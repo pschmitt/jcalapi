@@ -129,19 +129,21 @@ async def get_confluence_events(url, username, password, start=None, end=None):
                     end = datetime.datetime.combine(end, datetime.time(23, 59))
 
                 # Save data
-                events.append(
-                    {
-                        "uid": ev_uid,
-                        "backend": "confluence",
-                        "calendar": cal["name"],
-                        "summary": ev_summary,
-                        "description": ev_description,
-                        "location": ev_location,
-                        "start": ev_start,
-                        "end": ev_end,
-                        "status": ev_status,
-                    }
-                )
+                data = {
+                    "uid": ev_uid,
+                    "backend": "confluence",
+                    "calendar": cal["name"],
+                    "summary": ev_summary,
+                    "description": ev_description,
+                    "location": ev_location,
+                    "start": ev_start,
+                    "end": ev_end,
+                    "status": ev_status,
+                }
+                if data in events:
+                    LOGGER.warning(f"Dupplicate item detected: {data}")
+                else:
+                    events.append(data)
 
     return events
 
