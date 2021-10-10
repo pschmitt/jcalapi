@@ -3,6 +3,7 @@ import logging
 import re
 import os
 
+from contextvars import ContextVar
 from typing import Optional
 
 import xdg
@@ -23,6 +24,7 @@ CALENDAR_DATA = {"exchange": [], "confluence": []}
 CACHE = Cache(os.path.join(xdg.xdg_cache_home(), "jcalapi"))
 CACHE_KEY_META_SUFFIX = "-metadata"
 CACHE_EXPIRY = 60 * 10  # 10 minutes
+CACHE_RESTORED = ContextVar("CACHE_RESTORED", default=False)
 
 
 LOGGER = logging.getLogger(__name__)
@@ -43,8 +45,7 @@ def cache_events(key):
     return res_data, res_meta
 
 
-@app.on_event("startup")
-async def startup_event():
+def cache_restore():
     # Load data from cache
     # NOTE: This requires CALENDAR_DATA to be properly initialized (with all
     # the backends as keys)
@@ -52,11 +53,27 @@ async def startup_event():
         cached_data = CACHE.get(key)
         if cached_data:
             CALENDAR_DATA[key] = cached_data
-    # return await reload()
+            LOGGER.info(f"Loaded {key} data from cache")
+        else:
+            LOGGER.warning(f"Cache for {key} is empty")
+    LOGGER.info(f"Cached values have been restored")
+    CACHE_RESTORED.set(True)
+
+
+@app.on_event("startup")
+@repeat_every(seconds=60 * 5)  # 5 minutes
+async def startup_event():
+    LOGGER.info(f"Startup event triggered -> CACHE_RESTORED={CACHE_RESTORED}")
+    # At the very first start restore from cache, after that run reload()
+    # at every interval
+    if not CACHE_RESTORED.get():
+        cache_restore()
+    else:
+        LOGGER.info(f"Refreshing events data")
+        await reload()
 
 
 @app.post("/reload")
-@repeat_every(seconds=60 * 5)  # 5 minutes
 async def reload(
     confluence_url: Optional[str] = None,
     confluence_username: Optional[str] = None,
@@ -65,15 +82,15 @@ async def reload(
     exchange_password: Optional[str] = None,
     exchange_email: Optional[str] = None,
 ):
-    confl = await reload_confluence(
+    res_confluence = await reload_confluence(
         url=confluence_url, username=confluence_username, password=confluence_password
     )
-    excg = await reload_exchange(
+    res_exchange = await reload_exchange(
         username=exchange_username,
         password=exchange_password,
         email=exchange_email,
     )
-    return [confl, excg]
+    return [res_confluence, res_exchange]
 
 
 @app.post("/reload/confluence")
@@ -166,7 +183,7 @@ async def get_metadata(backend: Optional[str] = "all"):
 @app.get("/agenda/{when}")
 async def get_events_at_date(when: Optional[str] = "today"):
     now = datetime.datetime.now(tz=tzlocal())
-    target_date = now
+    target_date = now  # default to today ie now
 
     if when in ["tomorrow", "tom"]:
         target_date = now + datetime.timedelta(days=1)
@@ -194,7 +211,9 @@ async def get_events_at_date(when: Optional[str] = "today"):
         ev_end_date = ev_end.date() if isinstance(ev_end, datetime.datetime) else ev_end
         LOGGER.debug(f"compare: {ev_start}/{ev_end} with {target_date}")
         LOGGER.debug(f"{ev_start_date} vs {target_date.date()}")
-        if ev_start_date == target_date.date() or ev_end_date == target_date.date():
+        if (
+            ev_start_date == target_date.date() or ev_end_date == target_date.date()
+        ) and ev not in agenda:
             agenda.append(ev)
 
     # return agenda
