@@ -1,0 +1,13 @@
+asynccli
+atlassian-python-api
+python-dateutil
+diskcache
+fastapi
+fastapi-utils
+httpx
+icalendar
+recurring-ical-events
+uvicorn[standard]
+loguru
+exchangelib
+xdg
