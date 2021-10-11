@@ -209,6 +209,12 @@ async def get_todays_agenda(hours_prior: int = 0):
     return current_agenda
 
 
+@app.get("/tom")
+@app.get("/tomorrow")
+async def get_todays_agenda():
+    return await get_events_at_date("tomorrow")
+
+
 @app.get("/agenda/{when}")
 async def get_events_at_date(when: Optional[str] = "today"):
     now = datetime.datetime.now(tz=tzlocal())
