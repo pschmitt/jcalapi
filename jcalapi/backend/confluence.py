@@ -140,6 +140,8 @@ async def get_confluence_events(url, username, password, start=None, end=None):
                     "end": ev_end,
                     "status": ev_status,
                 }
+                if ev_summary == "Review: Kubernetes IMKE":
+                    LOGGER.error(f"Here we have an item that appears twice: {data}")
                 if data in events:
                     LOGGER.warning(f"Dupplicate item detected: {data}")
                 else:

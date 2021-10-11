@@ -63,10 +63,11 @@ def cache_restore():
 @app.on_event("startup")
 @repeat_every(seconds=60 * 5)  # 5 minutes
 async def startup_event():
-    LOGGER.info(f"Startup event triggered -> CACHE_RESTORED={CACHE_RESTORED}")
+    cache_restored = CACHE_RESTORED.get(False)
+    LOGGER.info(f"Startup event triggered -> CACHE_RESTORED={cache_restored}")
     # At the very first start restore from cache, after that run reload()
     # at every interval
-    if not CACHE_RESTORED.get():
+    if not cache_restored:
         cache_restore()
     else:
         LOGGER.info(f"Refreshing events data")

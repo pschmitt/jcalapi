@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "jcalapi"
+version = "0.1.0"
+description = "Local calendar caching and JSON API"
+authors = ["Philipp Schmitt <philipp@schmitt.co>"]
+license = "GPL-3"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+aioify = "^0.4.0"
+asynccli = "^0.1.3"
+atlassian-python-api = "^3.14.1"
+python-dateutil = "^2.8.2"
+diskcache = "^5.2.1"
+fastapi = "^0.70.0"
+fastapi-utils = "^0.2.1"
+httpx = "^0.19.0"
+icalendar = "^4.0.8"
+recurring-ical-events = "^0.2.0-beta.0"
+uvicorn = {extras = ["standard"], version = "^0.15.0"}
+loguru = "^0.5.3"
+exchangelib = "^4.5.2"
+xdg = "^5.1.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
