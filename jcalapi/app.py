@@ -45,7 +45,7 @@ def cache_events(key):
     return res_data, res_meta
 
 
-def cache_restore():
+async def cache_restore():
     # Load data from cache
     # NOTE: This requires CALENDAR_DATA to be properly initialized (with all
     # the backends as keys)
@@ -55,7 +55,12 @@ def cache_restore():
             CALENDAR_DATA[key] = cached_data
             LOGGER.info(f"Loaded {key} data from cache")
         else:
-            LOGGER.warning(f"Cache for {key} is empty")
+            LOGGER.warning(f"Cache for {key} is empty. Requesting refresh")
+            if key == "exchange":
+                await reload_exchange()
+            elif key == "confluence":
+                await reload_confluence()
+
     LOGGER.info(f"Cached values have been restored")
     CACHE_RESTORED.set(True)
 
@@ -68,7 +73,7 @@ async def startup_event():
     # At the very first start restore from cache, after that run reload()
     # at every interval
     if not cache_restored:
-        cache_restore()
+        await cache_restore()
     else:
         LOGGER.info(f"Refreshing events data")
         await reload()
@@ -181,6 +186,29 @@ async def get_metadata(backend: Optional[str] = "all"):
 
 
 @app.get("/today")
+@app.get("/today/{hours_prior}")
+async def get_todays_agenda(hours_prior: int = 0):
+    agenda = await get_events_at_date("today")
+    now = datetime.datetime.now(tz=tzlocal())
+    # now = datetime.datetime.now()
+    target_date = now + datetime.timedelta(hours=hours_prior)
+    LOGGER.info(f"Get agenda for today's events - {hours_prior} hour")
+    current_agenda = []
+    for event in agenda:
+        ev_end = event.get("end")
+        if isinstance(ev_end, str):
+            ev_end = dparse(ev_end)
+        # Whole day events
+        if not isinstance(ev_end, datetime.datetime):
+            current_agenda.append(event)
+        else:
+            if not ev_end.tzinfo:
+                ev_end = ev_end.replace(tzinfo=tzlocal())
+            if ev_end >= target_date:
+                current_agenda.append(event)
+    return current_agenda
+
+
 @app.get("/agenda/{when}")
 async def get_events_at_date(when: Optional[str] = "today"):
     now = datetime.datetime.now(tz=tzlocal())
@@ -196,6 +224,7 @@ async def get_events_at_date(when: Optional[str] = "today"):
     LOGGER.info(f"Grabbing agenda for {target_date}")
 
     agenda = []
+
     for ev in events_merged():
         LOGGER.debug(
             f"ITEM DATES {ev.get('summary')}: {ev.get('start')} ({type(ev.get('start'))}) -> {ev.get('end')} ({type(ev.get('end'))})"
@@ -212,16 +241,22 @@ async def get_events_at_date(when: Optional[str] = "today"):
         ev_end_date = ev_end.date() if isinstance(ev_end, datetime.datetime) else ev_end
         LOGGER.debug(f"compare: {ev_start}/{ev_end} with {target_date}")
         LOGGER.debug(f"{ev_start_date} vs {target_date.date()}")
-        if (
-            ev_start_date == target_date.date() or ev_end_date == target_date.date()
-        ) and ev not in agenda:
+        if ev_start_date == target_date.date() or ev_end_date == target_date.date():
+            # FIXME Won't this prevent events that occur multiple times in a day
+            # from being included more than once?
+            if ev.get("uid") in [x.get("uid") for x in agenda]:
+                LOGGER.warning(f"Duplicate event skipped: {ev}")
+                continue
             agenda.append(ev)
 
-    # return agenda
+    # remove duplicate entries from agenda
+    # agenda = [dict(t) for t in {tuple(d.items()) for d in agenda}]
+
     # Sort by start time
-    return sorted(
-        agenda,
-        key=lambda d: d["start"]
-        if isinstance(d["start"], datetime.date)
-        else dparse(d["start"]),
-    )
+    return agenda
+    # return sorted(
+    #     agenda,
+    #     key=lambda d: d["start"]
+    #     if isinstance(d["start"], datetime.date)
+    #     else dparse(d["start"]),
+    # )
