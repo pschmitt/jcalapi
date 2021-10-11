@@ -10,7 +10,7 @@ REGEX_MS_TEAMS_URL = re.compile(
 )
 
 
-def guess_media_location(event):
+def guess_conference_location(event):
     for key in ["location", "description"]:
         if val := str(event.get(key)):
             for regex in [REGEX_ZOOM_URL, REGEX_MS_TEAMS_URL]:
