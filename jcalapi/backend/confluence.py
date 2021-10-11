@@ -15,7 +15,7 @@ from atlassian import Confluence
 from dateutil.parser import parse as dparse
 from dateutil.tz import gettz
 
-# from ics import Calendar
+from jcalapi.events import guess_conference_location
 
 LOGGER = logging.getLogger(__name__)
 
@@ -50,11 +50,11 @@ async def get_confluence_events(url, username, password, start=None, end=None):
     # If start is undefined, set it to next monday
     if not start:
         today = datetime.date.today()
-        monday = today + datetime.timedelta(days=-today.weekday(), weeks=1)
-        start = monday
-    # For end, default to start + 7 days
+        last_monday = today - datetime.timedelta(days=today.weekday())
+        start = last_monday
+    # For end, default to start + 14 days
     if not end:
-        end = start + datetime.timedelta(days=7)
+        end = start + datetime.timedelta(days=14)
     LOGGER.info(f"Searching for events between {start} and {end}")
 
     events = []
@@ -115,7 +115,9 @@ async def get_confluence_events(url, username, password, start=None, end=None):
                     if "DESCRIPTION" in e
                     else ""
                 )
-                ev_location = e.decoded("LOCATION") if "LOCATION" in e else None
+                ev_location = (
+                    e.decoded("LOCATION").decode("utf-8") if "LOCATION" in e else None
+                )
                 ev_status = (
                     e.decoded("STATUS").decode("utf-8").lower()
                     if "STATUS" in e
@@ -140,8 +142,8 @@ async def get_confluence_events(url, username, password, start=None, end=None):
                     "end": ev_end,
                     "status": ev_status,
                 }
-                if ev_summary == "Review: Kubernetes IMKE":
-                    LOGGER.error(f"Here we have an item that appears twice: {data}")
+                data["conference_url"] = guess_conference_location(data)
+
                 if data in events:
                     LOGGER.warning(f"Dupplicate item detected: {data}")
                 else:

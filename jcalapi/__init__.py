@@ -1,3 +1,3 @@
 import jcalapi
 
-__all__ = ["jcalapi.app", "jcalapi.backend"]
+__all__ = ["jcalapi.app", "jcalapi.backend", "jcalapi.events"]

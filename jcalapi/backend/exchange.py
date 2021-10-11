@@ -8,6 +8,9 @@ from aioify import aioify
 from exchangelib import Credentials, Account, EWSDate, EWSDateTime
 from exchangelib.folders import Calendar
 
+from jcalapi.events import guess_conference_location
+
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -71,6 +74,7 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
                 "start": str(ev.start),
                 "end": str(ev.end),
             }
+            ev_data["conference_url"] = guess_conference_location(ev_data)
             data.append(ev_data)
 
     return data
