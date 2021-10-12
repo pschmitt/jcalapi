@@ -77,6 +77,11 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
                 "start": str(ev.start),
                 "end": str(ev.end),
                 "status": status,
+                "extra": {
+                    "conference_type": ev.conference_type,
+                    "meeting_workspace_url": ev.meeting_workspace_url,
+                    "net_show_url": ev.net_show_url,
+                },
             }
             ev_data["conference_url"] = guess_conference_location(ev_data)
             data.append(ev_data)
