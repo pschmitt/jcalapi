@@ -33,7 +33,7 @@ def parse_args():
     return parser.parse_args()
 
 
-async def get_confluence_events(url, username, password, start=None, end=None):
+def get_confluence_calendar_info(url: str, username: str, password: str):
     confluence_client = Confluence(url, username=username, password=password)
     cal_metadata = []
     for c in confluence_client.team_calendars_get_sub_calendars().get("payload"):
@@ -46,6 +46,13 @@ async def get_confluence_events(url, username, password, start=None, end=None):
         cal_metadata.append(
             {"id": cal_id, "name": cal_name, "tz": cal_tz, "url": ics_url}
         )
+    return cal_metadata
+
+
+async def get_confluence_events(
+    url: str, username: str, password: str, start=None, end=None
+):
+    cal_metadata = get_confluence_calendar_info(url, username, password)
 
     # If start is undefined, set it to next monday
     if not start:
