@@ -1,6 +1,3 @@
-source './.venv/bin/activate'
-unset PS1
-
 export CONFLUENCE_URL=https://confluence.example.com
 export CONFLUENCE_USERNAME=john.doe
 export CONFLUENCE_PASSWORD=XXX
