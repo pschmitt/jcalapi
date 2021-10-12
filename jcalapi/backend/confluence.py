@@ -66,10 +66,18 @@ async def get_confluence_events(
 
     events = []
     # ics_raw = requests.get(ics_url, auth=(args.username, args.password)).text
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(auth=(username, password)) as client:
         for cal in cal_metadata:
-            response = await client.get(cal["url"], auth=(username, password))
-            LOGGER.debug(f"Fetch {cal['name']} - http response: {response}")
+            try:
+                response = await client.get(cal["url"])
+                LOGGER.debug(f"Fetch {cal['name']} - http response: {response}")
+                response.raise_for_status()
+            except httpx.HTTPStatusError as exc:
+                LOGGER.error(
+                    f"Error response {exc.response.status_code} "
+                    f"while requesting {exc.request.url!r}."
+                )
+                continue
 
             ical = icalendar.Calendar.from_ical(response.text)
             normal_events = []
