@@ -73,6 +73,6 @@ if __name__ == "__main__":
     setup_logging()
 
     LOGGER = logging.getLogger(__name__)
-    LOGGER.info(f"Starting server on {HOST} with {WORKERS} workers")
+    LOGGER.info(f"Starting server on {HOST}:{PORT} with {WORKERS} workers")
 
     server.run()
