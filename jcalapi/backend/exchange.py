@@ -64,6 +64,9 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
             else:
                 start = datetime.fromtimestamp(int(ev.start.timestamp()))
                 end = datetime.fromtimestamp(int(ev.end.timestamp()))
+
+            status = "cancelled" if ev.is_cancelled else "confirmed"
+
             ev_data = {
                 "uid": ev.uid,
                 "backend": "exchange",
@@ -73,6 +76,7 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
                 "location": ev.location,
                 "start": str(ev.start),
                 "end": str(ev.end),
+                "status": status,
             }
             ev_data["conference_url"] = guess_conference_location(ev_data)
             data.append(ev_data)
