@@ -7,7 +7,8 @@ RUN pip install /app
 ENV DEBUG=False \
     LOG_LEVEL=INFO \
     WORKERS=2 \
-    HOST=0.0.0.0:8000
+    HOST=0.0.0.0 \
+    PORT=8000
 
 ENV CONFLUENCE_URL= \
     CONFLUENCE_USERNAME= \

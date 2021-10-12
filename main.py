@@ -15,7 +15,8 @@ DEBUG = env.bool("DEBUG", False)
 LOG_LEVEL = logging.getLevelName(env("LOG_LEVEL", "INFO"))
 JSON_LOGS = env.bool("JSON_LOGS", False)
 WORKERS = env.int("WORKERS", 2)
-HOST = env("HOST", "127.0.0.1:8000")
+HOST = env("HOST", "127.0.0.1")
+PORT = env.int("PORT", 8000)
 RELOAD = env("RELOAD", DEBUG)
 
 
@@ -58,6 +59,7 @@ if __name__ == "__main__":
         Config(
             "jcalapi.app:app",
             host=HOST,
+            port=PORT,
             log_level=LOG_LEVEL,
             reload=RELOAD,
             reload_includes=["*.py"],
