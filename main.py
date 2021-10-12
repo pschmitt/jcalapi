@@ -3,15 +3,20 @@
 
 # https://pawamoy.github.io/posts/unify-logging-for-a-gunicorn-uvicorn-app/
 
-import os
 import logging
 import sys
 
+from environs import Env
 from uvicorn import Config, Server
 from loguru import logger
 
-LOG_LEVEL = logging.getLevelName(os.environ.get("LOG_LEVEL", "INFO"))
-JSON_LOGS = True if os.environ.get("JSON_LOGS", "0") == "1" else False
+env = Env()
+DEBUG = env.bool("DEBUG", False)
+LOG_LEVEL = logging.getLevelName(env("LOG_LEVEL", "INFO"))
+JSON_LOGS = env.bool("JSON_LOGS", False)
+WORKERS = env.int("WORKERS", 2)
+HOST = env("HOST", "127.0.0.1:8000")
+RELOAD = env("RELOAD", DEBUG)
 
 
 class InterceptHandler(logging.Handler):
@@ -52,17 +57,20 @@ if __name__ == "__main__":
     server = Server(
         Config(
             "jcalapi.app:app",
-            host="127.0.0.1",
+            host=HOST,
             log_level=LOG_LEVEL,
-            reload=True,
-            reload_includes=["*.py"]
-            # debug=True,
-            # workers=2,
+            reload=RELOAD,
+            reload_includes=["*.py"],
+            debug=DEBUG,
+            workers=WORKERS,
         ),
     )
 
     # setup logging last, to make sure no library overwrites it
     # (they shouldn't, but it happens)
     setup_logging()
+
+    LOGGER = logging.getLogger(__name__)
+    LOGGER.info(f"Starting server on {HOST} with {WORKERS} workers")
 
     server.run()
