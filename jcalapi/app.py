@@ -4,7 +4,7 @@ import re
 import os
 
 from contextvars import ContextVar
-from typing import Optional
+from typing import List, Optional
 
 import xdg
 
@@ -12,7 +12,7 @@ from dateutil.utils import within_delta
 from dateutil.parser import parse as dparse
 from dateutil.tz import tzlocal
 from diskcache import Cache
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi_utils.tasks import repeat_every
 
 from jcalapi.backend.confluence import get_confluence_events
@@ -30,10 +30,15 @@ CACHE_RESTORED = ContextVar("CACHE_RESTORED", default=False)
 LOGGER = logging.getLogger(__name__)
 
 
-def events_merged():
+def events_merged(ignore_calendars: Optional[List[str]] = None):
     merged = []
     for vals in CALENDAR_DATA.values():
-        merged += vals
+        values = (
+            [x for x in vals if x.get("calendar") not in ignore_calendars]
+            if ignore_calendars
+            else vals
+        )
+        merged += values
     return merged
 
 
@@ -187,8 +192,10 @@ async def get_metadata(backend: Optional[str] = "all"):
 
 @app.get("/today")
 @app.get("/today/{hours_prior}")
-async def get_todays_agenda(hours_prior: int = 0):
-    agenda = await get_events_at_date("today")
+async def get_todays_agenda(
+    ignore_calendars: Optional[List[str]] = Query(None), hours_prior: int = 0
+):
+    agenda = await get_events_at_date("today", ignore_calendars=ignore_calendars)
     now = datetime.datetime.now(tz=tzlocal())
     # now = datetime.datetime.now()
     target_date = now + datetime.timedelta(hours=hours_prior)
@@ -211,12 +218,14 @@ async def get_todays_agenda(hours_prior: int = 0):
 
 @app.get("/tom")
 @app.get("/tomorrow")
-async def get_todays_agenda():
-    return await get_events_at_date("tomorrow")
+async def get_todays_agenda(ignore_calendars: Optional[List[str]] = Query(None)):
+    return await get_events_at_date(when="tomorrow", ignore_calendars=ignore_calendars)
 
 
 @app.get("/agenda/{when}")
-async def get_events_at_date(when: Optional[str] = "today"):
+async def get_events_at_date(
+    when: Optional[str] = "today", ignore_calendars: Optional[List[str]] = Query(None)
+):
     now = datetime.datetime.now(tz=tzlocal())
     target_date = now  # default to today ie now
 
@@ -231,7 +240,7 @@ async def get_events_at_date(when: Optional[str] = "today"):
 
     agenda = []
 
-    for ev in events_merged():
+    for ev in events_merged(ignore_calendars):
         LOGGER.debug(
             f"ITEM DATES {ev.get('summary')}: {ev.get('start')} ({type(ev.get('start'))}) -> {ev.get('end')} ({type(ev.get('end'))})"
         )
