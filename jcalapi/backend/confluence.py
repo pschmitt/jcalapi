@@ -133,6 +133,7 @@ async def get_confluence_events(
                 ev_location = (
                     e.decoded("LOCATION").decode("utf-8") if "LOCATION" in e else None
                 )
+                ev_url = e.decoded("URL") if "URL" in e else None
                 ev_status = (
                     e.decoded("STATUS").decode("utf-8").lower()
                     if "STATUS" in e
@@ -156,6 +157,7 @@ async def get_confluence_events(
                     "start": ev_start,
                     "end": ev_end,
                     "status": ev_status,
+                    "extra": {"url": ev_url},
                 }
                 data["conference_url"] = guess_conference_location(data)
 

@@ -11,9 +11,17 @@ REGEX_MS_TEAMS_URL = re.compile(
 
 
 def guess_conference_location(event):
-    for key in ["location", "description"]:
-        if val := str(event.get(key)):
-            for regex in [REGEX_ZOOM_URL, REGEX_MS_TEAMS_URL]:
-                if m := re.findall(regex, val):
-                    # The first link wins
-                    return m[0]
+    # Search in location and description
+    fields = [str(event.get("location")), str(event.get("description"))]
+
+    # Search in any extra field if any
+    if "extra" in event:
+        for val in event.get("extra").values():
+            if val:
+                fields.append(val)
+
+    for val in [x for x in fields if x]:
+        for regex in [REGEX_ZOOM_URL, REGEX_MS_TEAMS_URL]:
+            if m := re.findall(regex, val):
+                # The first link wins
+                return m[0]
