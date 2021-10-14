@@ -14,7 +14,7 @@ python-dateutil = "^2.8.2"
 diskcache = "^5.2.1"
 fastapi = "^0.70.0"
 fastapi-utils = "^0.2.1"
-httpx = "^0.19.0"
+httpx = "^0.20.0"
 icalendar = "^4.0.8"
 recurring-ical-events = "^0.2.0-beta.0"
 uvicorn = {extras = ["standard"], version = "^0.15.0"}
