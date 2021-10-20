@@ -2,7 +2,7 @@
 
 import logging
 import json
-from datetime import datetime, timedelta
+import datetime
 
 from aioify import aioify
 from exchangelib import Credentials, Account, EWSDate, EWSDateTime, EWSTimeZone
@@ -37,24 +37,32 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
     account = Account(email, credentials=credentials, autodiscover=True)
     calendars = [x for x in account.calendar.children] + [account.calendar]
 
-    today = datetime.today()
-    tomorrow = today + timedelta(days=7)
-    midnight_today = datetime.combine(
+    today = datetime.datetime.today()
+    tomorrow = today + datetime.timedelta(days=7)
+    midnight_today = datetime.datetime.combine(
         today if not start else start,
-        datetime.min.time(),
+        datetime.datetime.min.time(),
         tzinfo=account.default_timezone,
     )
-    midnight_tomorrow = datetime.combine(
+    midnight_tomorrow = datetime.datetime.combine(
         tomorrow if not end else end,
-        datetime.min.time(),
+        datetime.datetime.min.time(),
         tzinfo=account.default_timezone,
     )
+
+    if not start:
+        today = datetime.date.today()
+        last_monday = today - datetime.timedelta(days=today.weekday())
+        start = last_monday
+    # For end, default to start + 14 days
+    if not end:
+        end = start + datetime.timedelta(days=14)
 
     data = []
     events = []
     for cal in calendars:
         LOGGER.info(f"Processing calendar {cal}")
-        for ev in cal.all().filter(start__range=(midnight_today, midnight_tomorrow)):
+        for ev in cal.all().filter(start__range=(start, end)):
             events.append(ev)
 
             if isinstance(ev.start, EWSDate):
