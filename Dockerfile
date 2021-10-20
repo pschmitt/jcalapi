@@ -2,7 +2,10 @@ FROM python:3.9
 
 COPY pyproject.toml ./main.py /app/
 COPY ./jcalapi /app/jcalapi
-RUN pip install /app
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    pip install /app && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV DEBUG=False \
     LOG_LEVEL=INFO \
