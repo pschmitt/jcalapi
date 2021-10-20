@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timedelta
 
 from aioify import aioify
-from exchangelib import Credentials, Account, EWSDate, EWSDateTime
+from exchangelib import Credentials, Account, EWSDate, EWSDateTime, EWSTimeZone
 from exchangelib.folders import Calendar
 
 from jcalapi.events import guess_conference_location
@@ -57,15 +57,15 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
         for ev in cal.all().filter(start__range=(midnight_today, midnight_tomorrow)):
             events.append(ev)
 
-            # Check for whole day events
             if isinstance(ev.start, EWSDate):
-                start = midnight_today
-                end = midnight_tomorrow
+                ev_start = ev.start
+                ev_end = ev.end
             else:
-                start = datetime.fromtimestamp(int(ev.start.timestamp()))
-                end = datetime.fromtimestamp(int(ev.end.timestamp()))
+                # datetime object -> convert to local timezone
+                ev_start = ev.start.astimezone(EWSTimeZone.localzone())
+                ev_end = ev.end.astimezone(EWSTimeZone.localzone())
 
-            status = "cancelled" if ev.is_cancelled else "confirmed"
+            ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
             ev_data = {
                 "uid": ev.uid,
@@ -74,9 +74,9 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
                 "summary": ev.subject,
                 "description": ev.body,
                 "location": ev.location,
-                "start": str(ev.start),
-                "end": str(ev.end),
-                "status": status,
+                "start": ev_start,
+                "end": ev_end,
+                "status": ev_status,
                 "extra": {
                     "conference_type": ev.conference_type,
                     "meeting_workspace_url": ev.meeting_workspace_url,
