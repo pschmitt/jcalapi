@@ -130,7 +130,7 @@ async def reload_confluence(
         )
         cache_events(backend)
 
-    return {"events": len(CALENDAR_DATA.get("confluence", []))}
+    return {"events": len(CALENDAR_DATA.get(backend, []))}
 
 
 @app.post("/reload/exchange")
@@ -146,7 +146,7 @@ async def reload_exchange(
 
     LOGGER.info(f"Fetch calendar events from Exchange for user {exchange_username}")
 
-    CALENDAR_DATA["exchange"] = await get_exchange_events(
+    CALENDAR_DATA[backend] = await get_exchange_events(
         username=exchange_username,
         email=exchange_email,
         password=exchange_password,
@@ -156,7 +156,7 @@ async def reload_exchange(
 
     cache_events(backend)
 
-    return {"events": len(CALENDAR_DATA.get("exchange", []))}
+    return {"events": len(CALENDAR_DATA.get(backend, []))}
 
 
 @app.get("/events")
