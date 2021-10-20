@@ -101,7 +101,7 @@ async def reload(
         password=exchange_password,
         email=exchange_email,
     )
-    return [res_confluence, res_exchange]
+    return {"exchange": res_exchange, "confluence": res_confluence}
 
 
 @app.post("/reload/confluence")
