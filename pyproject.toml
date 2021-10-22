@@ -12,7 +12,6 @@ asynccli = "^0.1.3"
 atlassian-python-api = "^3.14.1"
 diskcache = "^5.2.1"
 environs = "^9.3.4"
-exchangelib = "^4.5.2"
 fastapi = "^0.70.0"
 fastapi-utils = "^0.2.1"
 httpx = "^0.20.0"
@@ -22,6 +21,7 @@ python-dateutil = "^2.8.2"
 recurring-ical-events = "^0.2.0-beta.0"
 uvicorn = {extras = ["standard"], version = "^0.15.0"}
 xdg = "^5.1.1"
+exchangelib = {git = "https://github.com/ecederstrand/exchangelib.git"}
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
