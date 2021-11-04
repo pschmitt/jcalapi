@@ -27,7 +27,7 @@ exchangelib = {git = "https://github.com/ecederstrand/exchangelib.git"}
 black = "^21.10b0"
 flake8 = "^4.0.1"
 ipython = "^7.29.0"
-isort = "^5.9.3"
+isort = "^5.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
