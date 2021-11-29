@@ -255,7 +255,7 @@ tests = ["pytest", "dj-database-url", "dj-email-url", "django-cache-url"]
 
 [[package]]
 name = "exchangelib"
-version = "4.6.0"
+version = "4.6.1"
 description = "Client for Microsoft Exchange Web Services (EWS)"
 category = "main"
 optional = false
@@ -285,7 +285,7 @@ sspi = ["requests-negotiate-sspi"]
 type = "git"
 url = "https://github.com/ecederstrand/exchangelib.git"
 reference = "master"
-resolved_reference = "0f346094e136ce9764c1486a144db0dcee80e414"
+resolved_reference = "0757658f27fc5358b64c419c744507e52e063120"
 
 [[package]]
 name = "fastapi"
@@ -420,7 +420,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "ipython"
-version = "7.29.0"
+version = "7.30.0"
 description = "IPython: Productive Interactive Computing"
 category = "dev"
 optional = false
@@ -1069,7 +1069,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "135cb154b62dbc016502280b198268f2c7da3a06739d67709b718944ebd4a259"
+content-hash = "9937786cef2e12a423ab451a0e547d76408f2e2647612d59747470c9fa3bacbe"
 
 [metadata.files]
 aioify = [
@@ -1323,8 +1323,8 @@ idna = [
     {file = "idna-3.2.tar.gz", hash = "sha256:467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"},
 ]
 ipython = [
-    {file = "ipython-7.29.0-py3-none-any.whl", hash = "sha256:a658beaf856ce46bc453366d5dc6b2ddc6c481efd3540cb28aa3943819caac9f"},
-    {file = "ipython-7.29.0.tar.gz", hash = "sha256:4f69d7423a5a1972f6347ff233e38bbf4df6a150ef20fbb00c635442ac3060aa"},
+    {file = "ipython-7.30.0-py3-none-any.whl", hash = "sha256:c8f3e07aefb9cf9e067f39686f035ce09b27a1ee602116a3030b91b6fc138ee4"},
+    {file = "ipython-7.30.0.tar.gz", hash = "sha256:d41f8e80b99690122400f9b2069b12f670246a1b4cc5d332bd6c4e2500e6d6fb"},
 ]
 isodate = [
     {file = "isodate-0.6.0-py2.py3-none-any.whl", hash = "sha256:aa4d33c06640f5352aca96e4b81afd8ab3b47337cc12089822d6f322ac772c81"},
