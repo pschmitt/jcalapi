@@ -214,7 +214,7 @@ dev = ["tox", "bump2version (<1)", "sphinx (<2)", "importlib-metadata (<3)", "im
 
 [[package]]
 name = "diskcache"
-version = "5.2.1"
+version = "5.3.0"
 description = "Disk Cache -- Disk and file backed persistent cache."
 category = "main"
 optional = false
@@ -1069,7 +1069,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "9937786cef2e12a423ab451a0e547d76408f2e2647612d59747470c9fa3bacbe"
+content-hash = "b7e137baa33cb1d9240782a7c486cb9b06f360a9595996ea94770edef44d7274"
 
 [metadata.files]
 aioify = [
@@ -1209,8 +1209,8 @@ deprecated = [
     {file = "Deprecated-1.2.13.tar.gz", hash = "sha256:43ac5335da90c31c24ba028af536a91d41d53f9e6901ddb021bcc572ce44e38d"},
 ]
 diskcache = [
-    {file = "diskcache-5.2.1-py3-none-any.whl", hash = "sha256:6e8137c778fd2752b93c8a8f944e939b3665d645b46774d8537dd3528ac3baa1"},
-    {file = "diskcache-5.2.1.tar.gz", hash = "sha256:1805acd5868ac10ad547208951a1190a0ab7bbff4e70f9a07cde4dbdfaa69f64"},
+    {file = "diskcache-5.3.0-py3-none-any.whl", hash = "sha256:75138cacec6c1d7b8339cc78912dd218d955f0706123e447a322a7ea4c97f270"},
+    {file = "diskcache-5.3.0.tar.gz", hash = "sha256:3f1fa30b29fdff26cfddcb3ee7d61376903f82c769ea2907a2b82a5bfb8abbe2"},
 ]
 dnspython = [
     {file = "dnspython-2.1.0-py3-none-any.whl", hash = "sha256:95d12f6ef0317118d2a1a6fc49aac65ffec7eb8087474158f42f26a639135216"},
