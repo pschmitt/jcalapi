@@ -19,7 +19,7 @@ icalendar = "^4.0.9"
 loguru = "^0.5.3"
 python-dateutil = "^2.8.2"
 recurring-ical-events = "^0.2.4b0"
-uvicorn = {extras = ["standard"], version = "^0.16.0"}
+uvicorn = {extras = ["standard"], version = "^0.17.0"}
 xdg = "^5.1.1"
 exchangelib = {git = "https://github.com/ecederstrand/exchangelib.git"}
 
