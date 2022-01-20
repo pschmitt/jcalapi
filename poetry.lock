@@ -798,7 +798,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
 name = "recurring-ical-events"
-version = "0.2.4b0"
+version = "1.0.0b0"
 description = "A Python module which repeats ICalendar events by RRULE, RDATE and EXDATE."
 category = "main"
 optional = false
@@ -808,6 +808,7 @@ python-versions = "*"
 icalendar = "*"
 python-dateutil = ">=2.8.1"
 pytz = "*"
+x-wr-timezone = "<1.0.0"
 
 [[package]]
 name = "requests"
@@ -1102,6 +1103,18 @@ optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
+name = "x-wr-timezone"
+version = "0.0.2"
+description = "A Python module and program to convert calendars using X-WR-TIMEZONE to standard ones."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+icalendar = "*"
+pytz = "*"
+
+[[package]]
 name = "xdg"
 version = "5.1.1"
 description = "Variables defined by the XDG Base Directory Specification"
@@ -1112,7 +1125,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8214cdc29079286b8de23dddcd27fe04972c14dcc7a44297052d6322b7002f47"
+content-hash = "ef6480b7b9477f4a558f565aa1255b819d23feb1123c7db1b4be35da52720b24"
 
 [metadata.files]
 aioify = [
@@ -1596,7 +1609,7 @@ pyyaml = [
     {file = "PyYAML-5.4.1.tar.gz", hash = "sha256:607774cbba28732bfa802b54baa7484215f530991055bb562efbed5b2f20a45e"},
 ]
 recurring-ical-events = [
-    {file = "recurring_ical_events-0.2.4b0.tar.gz", hash = "sha256:7030741b67c93b39300dc477a5750d9f65850d81d3a33f04a86292347cfe3e0e"},
+    {file = "recurring_ical_events-1.0.0b0.tar.gz", hash = "sha256:2416b27b10be4314fe7e58d38fbe9e1a71e5981a913f97cbb3733b7b990fe518"},
 ]
 requests = [
     {file = "requests-2.26.0-py2.py3-none-any.whl", hash = "sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"},
@@ -1799,6 +1812,10 @@ wrapt = [
     {file = "wrapt-1.13.1-cp39-cp39-win32.whl", hash = "sha256:04312fbf51e9dd15261228e6b4bed0c0ed5723ccf986645d2c7308511dccba35"},
     {file = "wrapt-1.13.1-cp39-cp39-win_amd64.whl", hash = "sha256:bd705e341baccc3d1ef20e790b1f6383bd4ae92a77ba87a86ece8189fab8793c"},
     {file = "wrapt-1.13.1.tar.gz", hash = "sha256:909a80ce028821c7ad01bdcaa588126825931d177cdccd00b3545818d4a195ce"},
+]
+x-wr-timezone = [
+    {file = "x_wr_timezone-0.0.2-py3-none-any.whl", hash = "sha256:49a7057867832d66579f73da34122c025490b93ccdb7bd2ce18b305b0bf5477e"},
+    {file = "x_wr_timezone-0.0.2.tar.gz", hash = "sha256:a33ff27e1fbd342c9aecd051958ca80b19b38c4d655ab668296a5d001f23fc88"},
 ]
 xdg = [
     {file = "xdg-5.1.1-py3-none-any.whl", hash = "sha256:865a7b56ed1d4cd2fce2ead1eddf97360843619757f473cd90b75f1817ca541d"},
