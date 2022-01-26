@@ -69,7 +69,7 @@ python-versions = "*"
 
 [[package]]
 name = "atlassian-python-api"
-version = "3.18.0"
+version = "3.18.1"
 description = "Python Atlassian REST API Wrapper"
 category = "main"
 optional = false
@@ -1125,7 +1125,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "087afd1ff673222e1dca932fc5c3971d2e7526481b737a8442ccd5125b72f646"
+content-hash = "f292a13c2776cd6ba610558ffeb0a73b647a57ee520f910e035635782e983b52"
 
 [metadata.files]
 aioify = [
@@ -1152,7 +1152,7 @@ asynccli = [
     {file = "asynccli-0.1.3.tar.gz", hash = "sha256:c3603f80856d8982817f0f2fcbe0429975242078e1bbae3e96cd4917f20c4c2a"},
 ]
 atlassian-python-api = [
-    {file = "atlassian-python-api-3.18.0.tar.gz", hash = "sha256:002dfd948db48356fa483a9283efc3cba47026598f7e731554e60c891005d02e"},
+    {file = "atlassian-python-api-3.18.1.tar.gz", hash = "sha256:81f7554a1fd24520374951a5e0ef5d223966e52cce1a5967cb637cc79f771b2e"},
 ]
 backcall = [
     {file = "backcall-0.2.0-py2.py3-none-any.whl", hash = "sha256:fbbce6a29f263178a1f7915c1940bde0ec2b2a967566fe1c65c1dfb7422bd255"},
