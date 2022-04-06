@@ -796,7 +796,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
 name = "recurring-ical-events"
-version = "1.0.1b0"
+version = "1.0.2b0"
 description = "A Python module which repeats ICalendar events by RRULE, RDATE and EXDATE."
 category = "main"
 optional = false
@@ -806,7 +806,10 @@ python-versions = "*"
 icalendar = "*"
 python-dateutil = ">=2.8.1"
 pytz = "*"
-x-wr-timezone = "<1.0.0"
+x-wr-timezone = [
+    "<1.0.0",
+    ">=0.0.5",
+]
 
 [[package]]
 name = "requests"
@@ -1102,7 +1105,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
 name = "x-wr-timezone"
-version = "0.0.2"
+version = "0.0.5"
 description = "A Python module and program to convert calendars using X-WR-TIMEZONE to standard ones."
 category = "main"
 optional = false
@@ -1123,7 +1126,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e500c89f824a3f243e64ae1cefde2db363570fbe991c0fd7f5e0fede3af61ca2"
+content-hash = "a4436f986b0014bdc3dc567f3bc7c7ff30710b25a8a905ec49b2997133200374"
 
 [metadata.files]
 aioify = [
@@ -1647,8 +1650,8 @@ pyyaml = [
     {file = "PyYAML-5.4.1.tar.gz", hash = "sha256:607774cbba28732bfa802b54baa7484215f530991055bb562efbed5b2f20a45e"},
 ]
 recurring-ical-events = [
-    {file = "recurring_ical_events-1.0.1b0-py3-none-any.whl", hash = "sha256:eecd89ea5af86c99de713decce7729bb94f68d5941f39ecf3d0fd453d5ae13ac"},
-    {file = "recurring_ical_events-1.0.1b0.tar.gz", hash = "sha256:82967d068f0048342148c24dce04dfc7a01395e84b630e3319248fbada73c22a"},
+    {file = "recurring_ical_events-1.0.2b0-py3-none-any.whl", hash = "sha256:6316b9bcf1506c2c8ead2122234c26ad4ff3ba6491e70b32613687bf1065c8f4"},
+    {file = "recurring_ical_events-1.0.2b0.tar.gz", hash = "sha256:6a8414eebc5126fa9edcf2c73eda394f6ac2bc54a49aa7e20a5c022fa4918e4d"},
 ]
 requests = [
     {file = "requests-2.26.0-py2.py3-none-any.whl", hash = "sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"},
@@ -1853,8 +1856,8 @@ wrapt = [
     {file = "wrapt-1.13.1.tar.gz", hash = "sha256:909a80ce028821c7ad01bdcaa588126825931d177cdccd00b3545818d4a195ce"},
 ]
 x-wr-timezone = [
-    {file = "x_wr_timezone-0.0.2-py3-none-any.whl", hash = "sha256:49a7057867832d66579f73da34122c025490b93ccdb7bd2ce18b305b0bf5477e"},
-    {file = "x_wr_timezone-0.0.2.tar.gz", hash = "sha256:a33ff27e1fbd342c9aecd051958ca80b19b38c4d655ab668296a5d001f23fc88"},
+    {file = "x_wr_timezone-0.0.5-py3-none-any.whl", hash = "sha256:e438b27b96635f5f712a4fb5dda4c82597a53a412fe834c9fe8409fddb3fc2b1"},
+    {file = "x_wr_timezone-0.0.5.tar.gz", hash = "sha256:c05cb34b9b58a4607a788db086dcae5766728e4b94e0672870dc5593a6e13fe6"},
 ]
 xdg = [
     {file = "xdg-5.1.1-py3-none-any.whl", hash = "sha256:865a7b56ed1d4cd2fce2ead1eddf97360843619757f473cd90b75f1817ca541d"},
