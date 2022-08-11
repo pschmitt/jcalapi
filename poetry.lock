@@ -58,7 +58,7 @@ python-versions = "*"
 
 [[package]]
 name = "atlassian-python-api"
-version = "3.25.0"
+version = "3.26.0"
 description = "Python Atlassian REST API Wrapper"
 category = "main"
 optional = false
@@ -253,7 +253,7 @@ tests = ["pytest", "dj-database-url", "dj-email-url", "django-cache-url"]
 
 [[package]]
 name = "exchangelib"
-version = "4.7.4"
+version = "4.7.6"
 description = "Client for Microsoft Exchange Web Services (EWS)"
 category = "main"
 optional = false
@@ -283,7 +283,7 @@ sspi = ["requests-negotiate-sspi"]
 type = "git"
 url = "https://github.com/ecederstrand/exchangelib.git"
 reference = "master"
-resolved_reference = "6c4a0fe1667b8a115fc26e8c46151c7473efc9a3"
+resolved_reference = "fdadcc61461c962d9b35b6da42d945ef6a58daf2"
 
 [[package]]
 name = "executing"
@@ -653,8 +653,8 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-test = ["pytest-mock (>=3.6)", "pytest-cov (>=2.7)", "pytest (>=6)", "appdirs (==1.4.4)"]
-docs = ["sphinx-autodoc-typehints (>=1.12)", "proselint (>=0.10.2)", "furo (>=2021.7.5b38)", "Sphinx (>=4)"]
+docs = ["Sphinx (>=4)", "furo (>=2021.7.5b38)", "proselint (>=0.10.2)", "sphinx-autodoc-typehints (>=1.12)"]
+test = ["appdirs (==1.4.4)", "pytest (>=6)", "pytest-cov (>=2.7)", "pytest-mock (>=3.6)"]
 
 [[package]]
 name = "prompt-toolkit"
@@ -1117,7 +1117,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "88131d3b7aa70335a902f9ec9d704d95b949b83637df93c86fb5cba4d1145252"
+content-hash = "f73a25c45e5686ef87b92e1258ed58886f4ddd308b4c35b2792d7c18b9bc4a74"
 
 [metadata.files]
 aioify = [
@@ -1140,7 +1140,7 @@ asynccli = [
     {file = "asynccli-0.1.3.tar.gz", hash = "sha256:c3603f80856d8982817f0f2fcbe0429975242078e1bbae3e96cd4917f20c4c2a"},
 ]
 atlassian-python-api = [
-    {file = "atlassian-python-api-3.25.0.tar.gz", hash = "sha256:0e0afe60f7005ed94fb3abd42d13b9c9fd34d1baff1a184a4e066bc9ceadb055"},
+    {file = "atlassian-python-api-3.26.0.tar.gz", hash = "sha256:39218baeb57c5671859a730c6a2bafb25b60fa4fd7956ee6308d779e611f619e"},
 ]
 backcall = [
     {file = "backcall-0.2.0-py2.py3-none-any.whl", hash = "sha256:fbbce6a29f263178a1f7915c1940bde0ec2b2a967566fe1c65c1dfb7422bd255"},
