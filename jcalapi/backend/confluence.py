@@ -2,15 +2,14 @@
 # coding: utf-8
 
 import argparse
-import logging
 import datetime
+import logging
 
 import asynccli
 import httpx
 import icalendar
 import recurring_ical_events
 import requests
-
 from atlassian import Confluence
 from dateutil.parser import parse as dparse
 from dateutil.tz import gettz
@@ -66,7 +65,8 @@ async def get_confluence_events(
 
     events = []
     # ics_raw = requests.get(ics_url, auth=(args.username, args.password)).text
-    async with httpx.AsyncClient(auth=(username, password)) as client:
+    timeout = httpx.Timeout(10.0)
+    async with httpx.AsyncClient(auth=(username, password), timeout=timeout) as client:
         for cal in cal_metadata:
             try:
                 response = await client.get(cal["url"])
