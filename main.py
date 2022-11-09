@@ -7,8 +7,8 @@ import logging
 import sys
 
 from environs import Env
-from uvicorn import Config, Server
 from loguru import logger
+from uvicorn import Config, Server
 
 env = Env()
 DEBUG = env.bool("DEBUG", False)
@@ -63,7 +63,6 @@ if __name__ == "__main__":
             log_level=LOG_LEVEL,
             reload=RELOAD,
             reload_includes=["*.py"],
-            debug=DEBUG,
             workers=WORKERS,
         ),
     )
