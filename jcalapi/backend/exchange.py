@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-import logging
-import json
+import asyncio
 import datetime
+import json
+import logging
 
 from aioify import aioify
-from exchangelib import Credentials, Account, EWSDate, EWSDateTime, EWSTimeZone
-from exchangelib.folders import Calendar
+from exchangelib import Account, Credentials, EWSDate, EWSDateTime, EWSTimeZone
+from exchangelib.folders import Calendar, SingleFolderQuerySet
+from exchangelib.properties import DistinguishedFolderId, Mailbox
 
 from jcalapi.events import guess_conference_location
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,34 +22,63 @@ def parse_args():
     parser.add_argument("-e", "--email", help="Email", required=False)
     parser.add_argument("-u", "--username", help="Username", required=True)
     parser.add_argument("-p", "--password", help="Password", required=True)
+    parser.add_argument(
+        "-s",
+        "--shared_inboxes",
+        action="append",
+        help="Shared Inboxes",
+        required=False,
+        default=[],
+    )
     return parser.parse_args()
 
 
-async def get_exchange_events(username, password, email=None, start=None, end=None):
+async def get_exchange_events(
+    username, password, email=None, shared_inboxes=[], start=None, end=None
+):
     aio_get_exchange_events = aioify(obj=sync_get_exchange_events)
     return await aio_get_exchange_events(
-        username=username, password=password, email=email, start=start, end=end
+        username=username,
+        password=password,
+        email=email,
+        shared_inboxes=shared_inboxes,
+        start=start,
+        end=end,
     )
 
 
-def sync_get_exchange_events(username, password, email=None, start=None, end=None):
+def sync_get_exchange_events(
+    username, password, email=None, shared_inboxes=[], start=None, end=None
+):
     email = email if email else username
     credentials = Credentials(username, password)
     account = Account(email, credentials=credentials, autodiscover=True)
     calendars = [x for x in account.calendar.children] + [account.calendar]
 
-    today = datetime.datetime.today()
-    tomorrow = today + datetime.timedelta(days=7)
-    midnight_today = datetime.datetime.combine(
-        today if not start else start,
-        datetime.datetime.min.time(),
-        tzinfo=account.default_timezone,
-    )
-    midnight_tomorrow = datetime.datetime.combine(
-        tomorrow if not end else end,
-        datetime.datetime.min.time(),
-        tzinfo=account.default_timezone,
-    )
+    shared_calendars = {}
+    for shared_inbox in shared_inboxes:
+        shared_calendar = SingleFolderQuerySet(
+            account=account,
+            folder=DistinguishedFolderId(
+                id=Calendar.DISTINGUISHED_FOLDER_ID,
+                mailbox=Mailbox(email_address=shared_inbox),
+            ),
+        ).resolve()
+        shared_calendars[shared_calendar] = shared_inbox
+        calendars.append(shared_calendar)
+
+    # today = datetime.datetime.today()
+    # tomorrow = today + datetime.timedelta(days=7)
+    # midnight_today = datetime.datetime.combine(
+    #     today if not start else start,
+    #     datetime.datetime.min.time(),
+    #     tzinfo=account.default_timezone,
+    # )
+    # midnight_tomorrow = datetime.datetime.combine(
+    #     tomorrow if not end else end,
+    #     datetime.datetime.min.time(),
+    #     tzinfo=account.default_timezone,
+    # )
 
     if not start:
         today = datetime.date.today()
@@ -75,10 +105,16 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
 
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
+            if cal in shared_calendars:
+                cal_name = f"{cal.name} ({shared_calendars[cal]})"
+            else:
+                cal_name = f"{cal.name} ({username})"
+
             ev_data = {
                 "uid": ev.uid,
                 "backend": "exchange",
-                "calendar": cal.name,
+                "calendar": cal_name,
+                "organizer": ev.organizer.name,
                 "summary": ev.subject,
                 "description": ev.body,
                 "location": ev.location,
@@ -97,17 +133,20 @@ def sync_get_exchange_events(username, password, email=None, start=None, end=Non
     return data
 
 
-def main():
+async def async_main():
     args = parse_args()
-    data = get_exchange_events(
+    data = await get_exchange_events(
         username=args.username,
         password=args.password,
         email=args.email,
+        shared_inboxes=args.shared_inboxes,
         start=None,
         end=None,
     )
-    print(json.dumps(data))
+    print(json.dumps(data, default=str))
 
 
 if __name__ == "__main__":
-    main()
+    loop = asyncio.get_event_loop()
+    coroutine = async_main()
+    loop.run_until_complete(coroutine)
