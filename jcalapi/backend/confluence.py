@@ -115,7 +115,7 @@ async def get_confluence_events(
                     )
                 if not isinstance(ev_end, datetime.datetime):
                     ev_end = datetime.datetime.combine(
-                        ev_end, datetime.datetime.min.time(), tzinfo=gettz(cal["tz"])
+                        ev_end, datetime.datetime.max.time(), tzinfo=gettz(cal["tz"])
                     )
                 ev_rrule = e.decoded("RRULE") if "RRULE" in e else None
                 if ev_rrule:
