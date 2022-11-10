@@ -83,7 +83,7 @@ def sync_get_exchange_events(
     )
 
     if not start:
-        today = datetime.date.today()
+        today = midnight_today  # datetime.date.today()
         last_monday = today - datetime.timedelta(days=today.weekday())
         start = last_monday
     # For end, default to start + 14 days
@@ -104,8 +104,21 @@ def sync_get_exchange_events(
             events.append(ev)
 
             if isinstance(ev.start, EWSDate):
-                ev_start = ev.start
-                ev_end = ev.end
+                # Raw date objects
+                # ev_start = ev.start
+                # ev_end = ev.end
+                # Convert EWSDate objects to datetime
+                # ev_start = datetime.fromisoformat(ev.start.isoformat())
+                # ev_end = datetime.fromisoformat(ev.end.isoformat())
+                # Convert EWSDate to tz aware datetime objects
+                ev_start = datetime.datetime.combine(
+                    ev.start, datetime.datetime.min.time(), tzinfo=EWSTimeZone.localzone()
+                )
+                ev_start = ev_start.replace(microsecond=0)
+                ev_end = datetime.datetime.combine(
+                    ev.end, datetime.datetime.max.time(), tzinfo=EWSTimeZone.localzone()
+                )
+                ev_end = ev_end.replace(microsecond=0)
             else:
                 # datetime object -> convert to local timezone
                 ev_start = ev.start.astimezone(EWSTimeZone.localzone())
