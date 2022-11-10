@@ -108,8 +108,12 @@ async def get_confluence_events(
                     ev_start = dparse(ev_start)
                 if isinstance(ev_end, str):
                     ev_end = dparse(ev_end)
+                
+
+                whole_day = False
                 # Convert date to datetime
                 if not isinstance(ev_start, datetime.datetime):
+                    whole_day = True
                     ev_start = datetime.datetime.combine(
                         ev_start, datetime.datetime.min.time(), tzinfo=gettz(cal["tz"])
                     )
@@ -156,6 +160,7 @@ async def get_confluence_events(
                     "location": ev_location,
                     "start": ev_start,
                     "end": ev_end,
+                    "whole_day": whole_day,
                     "status": ev_status,
                     "extra": {"url": ev_url},
                 }

@@ -103,7 +103,9 @@ def sync_get_exchange_events(
         for ev in cal.view(start, end):
             events.append(ev)
 
+            whole_day = False
             if isinstance(ev.start, EWSDate):
+                whole_day = True
                 # Raw date objects
                 # ev_start = ev.start
                 # ev_end = ev.end
@@ -136,6 +138,7 @@ def sync_get_exchange_events(
                 "location": ev.location,
                 "start": ev_start,
                 "end": ev_end,
+                "whole_day": whole_day,
                 "status": ev_status,
                 "extra": {
                     "conference_type": ev.conference_type,
