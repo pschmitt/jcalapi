@@ -53,7 +53,9 @@ def sync_get_exchange_events(
     email = email if email else username
     credentials = Credentials(username, password)
     account = Account(email, credentials=credentials, autodiscover=True)
-    calendars = [x for x in account.calendar.children] + [account.calendar]
+    calendars = [x for x in account.calendar.children if isinstance(x, Calendar)] + [
+        account.calendar
+    ]
 
     shared_calendars = {}
     for shared_inbox in shared_inboxes:
@@ -67,18 +69,18 @@ def sync_get_exchange_events(
         shared_calendars[shared_calendar] = shared_inbox
         calendars.append(shared_calendar)
 
-    # today = datetime.datetime.today()
-    # tomorrow = today + datetime.timedelta(days=7)
-    # midnight_today = datetime.datetime.combine(
-    #     today if not start else start,
-    #     datetime.datetime.min.time(),
-    #     tzinfo=account.default_timezone,
-    # )
-    # midnight_tomorrow = datetime.datetime.combine(
-    #     tomorrow if not end else end,
-    #     datetime.datetime.min.time(),
-    #     tzinfo=account.default_timezone,
-    # )
+    today = datetime.datetime.today()
+    tomorrow = today + datetime.timedelta(days=1)
+    midnight_today = datetime.datetime.combine(
+        today if not start else start,
+        datetime.datetime.min.time(),
+        tzinfo=account.default_timezone,
+    )
+    midnight_tomorrow = datetime.datetime.combine(
+        tomorrow if not end else end,
+        datetime.datetime.min.time(),
+        tzinfo=account.default_timezone,
+    )
 
     if not start:
         today = datetime.date.today()
@@ -97,8 +99,8 @@ def sync_get_exchange_events(
             cal_name = f"{cal.name} ({username})"
 
         LOGGER.info(f"Processing calendar {cal_name}")
-
-        for ev in cal.all().filter(start__range=(start, end)):
+        # for ev in cal.all().filter(start__range=(start, end)):
+        for ev in cal.view(start, end):
             events.append(ev)
 
             if isinstance(ev.start, EWSDate):

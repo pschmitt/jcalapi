@@ -99,7 +99,7 @@ async def reload(
         username=exchange_username,
         password=exchange_password,
         email=exchange_email,
-        shared_inboxes=exchange_shared_inboxes
+        shared_inboxes=exchange_shared_inboxes,
     )
     return {"exchange": res_exchange, "confluence": res_confluence}
 
@@ -226,7 +226,7 @@ async def get_todays_agenda(
 
 @app.get("/tom")
 @app.get("/tomorrow")
-async def get_todays_agenda(ignore_calendars: Optional[List[str]] = Query(None)):
+async def get_tomorrows_agenda(ignore_calendars: Optional[List[str]] = Query(None)):
     return await get_events_at_date(when="tomorrow", ignore_calendars=ignore_calendars)
 
 
