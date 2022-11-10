@@ -91,7 +91,13 @@ def sync_get_exchange_events(
     data = []
     events = []
     for cal in calendars:
-        LOGGER.info(f"Processing calendar {cal}")
+        if cal in shared_calendars:
+            cal_name = f"{cal.name} ({shared_calendars[cal]})"
+        else:
+            cal_name = f"{cal.name} ({username})"
+
+        LOGGER.info(f"Processing calendar {cal_name}")
+
         for ev in cal.all().filter(start__range=(start, end)):
             events.append(ev)
 
@@ -104,11 +110,6 @@ def sync_get_exchange_events(
                 ev_end = ev.end.astimezone(EWSTimeZone.localzone())
 
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
-
-            if cal in shared_calendars:
-                cal_name = f"{cal.name} ({shared_calendars[cal]})"
-            else:
-                cal_name = f"{cal.name} ({username})"
 
             ev_data = {
                 "uid": ev.uid,
