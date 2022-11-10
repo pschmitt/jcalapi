@@ -157,7 +157,7 @@ async def reload_exchange(
         username=exchange_username,
         email=exchange_email,
         password=exchange_password,
-        shared_inboxes=shared_inboxes,
+        shared_inboxes=exchange_shared_inboxes,
         start=None,
         end=None,
     )
