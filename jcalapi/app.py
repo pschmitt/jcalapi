@@ -1,16 +1,14 @@
 import datetime
 import logging
-import re
 import os
-
+import re
 from contextvars import ContextVar
 from typing import List, Optional
 
 import xdg
-
-from dateutil.utils import within_delta
 from dateutil.parser import parse as dparse
 from dateutil.tz import tzlocal
+from dateutil.utils import within_delta
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
 from fastapi_utils.tasks import repeat_every
@@ -92,6 +90,7 @@ async def reload(
     exchange_username: Optional[str] = None,
     exchange_password: Optional[str] = None,
     exchange_email: Optional[str] = None,
+    exchange_shared_inboxes: Optional[list] = [],
 ):
     res_confluence = await reload_confluence(
         url=confluence_url, username=confluence_username, password=confluence_password
@@ -100,6 +99,7 @@ async def reload(
         username=exchange_username,
         password=exchange_password,
         email=exchange_email,
+        shared_inboxes=exchange_shared_inboxes
     )
     return {"exchange": res_exchange, "confluence": res_confluence}
 
@@ -138,10 +138,17 @@ async def reload_exchange(
     email: Optional[str] = None,
     username: Optional[str] = None,
     password: Optional[str] = None,
+    shared_inboxes: Optional[list] = [],
 ):
     exchange_email = email if email else os.environ.get("EXCHANGE_EMAIL")
     exchange_username = username if username else os.environ.get("EXCHANGE_USERNAME")
     exchange_password = password if password else os.environ.get("EXCHANGE_PASSWORD")
+    exchange_shared_inboxes = (
+        shared_inboxes
+        if shared_inboxes
+        else [x.strip() for x in os.environ.get("EXCHANGE_SHARED_INBOXES").split(",")]
+    )
+
     backend = "exchange"
 
     LOGGER.info(f"Fetch calendar events from Exchange for user {exchange_username}")
@@ -150,6 +157,7 @@ async def reload_exchange(
         username=exchange_username,
         email=exchange_email,
         password=exchange_password,
+        shared_inboxes=shared_inboxes,
         start=None,
         end=None,
     )

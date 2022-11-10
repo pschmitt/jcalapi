@@ -17,7 +17,8 @@ ENV CONFLUENCE_URL= \
     CONFLUENCE_USERNAME= \
     CONFLUENCE_PASSWORD= \
     EXCHANGE_USERNAME= \
-    EXCHANGE_PASSWORD=
+    EXCHANGE_PASSWORD= \
+    EXCHANGE_SHARED_INBOXES=
 
 RUN adduser --disabled-password --gecos '' jcalapi
 USER jcalapi
