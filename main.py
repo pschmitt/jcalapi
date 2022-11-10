@@ -16,7 +16,7 @@ LOG_LEVEL = logging.getLevelName(env("LOG_LEVEL", "INFO"))
 JSON_LOGS = env.bool("JSON_LOGS", False)
 WORKERS = env.int("WORKERS", 2)
 HOST = env("HOST", "127.0.0.1")
-PORT = env.int("PORT", 8000)
+PORT = env.int("PORT", 7042)
 RELOAD = env("RELOAD", DEBUG)
 
 
