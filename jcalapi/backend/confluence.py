@@ -10,8 +10,8 @@ import asynccli
 import httpx
 import icalendar
 import recurring_ical_events
-
 from atlassian import Confluence
+from bs4 import BeautifulSoup
 from dateutil.parser import parse as dparse
 from dateutil.tz import gettz
 
@@ -117,10 +117,12 @@ async def get_confluence_events(
                     ev_start = datetime.datetime.combine(
                         ev_start, datetime.datetime.min.time(), tzinfo=gettz(cal["tz"])
                     )
+                    ev_start = ev_start.replace(microsecond=0)
                 if not isinstance(ev_end, datetime.datetime):
                     ev_end = datetime.datetime.combine(
                         ev_end, datetime.datetime.max.time(), tzinfo=gettz(cal["tz"])
                     )
+                    ev_end = ev_end.replace(microsecond=0)
                 ev_rrule = e.decoded("RRULE") if "RRULE" in e else None
                 if ev_rrule:
                     LOGGER.info(
@@ -130,7 +132,9 @@ async def get_confluence_events(
                     continue
                 ev_uid = str(e.get("UID"))
                 ev_description = (
-                    e.decoded("DESCRIPTION").decode("utf-8")
+                    BeautifulSoup(e.decoded("DESCRIPTION").decode("utf-8"))
+                    .get_text()
+                    .strip()
                     if "DESCRIPTION" in e
                     else ""
                 )

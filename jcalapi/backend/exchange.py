@@ -6,6 +6,7 @@ import json
 import logging
 
 from aioify import aioify
+from bs4 import BeautifulSoup
 from exchangelib import (DELEGATE, Account, Build, Configuration, Credentials,
                          EWSDate, EWSDateTime, EWSTimeZone, Version)
 from exchangelib.folders import Calendar, SingleFolderQuerySet
@@ -166,6 +167,7 @@ def sync_get_exchange_events(
                 ev_start = ev.start.astimezone(EWSTimeZone.localzone())
                 ev_end = ev.end.astimezone(EWSTimeZone.localzone())
 
+            ev_body = BeautifulSoup(ev.body).get_text().strip() if ev.body else ""
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
             ev_data = {
@@ -174,7 +176,7 @@ def sync_get_exchange_events(
                 "calendar": cal_name,
                 "organizer": ev.organizer.name,
                 "summary": ev.subject,
-                "description": ev.body,
+                "description": ev_body,
                 "location": ev.location,
                 "start": ev_start,
                 "end": ev_end,
