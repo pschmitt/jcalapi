@@ -108,7 +108,6 @@ async def get_confluence_events(
                     ev_start = dparse(ev_start)
                 if isinstance(ev_end, str):
                     ev_end = dparse(ev_end)
-                
 
                 whole_day = False
                 # Convert date to datetime
