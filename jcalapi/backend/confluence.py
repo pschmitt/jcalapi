@@ -4,12 +4,13 @@
 import argparse
 import datetime
 import logging
+import re
 
 import asynccli
 import httpx
 import icalendar
 import recurring_ical_events
-import requests
+
 from atlassian import Confluence
 from dateutil.parser import parse as dparse
 from dateutil.tz import gettz
@@ -49,7 +50,7 @@ def get_confluence_calendar_info(url: str, username: str, password: str):
 
 
 async def get_confluence_events(
-    url: str, username: str, password: str, start=None, end=None
+    url: str, username: str, password: str, convert_email=False, start=None, end=None
 ):
     cal_metadata = get_confluence_calendar_info(url, username, password)
 
@@ -133,6 +134,15 @@ async def get_confluence_events(
                     if "DESCRIPTION" in e
                     else ""
                 )
+                ev_organizer = str(e.decoded("ORGANIZER")) if "ORGANIZER" in e else ""
+                ev_organizer = ev_organizer.removeprefix("mailto:")
+                if convert_email:
+                    m = re.search(r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", ev_organizer)
+                    if m:
+                        ev_organizer = (
+                            f"{m.group(1).capitalize()} {m.group(2).capitalize()}"
+                        )
+
                 ev_location = (
                     e.decoded("LOCATION").decode("utf-8") if "LOCATION" in e else None
                 )
@@ -154,6 +164,7 @@ async def get_confluence_events(
                     "uid": ev_uid,
                     "backend": "confluence",
                     "calendar": cal["name"],
+                    "organizer": ev_organizer,
                     "summary": ev_summary,
                     "description": ev_description,
                     "location": ev_location,

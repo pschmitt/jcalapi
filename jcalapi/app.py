@@ -109,6 +109,7 @@ async def reload_confluence(
     url: Optional[str] = None,
     username: Optional[str] = None,
     password: Optional[str] = None,
+    convert_email: Optional[bool] = False,
 ):
     confluence_url = url if url else os.environ.get("CONFLUENCE_URL")
     confluence_username = (
@@ -116,6 +117,11 @@ async def reload_confluence(
     )
     confluence_password = (
         password if password else os.environ.get("CONFLUENCE_PASSWORD")
+    )
+    convert_email = (
+        convert_email
+        if convert_email
+        else os.environ.get("CONFLUENCE_CONVERT_EMAIL", "false") in ["true", "yes", "1"]
     )
     backend = "confluence"
 
@@ -125,6 +131,7 @@ async def reload_confluence(
             url=confluence_url,
             username=confluence_username,
             password=confluence_password,
+            convert_email=convert_email,
             start=None,
             end=None,
         )
