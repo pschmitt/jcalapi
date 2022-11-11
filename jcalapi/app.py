@@ -139,14 +139,35 @@ async def reload_exchange(
     username: Optional[str] = None,
     password: Optional[str] = None,
     shared_inboxes: Optional[list] = [],
+    autodiscovery: Optional[bool] = True,
+    service_endpoint: Optional[str] = None,
+    auth_type: Optional[str] = None,
+    version: Optional[str] = None,
 ):
     exchange_email = email if email else os.environ.get("EXCHANGE_EMAIL")
     exchange_username = username if username else os.environ.get("EXCHANGE_USERNAME")
     exchange_password = password if password else os.environ.get("EXCHANGE_PASSWORD")
+    exchange_autodiscovery = (
+        autodiscovery
+        if autodiscovery
+        else os.environ.get("EXCHANGE_AUTODISCOVERY", "true").lower()
+        in ["true", "yes", "1", "enable"]
+    )
+    exchange_service_endpoint = (
+        service_endpoint
+        if service_endpoint
+        else os.environ.get("EXCHANGE_SERVICE_ENDPOINT")
+    )
+    exchange_auth_type = (
+        auth_type if auth_type else os.environ.get("EXCHANGE_AUTH_TYPE")
+    )
+    exchange_version = version if version else os.environ.get("EXCHANGE_VERSION")
     exchange_shared_inboxes = (
         shared_inboxes
         if shared_inboxes
-        else [x.strip() for x in os.environ.get("EXCHANGE_SHARED_INBOXES").split(",")]
+        else [
+            x.strip() for x in os.environ.get("EXCHANGE_SHARED_INBOXES", "").split(",")
+        ]
     )
 
     backend = "exchange"
@@ -158,6 +179,10 @@ async def reload_exchange(
         email=exchange_email,
         password=exchange_password,
         shared_inboxes=exchange_shared_inboxes,
+        autodiscovery=exchange_autodiscovery,
+        service_endpoint=exchange_service_endpoint,
+        version=exchange_version,
+        auth_type=exchange_auth_type,
         start=None,
         end=None,
     )

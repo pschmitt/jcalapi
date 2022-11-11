@@ -6,7 +6,8 @@ import json
 import logging
 
 from aioify import aioify
-from exchangelib import Account, Credentials, EWSDate, EWSDateTime, EWSTimeZone
+from exchangelib import (DELEGATE, Account, Build, Configuration, Credentials,
+                         EWSDate, EWSDateTime, EWSTimeZone, Version)
 from exchangelib.folders import Calendar, SingleFolderQuerySet
 from exchangelib.properties import DistinguishedFolderId, Mailbox
 
@@ -34,7 +35,16 @@ def parse_args():
 
 
 async def get_exchange_events(
-    username, password, email=None, shared_inboxes=[], start=None, end=None
+    username,
+    password,
+    email=None,
+    shared_inboxes=[],
+    autodiscovery=True,
+    service_endpoint=None,
+    auth_type="NTLM",
+    version=None,
+    start=None,
+    end=None,
 ):
     aio_get_exchange_events = aioify(obj=sync_get_exchange_events)
     return await aio_get_exchange_events(
@@ -42,17 +52,45 @@ async def get_exchange_events(
         password=password,
         email=email,
         shared_inboxes=shared_inboxes,
+        autodiscovery=autodiscovery,
+        service_endpoint=service_endpoint,
+        auth_type=auth_type,
+        version=version,
         start=start,
         end=end,
     )
 
 
 def sync_get_exchange_events(
-    username, password, email=None, shared_inboxes=[], start=None, end=None
+    username,
+    password,
+    email=None,
+    shared_inboxes=[],
+    autodiscovery=True,
+    service_endpoint=None,
+    auth_type="NTLM",
+    version=None,
+    start=None,
+    end=None,
 ):
     email = email if email else username
     credentials = Credentials(username, password)
-    account = Account(email, credentials=credentials, autodiscover=True)
+    if autodiscovery:
+        account = Account(email, credentials=credentials, autodiscover=True)
+    else:
+        config = Configuration(
+            service_endpoint=service_endpoint,
+            credentials=credentials,
+            auth_type=auth_type,
+            version=version,
+            # FIXME Version should ideally be passed in a string, which we then
+            # need to parse and convert to Version/Build objects
+            # Example:
+            # version=Version(Build(15, 1, 2507, 16), "Exchange2016"),
+        )
+        account = Account(
+            primary_smtp_address=email, config=config, access_type=DELEGATE
+        )
     calendars = [x for x in account.calendar.children if isinstance(x, Calendar)] + [
         account.calendar
     ]
@@ -114,7 +152,9 @@ def sync_get_exchange_events(
                 # ev_end = datetime.fromisoformat(ev.end.isoformat())
                 # Convert EWSDate to tz aware datetime objects
                 ev_start = datetime.datetime.combine(
-                    ev.start, datetime.datetime.min.time(), tzinfo=EWSTimeZone.localzone()
+                    ev.start,
+                    datetime.datetime.min.time(),
+                    tzinfo=EWSTimeZone.localzone(),
                 )
                 ev_start = ev_start.replace(microsecond=0)
                 ev_end = datetime.datetime.combine(
