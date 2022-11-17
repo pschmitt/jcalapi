@@ -800,7 +800,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
 name = "recurring-ical-events"
-version = "1.0.3b0"
+version = "1.1.0b0"
 description = "A Python module which repeats ICalendar events by RRULE, RDATE and EXDATE."
 category = "main"
 optional = false
@@ -1138,7 +1138,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "72abdabd5f6d1ab06822d130353c699da0d59d00add3c59e515de2a464a92d46"
+content-hash = "4550efe7ac997699082f26bba48086ff3ae15b4fd4777d35876c3204fe4eb334"
 
 [metadata.files]
 aioify = [
@@ -1709,8 +1709,8 @@ pyyaml = [
     {file = "PyYAML-5.4.1.tar.gz", hash = "sha256:607774cbba28732bfa802b54baa7484215f530991055bb562efbed5b2f20a45e"},
 ]
 recurring-ical-events = [
-    {file = "recurring_ical_events-1.0.3b0-py3-none-any.whl", hash = "sha256:c2dd86ccbb03891ce17f353f79d0a10779199270dbe3cb63b4f8fe387360dea5"},
-    {file = "recurring_ical_events-1.0.3b0.tar.gz", hash = "sha256:0aed6a5965c719e50aa2e5f6be896688cdb2c2da7087fae928ad4ac05ff0785f"},
+    {file = "recurring_ical_events-1.1.0b0-py3-none-any.whl", hash = "sha256:afc82fa613a79484820aaacd0eccbe442da92b6bff4b87614ac58b5d22c65386"},
+    {file = "recurring_ical_events-1.1.0b0.tar.gz", hash = "sha256:9091671454a9df62356c9d0e9ef66365e255c6cc04044f665d083dd08a6c5c88"},
 ]
 requests = [
     {file = "requests-2.26.0-py2.py3-none-any.whl", hash = "sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"},
