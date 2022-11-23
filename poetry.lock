@@ -269,12 +269,11 @@ tests = ["dj-database-url", "dj-email-url", "django-cache-url", "pytest"]
 
 [[package]]
 name = "exchangelib"
-version = "4.8.0"
+version = "4.9.0"
 description = "Client for Microsoft Exchange Web Services (EWS)"
 category = "main"
 optional = false
 python-versions = ">=3.7"
-develop = false
 
 [package.dependencies]
 cached-property = "*"
@@ -294,12 +293,6 @@ tzlocal = "*"
 complete = ["requests-gssapi", "requests-negotiate-sspi"]
 kerberos = ["requests-gssapi"]
 sspi = ["requests-negotiate-sspi"]
-
-[package.source]
-type = "git"
-url = "https://github.com/ecederstrand/exchangelib.git"
-reference = "master"
-resolved_reference = "9ba7cc147b1ac0222497462edbe5f48412d48c1b"
 
 [[package]]
 name = "executing"
@@ -1138,7 +1131,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "4550efe7ac997699082f26bba48086ff3ae15b4fd4777d35876c3204fe4eb334"
+content-hash = "9a23e9e03bc532eaafd51a6fc7391384c0a30b304483ac9ac9a959279e04f409"
 
 [metadata.files]
 aioify = [
@@ -1332,7 +1325,10 @@ environs = [
     {file = "environs-9.5.0-py2.py3-none-any.whl", hash = "sha256:1e549569a3de49c05f856f40bce86979e7d5ffbbc4398e7f338574c220189124"},
     {file = "environs-9.5.0.tar.gz", hash = "sha256:a76307b36fbe856bdca7ee9161e6c466fd7fcffc297109a118c59b54e27e30c9"},
 ]
-exchangelib = []
+exchangelib = [
+    {file = "exchangelib-4.9.0-py2.py3-none-any.whl", hash = "sha256:43d7d5ef4a18dcdfe6a28c2d534d842697b0302ef2569b5d0af498f77fc78661"},
+    {file = "exchangelib-4.9.0.tar.gz", hash = "sha256:d6a1c3f7c55a42ff2ec33629128eeed09e87b09834e4006ed7a3c9931258f3e1"},
+]
 executing = [
     {file = "executing-0.8.2-py2.py3-none-any.whl", hash = "sha256:32fc6077b103bd19e6494a72682d66d5763cf20a106d5aa7c5ccbea4e47b0df7"},
     {file = "executing-0.8.2.tar.gz", hash = "sha256:c23bf42e9a7b9b212f185b1b2c3c91feb895963378887bb10e64a2e612ec0023"},

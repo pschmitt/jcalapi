@@ -21,7 +21,7 @@ python-dateutil = "^2.8.2"
 recurring-ical-events = "^1.1.0b0"
 uvicorn = {extras = ["standard"], version = "^0.19.0"}
 xdg = "^5.1.1"
-exchangelib = "^4.8.0"
+exchangelib = "^4.9.0"
 beautifulsoup4 = "^4.11.1"
 
 [tool.poetry.dev-dependencies]
