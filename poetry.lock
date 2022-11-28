@@ -423,7 +423,7 @@ socks = ["socksio (>=1.0.0,<2.0.0)"]
 
 [[package]]
 name = "icalendar"
-version = "5.0.2"
+version = "5.0.3"
 description = "iCalendar parser/generator"
 category = "main"
 optional = false
@@ -1138,7 +1138,7 @@ python-versions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.9"
-content-hash = "aca49f496d39d6e29da6e92bfc47858d0e7c080b6cc6efde34aba3d057028b5d"
+content-hash = "00b4336615798523e50bc351d306e097202892ed429c1ae4d6bdf75a4479892e"
 
 [metadata.files]
 aioify = [
@@ -1463,8 +1463,8 @@ httpx = [
     {file = "httpx-0.23.1.tar.gz", hash = "sha256:202ae15319be24efe9a8bd4ed4360e68fde7b38bcc2ce87088d416f026667d19"},
 ]
 icalendar = [
-    {file = "icalendar-5.0.2-py3-none-any.whl", hash = "sha256:2eefb4765286086afb9b5ed41c121c7b59d934567990982b60bb3edbca9922bc"},
-    {file = "icalendar-5.0.2.tar.gz", hash = "sha256:edc635fd9334102d409f4571fb953ef0f84ce01dd15ff83cac6afafe89c8e56a"},
+    {file = "icalendar-5.0.3-py3-none-any.whl", hash = "sha256:1cdcd27307e55db25bd7f99924b7a31c6b2d123228e7dae6723974a4a1d60258"},
+    {file = "icalendar-5.0.3.tar.gz", hash = "sha256:ca60810598681cb239fc3190202e01a3305e4f0389576273892dda31249f25e4"},
 ]
 idna = [
     {file = "idna-3.2-py3-none-any.whl", hash = "sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a"},
