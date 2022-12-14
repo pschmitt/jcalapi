@@ -167,7 +167,16 @@ def sync_get_exchange_events(
                 ev_start = ev.start.astimezone(EWSTimeZone.localzone())
                 ev_end = ev.end.astimezone(EWSTimeZone.localzone())
 
-            ev_body = BeautifulSoup(ev.body).get_text().strip() if ev.body else ""
+            soup = BeautifulSoup(ev.body if ev.body else "", features="lxml")
+            ev_body = soup.get_text().strip() if ev.body else ""
+            ms_teams_urls = [
+                x.get("href")
+                for x in soup.find_all("a")
+                if "/meetup-join" in x.get("href", "")
+            ]
+            ms_teams_url = ms_teams_urls[0] if len(ms_teams_urls) > 0 else None
+            location = ms_teams_url if not ev.location else ev.location
+
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
             ev_data = {
@@ -177,7 +186,8 @@ def sync_get_exchange_events(
                 "organizer": ev.organizer.name,
                 "summary": ev.subject,
                 "description": ev_body,
-                "location": ev.location,
+                "body": ev.body,
+                "location": location,
                 "start": ev_start,
                 "end": ev_end,
                 "whole_day": whole_day,
