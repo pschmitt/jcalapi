@@ -175,7 +175,11 @@ def sync_get_exchange_events(
                 if "/meetup-join" in x.get("href", "")
             ]
             ms_teams_url = ms_teams_urls[0] if len(ms_teams_urls) > 0 else None
-            location = ms_teams_url if not ev.location else ev.location
+            location = (
+                ms_teams_url
+                if (not ev.location or ev.location.startswith("Microsoft Teams"))
+                else ev.location
+            )
 
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
