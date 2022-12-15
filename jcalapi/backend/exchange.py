@@ -4,8 +4,8 @@ import asyncio
 import datetime
 import json
 import logging
+from functools import partial
 
-from aioify import aioify
 from bs4 import BeautifulSoup
 from exchangelib import (DELEGATE, Account, Build, Configuration, Credentials,
                          EWSDate, EWSDateTime, EWSTimeZone, Version)
@@ -47,8 +47,10 @@ async def get_exchange_events(
     start=None,
     end=None,
 ):
-    aio_get_exchange_events = aioify(obj=sync_get_exchange_events)
-    return await aio_get_exchange_events(
+    # https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor
+    loop = asyncio.get_running_loop()
+    func = partial(
+        sync_get_exchange_events,
         username=username,
         password=password,
         email=email,
@@ -60,6 +62,7 @@ async def get_exchange_events(
         start=start,
         end=end,
     )
+    return await loop.run_in_executor(None, func)
 
 
 def sync_get_exchange_events(

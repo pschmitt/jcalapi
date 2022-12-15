@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 
 COPY pyproject.toml ./main.py /app/
 COPY ./jcalapi /app/jcalapi

@@ -6,8 +6,7 @@ authors = ["Philipp Schmitt <philipp@schmitt.co>"]
 license = "GPL-3"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-aioify = "^0.4.0"
+python = "^3.10"
 asynccli = "^0.1.3"
 atlassian-python-api = "^3.32.1"
 diskcache = "^5.4.0"
