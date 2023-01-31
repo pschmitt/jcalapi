@@ -725,14 +725,14 @@ socks = ["socksio (>=1.0.0,<2.0.0)"]
 
 [[package]]
 name = "icalendar"
-version = "5.0.3"
+version = "5.0.4"
 description = "iCalendar parser/generator"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "icalendar-5.0.3-py3-none-any.whl", hash = "sha256:1cdcd27307e55db25bd7f99924b7a31c6b2d123228e7dae6723974a4a1d60258"},
-    {file = "icalendar-5.0.3.tar.gz", hash = "sha256:ca60810598681cb239fc3190202e01a3305e4f0389576273892dda31249f25e4"},
+    {file = "icalendar-5.0.4-py3-none-any.whl", hash = "sha256:3e759f9c3875e037c90e1c2f4aff0f6123f4435af6152b80a70b8d6a5529cb1b"},
+    {file = "icalendar-5.0.4.tar.gz", hash = "sha256:f0aa86d6f5bc110ed3b91e96c48c70351d7a09fbed25366f673dc0b799c83975"},
 ]
 
 [package.dependencies]
@@ -2030,4 +2030,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "51c788c180bac3328be83ecf972dabf7c97b8649363d53059c6723ed90e67135"
+content-hash = "664216efda81d87f40aed0ca2350f17c1c626f2a34aab267e14f7f272ddd02e3"
