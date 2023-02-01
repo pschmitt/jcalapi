@@ -24,7 +24,7 @@ exchangelib = "^4.8.0"
 beautifulsoup4 = "^4.11.1"
 
 [tool.poetry.dev-dependencies]
-black = "^22.12"
+black = "^23.1"
 flake8 = "^6.0.0"
 ipython = "^8.9.0"
 isort = "^5.12.0"
