@@ -21,7 +21,7 @@ recurring-ical-events = "^2.0.0"
 uvicorn = {extras = ["standard"], version = "^0.20.0"}
 xdg = "^5.1.1"
 exchangelib = "^4.8.0"
-beautifulsoup4 = "^4.11.1"
+beautifulsoup4 = "^4.11.2"
 
 [tool.poetry.dev-dependencies]
 black = "^23.1"
