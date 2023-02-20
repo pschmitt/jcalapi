@@ -17,7 +17,7 @@ httpx = "^0.23.3"
 icalendar = "^5.0.4"
 loguru = "^0.6.0"
 python-dateutil = "^2.8.2"
-recurring-ical-events = "^2.0.1"
+recurring-ical-events = "^2.0.2"
 uvicorn = {extras = ["standard"], version = "^0.20.0"}
 xdg = "^5.1.1"
 exchangelib = "^4.8.0"
