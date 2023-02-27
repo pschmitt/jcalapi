@@ -8,7 +8,7 @@ license = "GPL-3"
 [tool.poetry.dependencies]
 python = "^3.10"
 asynccli = "^0.1.3"
-atlassian-python-api = "^3.33.0"
+atlassian-python-api = "^3.34.0"
 diskcache = "^5.4.0"
 environs = "^9.5.0"
 fastapi = "^0.92.0"
