@@ -41,15 +41,18 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ${{ env.image_name }}
+            docker.io/${{ env.image_name }}
             ghcr.io/${{ env.image_name }}
+          tags: |
+            # set latest tag for default branch
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }},${{ env.image_name }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ env.platforms }}
           cache-from: type=gha
