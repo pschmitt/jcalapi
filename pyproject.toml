@@ -15,7 +15,7 @@ fastapi = "^0.95.0"
 fastapi-utils = "^0.2.1"
 httpx = "^0.23.3"
 icalendar = "^5.0.4"
-loguru = "^0.6.0"
+loguru = "^0.7.0"
 python-dateutil = "^2.8.2"
 recurring-ical-events = "^2.0.2"
 uvicorn = {extras = ["standard"], version = "^0.21.1"}
