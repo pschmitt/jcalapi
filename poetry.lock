@@ -397,14 +397,14 @@ dev = ["PyTest", "PyTest (<5)", "PyTest-Cov", "PyTest-Cov (<2.6)", "bump2version
 
 [[package]]
 name = "diskcache"
-version = "5.4.0"
+version = "5.5.1"
 description = "Disk Cache -- Disk and file backed persistent cache."
 category = "main"
 optional = false
 python-versions = ">=3"
 files = [
-    {file = "diskcache-5.4.0-py3-none-any.whl", hash = "sha256:af3ec6d7f167bbef7b6c33d9ee22f86d3e8f2dd7131eb7c4703d8d91ccdc0cc4"},
-    {file = "diskcache-5.4.0.tar.gz", hash = "sha256:8879eb8c9b4a2509a5e633d2008634fb2b0b35c2b36192d89655dbde02419644"},
+    {file = "diskcache-5.5.1-py3-none-any.whl", hash = "sha256:6cf72618688a8be50462d2cfdeba6828119ac495283c5b820b508452b7239a9f"},
+    {file = "diskcache-5.5.1.tar.gz", hash = "sha256:8685515584cc110a463d0728d98beaba56c7e2803b60a19cb8983a4c9e341d91"},
 ]
 
 [[package]]
@@ -2044,4 +2044,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "11dec7baa275158db384e68fe05903d44fac9605bf0c31efa3f1569094d5a43e"
+content-hash = "ffcdad358da01e30322e136d29b0717334b926d6df5066d35f0ab923fcf728a9"
