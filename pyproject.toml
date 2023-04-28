@@ -18,7 +18,7 @@ icalendar = "^5.0.5"
 loguru = "^0.7.0"
 python-dateutil = "^2.8.2"
 recurring-ical-events = "^2.0.2"
-uvicorn = {extras = ["standard"], version = "^0.21.1"}
+uvicorn = {extras = ["standard"], version = "^0.22.0"}
 xdg = "^6.0.0"
 exchangelib = "^5.0.2"
 beautifulsoup4 = "^4.12.2"
