@@ -451,14 +451,14 @@ tests = ["dj-database-url", "dj-email-url", "django-cache-url", "pytest"]
 
 [[package]]
 name = "exchangelib"
-version = "5.0.2"
+version = "5.0.3"
 description = "Client for Microsoft Exchange Web Services (EWS)"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "exchangelib-5.0.2-py2.py3-none-any.whl", hash = "sha256:79b47908ad476b87b94952859fea83156f9dbe4ee1a8ab1ceede26890b2196be"},
-    {file = "exchangelib-5.0.2.tar.gz", hash = "sha256:1c85a405550c49be4eef29cefb8a679250a060618e54a2ae7956cab527fb9253"},
+    {file = "exchangelib-5.0.3-py2.py3-none-any.whl", hash = "sha256:00a7666099aeca5e32ded089e612a6d5a9c9aa412ff41f385bbd12d27a248976"},
+    {file = "exchangelib-5.0.3.tar.gz", hash = "sha256:b254154fa543a0d9ff47762f4cdd718327971987fff444522849aa1f4017b7fd"},
 ]
 
 [package.dependencies]
@@ -2026,4 +2026,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "c4e0894e1ca853d3ec7e0491d993052925caa1396f1f7a63f384e2a8a9553a0c"
+content-hash = "7de77b6f3c2871988d99581c58e1623da519e73d03d66286e2f53b160dee7789"
