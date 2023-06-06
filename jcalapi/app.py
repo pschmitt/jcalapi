@@ -250,6 +250,28 @@ async def get_metadata(backend: Optional[str] = "all"):
     return meta
 
 
+@app.get("/now")
+async def get_current_events(
+    ignore_calendars: Optional[List[str]] = Query(None),
+):
+    agenda = await get_events_at_date(
+        "today", ignore_calendars=ignore_calendars
+    )
+    now = datetime.datetime.now(tz=tzlocal())
+    current_events = []
+    for ev in agenda:
+        ev_start = ev.get("start")
+        ev_end = ev.get("end")
+        if isinstance(ev_start, str):
+            ev_start = dparse(ev_start)
+        if isinstance(ev_end, str):
+            ev_end = dparse(ev_end)
+        if ev_start < now < ev_end:
+            LOGGER.info(f"Event {ev} is happening NOW")
+            current_events.append(ev)
+    return current_events
+
+
 @app.get("/today")
 @app.get("/today/{hours_prior}")
 async def get_todays_agenda(
