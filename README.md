@@ -27,7 +27,7 @@ See [.envrc-sample](./.envrc-sample) for an example.
 
 ```shell
 # pip
-pip install jcalapi
+pip install --user jcalapi
 
 # pipx
 pipx install jcalapi
