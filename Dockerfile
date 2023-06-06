@@ -1,7 +1,8 @@
 FROM python:3.10
 
-COPY pyproject.toml ./main.py /app/
+COPY pyproject.toml /app/
 COPY ./jcalapi /app/jcalapi
+
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
     pip install /app && \
@@ -32,4 +33,5 @@ USER jcalapi
 VOLUME ["/config"]
 WORKDIR /app
 EXPOSE 7042
-ENTRYPOINT ["python", "/app/run.py"]
+WORKDIR /app
+ENTRYPOINT ["python", "/app/jcalapi/run.py"]
