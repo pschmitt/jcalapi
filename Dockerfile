@@ -1,6 +1,6 @@
 FROM python:3.10
 
-COPY pyproject.toml /app/
+COPY pyproject.toml README.md /app/
 COPY ./jcalapi /app/jcalapi
 
 RUN apt-get update && \
