@@ -43,7 +43,10 @@ def events_merged(ignore_calendars: Optional[List[str]] = None):
 def cache_events(key):
     res_data = CACHE.set(key, CALENDAR_DATA[key], expire=CACHE_EXPIRY)
     # Save metdata
-    meta = {"last-update": datetime.datetime.now(), "entries": len(CALENDAR_DATA[key])}
+    meta = {
+        "last-update": datetime.datetime.now(),
+        "entries": len(CALENDAR_DATA[key]),
+    }
     res_meta = CACHE.set(f"{key}{CACHE_KEY_META_SUFFIX}", meta)
     return res_data, res_meta
 
@@ -93,7 +96,9 @@ async def reload(
     exchange_shared_inboxes: Optional[list] = [],
 ):
     res_confluence = await reload_confluence(
-        url=confluence_url, username=confluence_username, password=confluence_password
+        url=confluence_url,
+        username=confluence_username,
+        password=confluence_password,
     )
     res_exchange = await reload_exchange(
         username=exchange_username,
@@ -121,7 +126,8 @@ async def reload_confluence(
     convert_email = (
         convert_email
         if convert_email
-        else os.environ.get("CONFLUENCE_CONVERT_EMAIL", "false") in ["true", "yes", "1"]
+        else os.environ.get("CONFLUENCE_CONVERT_EMAIL", "false")
+        in ["true", "yes", "1"]
     )
     backend = "confluence"
 
@@ -152,8 +158,12 @@ async def reload_exchange(
     version: Optional[str] = None,
 ):
     exchange_email = email if email else os.environ.get("EXCHANGE_EMAIL")
-    exchange_username = username if username else os.environ.get("EXCHANGE_USERNAME")
-    exchange_password = password if password else os.environ.get("EXCHANGE_PASSWORD")
+    exchange_username = (
+        username if username else os.environ.get("EXCHANGE_USERNAME")
+    )
+    exchange_password = (
+        password if password else os.environ.get("EXCHANGE_PASSWORD")
+    )
     exchange_autodiscovery = (
         autodiscovery
         if autodiscovery
@@ -168,18 +178,23 @@ async def reload_exchange(
     exchange_auth_type = (
         auth_type if auth_type else os.environ.get("EXCHANGE_AUTH_TYPE")
     )
-    exchange_version = version if version else os.environ.get("EXCHANGE_VERSION")
+    exchange_version = (
+        version if version else os.environ.get("EXCHANGE_VERSION")
+    )
     exchange_shared_inboxes = (
         shared_inboxes
         if shared_inboxes
         else [
-            x.strip() for x in os.environ.get("EXCHANGE_SHARED_INBOXES", "").split(",")
+            x.strip()
+            for x in os.environ.get("EXCHANGE_SHARED_INBOXES", "").split(",")
         ]
     )
 
     backend = "exchange"
 
-    LOGGER.info(f"Fetch calendar events from Exchange for user {exchange_username}")
+    LOGGER.info(
+        f"Fetch calendar events from Exchange for user {exchange_username}"
+    )
 
     CALENDAR_DATA[backend] = await get_exchange_events(
         username=exchange_username,
@@ -202,9 +217,13 @@ async def reload_exchange(
 @app.get("/events")
 @app.get("/events/{backend}")
 @app.get("/events/{backend}/{calendar}")
-async def events(backend: Optional[str] = "all", calendar: Optional[str] = "all"):
+async def events(
+    backend: Optional[str] = "all", calendar: Optional[str] = "all"
+):
     if backend and backend != "all" and backend not in CALENDAR_DATA.keys():
-        raise HTTPException(status_code=404, detail=f"Unknown backend: {backend}")
+        raise HTTPException(
+            status_code=404, detail=f"Unknown backend: {backend}"
+        )
 
     res = (
         CALENDAR_DATA.get(backend, [])
@@ -235,7 +254,9 @@ async def get_metadata(backend: Optional[str] = "all"):
 async def get_todays_agenda(
     ignore_calendars: Optional[List[str]] = Query(None), hours_prior: int = 0
 ):
-    agenda = await get_events_at_date("today", ignore_calendars=ignore_calendars)
+    agenda = await get_events_at_date(
+        "today", ignore_calendars=ignore_calendars
+    )
     now = datetime.datetime.now(tz=tzlocal())
     # now = datetime.datetime.now()
     target_date = now + datetime.timedelta(hours=hours_prior)
@@ -258,13 +279,18 @@ async def get_todays_agenda(
 
 @app.get("/tom")
 @app.get("/tomorrow")
-async def get_tomorrows_agenda(ignore_calendars: Optional[List[str]] = Query(None)):
-    return await get_events_at_date(when="tomorrow", ignore_calendars=ignore_calendars)
+async def get_tomorrows_agenda(
+    ignore_calendars: Optional[List[str]] = Query(None),
+):
+    return await get_events_at_date(
+        when="tomorrow", ignore_calendars=ignore_calendars
+    )
 
 
 @app.get("/agenda/{when}")
 async def get_events_at_date(
-    when: Optional[str] = "today", ignore_calendars: Optional[List[str]] = Query(None)
+    when: Optional[str] = "today",
+    ignore_calendars: Optional[List[str]] = Query(None),
 ):
     now = datetime.datetime.now(tz=tzlocal())
     target_date = now  # default to today ie now
@@ -291,12 +317,19 @@ async def get_events_at_date(
         if isinstance(ev_end, str):
             ev_end = dparse(ev_end)
         ev_start_date = (
-            ev_start.date() if isinstance(ev_start, datetime.datetime) else ev_start
+            ev_start.date()
+            if isinstance(ev_start, datetime.datetime)
+            else ev_start
         )
-        ev_end_date = ev_end.date() if isinstance(ev_end, datetime.datetime) else ev_end
+        ev_end_date = (
+            ev_end.date() if isinstance(ev_end, datetime.datetime) else ev_end
+        )
         LOGGER.debug(f"compare: {ev_start}/{ev_end} with {target_date}")
         LOGGER.debug(f"{ev_start_date} vs {target_date.date()}")
-        if ev_start_date == target_date.date() or ev_end_date == target_date.date():
+        if (
+            ev_start_date == target_date.date()
+            or ev_end_date == target_date.date()
+        ):
             # FIXME Won't this prevent events that occur multiple times in a day
             # from being included more than once?
             if ev.get("uid") in [x.get("uid") for x in agenda]:

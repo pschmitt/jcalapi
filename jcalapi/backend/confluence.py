@@ -23,7 +23,11 @@ LOGGER = logging.getLogger(__name__)
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-D", "--debug", action="store_true", default=False, help="Debug logging"
+        "-D",
+        "--debug",
+        action="store_true",
+        default=False,
+        help="Debug logging",
     )
     parser.add_argument("-U", "--url", required=True, help="Confluence URL")
     parser.add_argument("-u", "--username", required=True, help="Username")
@@ -36,7 +40,9 @@ def parse_args():
 def get_confluence_calendar_info(url: str, username: str, password: str):
     confluence_client = Confluence(url, username=username, password=password)
     cal_metadata = []
-    for c in confluence_client.team_calendars_get_sub_calendars().get("payload"):
+    for c in confluence_client.team_calendars_get_sub_calendars().get(
+        "payload"
+    ):
         cal = c.get("subCalendar")
         cal_id = cal.get("id")
         cal_name = cal.get("name")
@@ -50,7 +56,12 @@ def get_confluence_calendar_info(url: str, username: str, password: str):
 
 
 async def get_confluence_events(
-    url: str, username: str, password: str, convert_email=False, start=None, end=None
+    url: str,
+    username: str,
+    password: str,
+    convert_email=False,
+    start=None,
+    end=None,
 ):
     cal_metadata = get_confluence_calendar_info(url, username, password)
 
@@ -67,11 +78,15 @@ async def get_confluence_events(
     events = []
     # ics_raw = requests.get(ics_url, auth=(args.username, args.password)).text
     timeout = httpx.Timeout(10.0)
-    async with httpx.AsyncClient(auth=(username, password), timeout=timeout) as client:
+    async with httpx.AsyncClient(
+        auth=(username, password), timeout=timeout
+    ) as client:
         for cal in cal_metadata:
             try:
                 response = await client.get(cal["url"])
-                LOGGER.debug(f"Fetch {cal['name']} - http response: {response}")
+                LOGGER.debug(
+                    f"Fetch {cal['name']} - http response: {response}"
+                )
                 response.raise_for_status()
             except httpx.HTTPStatusError as exc:
                 LOGGER.error(
@@ -87,13 +102,17 @@ async def get_confluence_events(
             for item in ical.walk():
                 # Skip non-events
                 if item.name != "VEVENT":
-                    LOGGER.debug(f"Not an event ({item.name}). Skip this ical item.")
+                    LOGGER.debug(
+                        f"Not an event ({item.name}). Skip this ical item."
+                    )
                     continue
                 # TODO only add if in between start and end dates
                 normal_events.append(item)
 
             # Recurring events
-            recurring_events = recurring_ical_events.of(ical).between(start, end)
+            recurring_events = recurring_ical_events.of(ical).between(
+                start, end
+            )
 
             for e in normal_events + recurring_events:
                 ev_summary = (
@@ -115,12 +134,16 @@ async def get_confluence_events(
                 if not isinstance(ev_start, datetime.datetime):
                     whole_day = True
                     ev_start = datetime.datetime.combine(
-                        ev_start, datetime.datetime.min.time(), tzinfo=gettz(cal["tz"])
+                        ev_start,
+                        datetime.datetime.min.time(),
+                        tzinfo=gettz(cal["tz"]),
                     )
                     ev_start = ev_start.replace(microsecond=0)
                 if not isinstance(ev_end, datetime.datetime):
                     ev_end = datetime.datetime.combine(
-                        ev_end, datetime.datetime.max.time(), tzinfo=gettz(cal["tz"])
+                        ev_end,
+                        datetime.datetime.max.time(),
+                        tzinfo=gettz(cal["tz"]),
                     )
                     ev_end = ev_end.replace(microsecond=0)
                 ev_rrule = e.decoded("RRULE") if "RRULE" in e else None
@@ -138,17 +161,21 @@ async def get_confluence_events(
                     if "DESCRIPTION" in e
                     else ""
                 )
-                ev_organizer = str(e.decoded("ORGANIZER")) if "ORGANIZER" in e else ""
+                ev_organizer = (
+                    str(e.decoded("ORGANIZER")) if "ORGANIZER" in e else ""
+                )
                 ev_organizer = ev_organizer.removeprefix("mailto:")
                 if convert_email:
-                    m = re.search(r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", ev_organizer)
+                    m = re.search(
+                        r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", ev_organizer
+                    )
                     if m:
-                        ev_organizer = (
-                            f"{m.group(1).capitalize()} {m.group(2).capitalize()}"
-                        )
+                        ev_organizer = f"{m.group(1).capitalize()} {m.group(2).capitalize()}"
 
                 ev_location = (
-                    e.decoded("LOCATION").decode("utf-8") if "LOCATION" in e else None
+                    e.decoded("LOCATION").decode("utf-8")
+                    if "LOCATION" in e
+                    else None
                 )
                 ev_url = e.decoded("URL") if "URL" in e else None
                 ev_status = (
@@ -157,9 +184,13 @@ async def get_confluence_events(
                     else "confirmed"
                 )
 
-                LOGGER.debug(f"Processing: {ev_summary} [{ev_start} - {ev_end}]")
+                LOGGER.debug(
+                    f"Processing: {ev_summary} [{ev_start} - {ev_end}]"
+                )
                 if not isinstance(ev_start, datetime.datetime):
-                    start = datetime.datetime.combine(start, datetime.time(0, 0))
+                    start = datetime.datetime.combine(
+                        start, datetime.time(0, 0)
+                    )
                 if not isinstance(ev_end, datetime.datetime):
                     end = datetime.datetime.combine(end, datetime.time(23, 59))
 

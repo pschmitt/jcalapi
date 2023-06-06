@@ -7,8 +7,17 @@ import logging
 from functools import partial
 
 from bs4 import BeautifulSoup
-from exchangelib import (DELEGATE, Account, Build, Configuration, Credentials,
-                         EWSDate, EWSDateTime, EWSTimeZone, Version)
+from exchangelib import (
+    DELEGATE,
+    Account,
+    Build,
+    Configuration,
+    Credentials,
+    EWSDate,
+    EWSDateTime,
+    EWSTimeZone,
+    Version,
+)
 from exchangelib.folders import Calendar, SingleFolderQuerySet
 from exchangelib.properties import DistinguishedFolderId, Mailbox
 
@@ -165,7 +174,9 @@ def sync_get_exchange_events(
                 )
                 ev_start = ev_start.replace(microsecond=0)
                 ev_end = datetime.datetime.combine(
-                    ev.end, datetime.datetime.max.time(), tzinfo=EWSTimeZone.localzone()
+                    ev.end,
+                    datetime.datetime.max.time(),
+                    tzinfo=EWSTimeZone.localzone(),
                 )
                 ev_end = ev_end.replace(microsecond=0)
             else:
@@ -183,7 +194,10 @@ def sync_get_exchange_events(
             ms_teams_url = ms_teams_urls[0] if len(ms_teams_urls) > 0 else None
             location = (
                 ms_teams_url
-                if (not ev.location or ev.location.startswith("Microsoft Teams"))
+                if (
+                    not ev.location
+                    or ev.location.startswith("Microsoft Teams")
+                )
                 else ev.location
             )
 
