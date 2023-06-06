@@ -45,7 +45,7 @@ poetry install
 You can run the application directly using Python:
 
 ```shell
-python main.py
+python run.py
 ```
 
 ### 🐳 Blablabla, Docker?

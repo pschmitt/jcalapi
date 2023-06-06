@@ -32,7 +32,7 @@ ipython = "^8.14.0"
 isort = "^5.12.0"
 
 [tool.poetry.scripts]
-jcalapi = 'main:main'
+jcalapi = 'run:main'
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

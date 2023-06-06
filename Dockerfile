@@ -32,4 +32,4 @@ USER jcalapi
 VOLUME ["/config"]
 WORKDIR /app
 EXPOSE 7042
-ENTRYPOINT ["python", "/app/main.py"]
+ENTRYPOINT ["python", "/app/run.py"]
