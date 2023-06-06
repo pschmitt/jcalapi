@@ -101,11 +101,13 @@ def sync_get_exchange_events(
         account = Account(
             primary_smtp_address=email, config=config, access_type=DELEGATE
         )
-    # FIXME Below used to work in earlier versions of exchangelib, but now it yeilds
-    # ErrorAccessDenied: Access is denied. Check credentials and try again., Non-system logon cannot access System folder.
-    # calendars = [x for x in account.calendar.children if isinstance(x, Calendar)] + [
-    #     account.calendar
-    # ]
+    # FIXME Below used to work in earlier versions of exchangelib, but now it
+    # yeilds
+    # ErrorAccessDenied: Access is denied. Check credentials and try again.,
+    # Non-system logon cannot access System folder.
+    # calendars = [
+    #     x for x in account.calendar.children if isinstance(x, Calendar)
+    # ] + [account.calendar]
     calendars = [account.calendar]
 
     shared_calendars = {}

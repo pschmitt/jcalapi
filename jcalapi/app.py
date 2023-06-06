@@ -8,6 +8,7 @@ from typing import List, Optional
 import xdg
 from dateutil.parser import parse as dparse
 from dateutil.tz import tzlocal
+
 # from dateutil.utils import within_delta
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
@@ -308,7 +309,7 @@ async def get_events_at_date(
 
     for ev in events_merged(ignore_calendars):
         LOGGER.debug(
-            f"ITEM DATES {ev.get('summary')}: {ev.get('start')} ({type(ev.get('start'))}) -> {ev.get('end')} ({type(ev.get('end'))})"
+            f"ITEM DATES {ev.get('summary')}: {ev.get('start')} ({type(ev.get('start'))}) -> {ev.get('end')} ({type(ev.get('end'))})"  # noqa: E501
         )
         ev_start = ev.get("start")
         ev_end = ev.get("end")

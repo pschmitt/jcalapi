@@ -47,7 +47,7 @@ def get_confluence_calendar_info(url: str, username: str, password: str):
         cal_id = cal.get("id")
         cal_name = cal.get("name")
         cal_tz = cal.get("timeZoneId")
-        ics_url = f"{url}/rest/calendar-services/1.0/calendar/export/subcalendar/{cal_id}.ics?os_authType=basic&isSubscribe=true"
+        ics_url = f"{url}/rest/calendar-services/1.0/calendar/export/subcalendar/{cal_id}.ics?os_authType=basic&isSubscribe=true"  # noqa: E501
         LOGGER.info(f"{cal_name} (ID: {cal_id}): {ics_url}")
         cal_metadata.append(
             {"id": cal_id, "name": cal_name, "tz": cal_tz, "url": ics_url}
@@ -149,7 +149,7 @@ async def get_confluence_events(
                 ev_rrule = e.decoded("RRULE") if "RRULE" in e else None
                 if ev_rrule:
                     LOGGER.info(
-                        f"Recurring event: {ev_summary} [{ev_start} - {ev_end}]"
+                        f"Recurring event: {ev_summary} [{ev_start} - {ev_end}]"  # noqa: E501
                         f"RRULE: {ev_rrule}. SKIP: Processing later."
                     )
                     continue
@@ -170,7 +170,7 @@ async def get_confluence_events(
                         r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", ev_organizer
                     )
                     if m:
-                        ev_organizer = f"{m.group(1).capitalize()} {m.group(2).capitalize()}"
+                        ev_organizer = f"{m.group(1).capitalize()} {m.group(2).capitalize()}"  # noqa: E501
 
                 ev_location = (
                     e.decoded("LOCATION").decode("utf-8")
