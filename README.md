@@ -101,7 +101,7 @@ curl http://localhost:7042/meta
 The `/reload` endpoint allows you to reload the calendar data:
 
 ```shell
-curl http://localhost:7042/reload
+curl -X POST http://localhost:7042/reload
 ```
 
 ## 🤝 Contributing
