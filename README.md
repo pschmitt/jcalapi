@@ -40,6 +40,14 @@ cd jcalapi
 poetry install
 ```
 
+### 🏃 Usage
+
+You can run the application directly using Python:
+
+```shell
+python main.py
+```
+
 ### 🐳 Blablabla, Docker?
 
 ```shell
@@ -50,14 +58,6 @@ docker run -it --rm -p 127.0.0.1:7042:7042 \
   -e EXCHANGE_USERNAME=john.doe@example.com \
   -e EXCHANGE_PASSWORD=XXX \
   ghcr.io/pschmitt/jcalapi
-```
-
-### 🏃 Usage
-
-You can run the application directly using Python:
-
-```shell
-python main.py
 ```
 
 ## 📚 API Usage
