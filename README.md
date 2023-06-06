@@ -9,6 +9,7 @@ making it easy to integrate calendar data into other systems.
 ### 📋 Prerequisites
 
 - Python
+- [Poetry](https://python-poetry.org)
 
 ### 🔑 Setting Up Credentials
 
@@ -34,11 +35,9 @@ git clone https://github.com/pschmitt/jcalapi.git
 cd jcalapi
 ```
 
-3. *Optional* Create a [virtualenv](https://docs.python.org/3/library/venv.html)
-
-4. Install the required Python packages
+3. Setup the environment
 ```shell
-pip install -r requirements.txt
+poetry install
 ```
 
 ### 🏃 Usage
