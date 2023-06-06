@@ -25,19 +25,12 @@ See [.envrc-sample](./.envrc-sample) for an example.
 
 ### 💾 Installation
 
-1. Clone the repository
 ```shell
-git clone https://github.com/pschmitt/jcalapi.git
-```
+# pip
+pip install jcalapi
 
-2. Navigate into the cloned repository
-```shell
-cd jcalapi
-```
-
-3. Setup the environment
-```shell
-poetry install
+# pipx
+pipx install jcalapi
 ```
 
 ### 🏃 Usage
@@ -119,6 +112,23 @@ curl -X POST http://localhost:7042/reload
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a pull request.
+
+### 🧑‍💻 Development setup
+
+1. Clone the repository
+```shell
+git clone https://github.com/pschmitt/jcalapi.git
+```
+
+2. Navigate into the cloned repository
+```shell
+cd jcalapi
+```
+
+3. Setup the environment
+```shell
+poetry install
+```
 
 ## 📄 License
 
