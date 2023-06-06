@@ -21,7 +21,7 @@ version control system.
 For Exchange, you'll need your username and password. 
 For Confluence, you'll need your API token.
 
-See [.envrc.sample](./envrc.sample) for an example.
+See [.envrc-sample](./envrc-sample) for an example.
 
 ### 💾 Installation
 
