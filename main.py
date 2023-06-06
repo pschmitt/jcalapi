@@ -54,7 +54,7 @@ def setup_logging():
     logger.configure(handlers=[{"sink": sys.stdout, "serialize": JSON_LOGS}])
 
 
-if __name__ == "__main__":
+def main():
     server = Server(
         Config(
             "jcalapi.app:app",
@@ -75,3 +75,7 @@ if __name__ == "__main__":
     LOGGER.info(f"Starting server on {HOST}:{PORT} with {WORKERS} workers")
 
     server.run()
+
+
+if __name__ == "__main__":
+    main()
