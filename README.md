@@ -38,7 +38,7 @@ pipx install jcalapi
 You can run the application directly using Python:
 
 ```shell
-python run.py
+python -m jcalapi
 ```
 
 ### 🐳 Blablabla, Docker?
