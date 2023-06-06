@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Local calendar caching and JSON API"
 authors = ["Philipp Schmitt <philipp@schmitt.co>"]
 license = "GPL-3"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
