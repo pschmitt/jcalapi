@@ -10,13 +10,10 @@ from bs4 import BeautifulSoup
 from exchangelib import (
     DELEGATE,
     Account,
-    Build,
     Configuration,
     Credentials,
     EWSDate,
-    EWSDateTime,
     EWSTimeZone,
-    Version,
 )
 from exchangelib.folders import Calendar, SingleFolderQuerySet
 from exchangelib.properties import DistinguishedFolderId, Mailbox
@@ -124,17 +121,17 @@ def sync_get_exchange_events(
         calendars.append(shared_calendar)
 
     today = datetime.datetime.today()
-    tomorrow = today + datetime.timedelta(days=1)
+    # tomorrow = today + datetime.timedelta(days=1)
     midnight_today = datetime.datetime.combine(
         today if not start else start,
         datetime.datetime.min.time(),
         tzinfo=account.default_timezone,
     )
-    midnight_tomorrow = datetime.datetime.combine(
-        tomorrow if not end else end,
-        datetime.datetime.min.time(),
-        tzinfo=account.default_timezone,
-    )
+    # midnight_tomorrow = datetime.datetime.combine(
+    #     tomorrow if not end else end,
+    #     datetime.datetime.min.time(),
+    #     tzinfo=account.default_timezone,
+    # )
 
     if not start:
         today = midnight_today  # datetime.date.today()

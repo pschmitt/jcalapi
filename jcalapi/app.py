@@ -8,7 +8,7 @@ from typing import List, Optional
 import xdg
 from dateutil.parser import parse as dparse
 from dateutil.tz import tzlocal
-from dateutil.utils import within_delta
+# from dateutil.utils import within_delta
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
 from fastapi_utils.tasks import repeat_every
@@ -42,7 +42,7 @@ def events_merged(ignore_calendars: Optional[List[str]] = None):
 
 def cache_events(key):
     res_data = CACHE.set(key, CALENDAR_DATA[key], expire=CACHE_EXPIRY)
-    # Save metdata
+    # Save metadata
     meta = {
         "last-update": datetime.datetime.now(),
         "entries": len(CALENDAR_DATA[key]),
@@ -67,7 +67,7 @@ async def cache_restore():
             elif key == "confluence":
                 await reload_confluence()
 
-    LOGGER.info(f"Cached values have been restored")
+    LOGGER.info("Cached values have been restored")
     CACHE_RESTORED.set(True)
 
 
@@ -81,7 +81,7 @@ async def startup_event():
     if not cache_restored:
         await cache_restore()
     else:
-        LOGGER.info(f"Refreshing events data")
+        LOGGER.info("Refreshing events data")
         await reload()
 
 
@@ -330,8 +330,8 @@ async def get_events_at_date(
             ev_start_date == target_date.date()
             or ev_end_date == target_date.date()
         ):
-            # FIXME Won't this prevent events that occur multiple times in a day
-            # from being included more than once?
+            # FIXME Won't this prevent events that occur multiple times
+            # in a day from being included more than once?
             if ev.get("uid") in [x.get("uid") for x in agenda]:
                 LOGGER.warning(f"Duplicate event skipped: {ev}")
                 continue
