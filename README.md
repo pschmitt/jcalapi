@@ -40,6 +40,18 @@ cd jcalapi
 poetry install
 ```
 
+### 🐳 Blablabla, Docker?
+
+```shell
+docker run -it --rm -p 127.0.0.1:7042:7042 \
+  -e ONFLUENCE_URL=https://confluence.example.com \
+  -e CONFLUENCE_USERNAME=john.doe \
+  -e CONFLUENCE_PASSWORD=XXX \
+  -e EXCHANGE_USERNAME=john.doe@example.com \
+  -e EXCHANGE_PASSWORD=XXX \
+  ghcr.io/pschmitt/jcalapi
+```
+
 ### 🏃 Usage
 
 You can run the application directly using Python:
