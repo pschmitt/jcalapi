@@ -212,7 +212,7 @@ async def get_confluence_events(
                 data["conference_url"] = guess_conference_location(data)
 
                 if data in events:
-                    LOGGER.warning(f"Dupplicate item detected: {data}")
+                    LOGGER.warning(f"Duplicate item detected: {data}")
                 else:
                     events.append(data)
 
