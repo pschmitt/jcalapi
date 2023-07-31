@@ -28,7 +28,7 @@ python-multipart = "^0.0.6"
 
 [tool.poetry.dev-dependencies]
 black = "^23.7"
-flake8 = "^6.0.0"
+flake8 = "^6.1.0"
 ipython = "^8.14.0"
 isort = "^5.12.0"
 
