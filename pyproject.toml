@@ -29,7 +29,7 @@ python-multipart = "^0.0.6"
 [tool.poetry.dev-dependencies]
 black = "^23.11"
 flake8 = "^6.1.0"
-ipython = "^8.17.2"
+ipython = "^8.18.0"
 isort = "^5.12.0"
 
 [tool.poetry.scripts]
