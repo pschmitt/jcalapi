@@ -112,15 +112,18 @@ def sync_get_exchange_events(
 
     shared_calendars = {}
     for shared_inbox in shared_inboxes:
-        shared_calendar = SingleFolderQuerySet(
-            account=account,
-            folder=DistinguishedFolderId(
-                id=Calendar.DISTINGUISHED_FOLDER_ID,
-                mailbox=Mailbox(email_address=shared_inbox),
-            ),
-        ).resolve()
-        shared_calendars[shared_calendar] = shared_inbox
-        calendars.append(shared_calendar)
+        try:
+            shared_calendar = SingleFolderQuerySet(
+                account=account,
+                folder=DistinguishedFolderId(
+                    id=Calendar.DISTINGUISHED_FOLDER_ID,
+                    mailbox=Mailbox(email_address=shared_inbox),
+                ),
+            ).resolve()
+            shared_calendars[shared_calendar] = shared_inbox
+            calendars.append(shared_calendar)
+        except ValueError as e:
+            LOGGER.warning(f"Could not find calendar for {shared_inbox}: {e}")
 
     today = datetime.datetime.today()
     # tomorrow = today + datetime.timedelta(days=1)
