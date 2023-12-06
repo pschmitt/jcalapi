@@ -112,6 +112,9 @@ def sync_get_exchange_events(
 
     shared_calendars = {}
     for shared_inbox in shared_inboxes:
+        if not shared_inbox:
+            # Skip if empty
+            continue
         try:
             shared_calendar = SingleFolderQuerySet(
                 account=account,
