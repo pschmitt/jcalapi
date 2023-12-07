@@ -7,8 +7,14 @@ import logging
 from functools import partial
 
 from bs4 import BeautifulSoup
-from exchangelib import (DELEGATE, Account, Configuration, Credentials,
-                         EWSDate, EWSTimeZone)
+from exchangelib import (
+    DELEGATE,
+    Account,
+    Configuration,
+    Credentials,
+    EWSDate,
+    EWSTimeZone,
+)
 from exchangelib.folders import Calendar, SingleFolderQuerySet
 from exchangelib.properties import DistinguishedFolderId, Mailbox
 
