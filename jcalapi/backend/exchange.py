@@ -7,14 +7,8 @@ import logging
 from functools import partial
 
 from bs4 import BeautifulSoup
-from exchangelib import (
-    DELEGATE,
-    Account,
-    Configuration,
-    Credentials,
-    EWSDate,
-    EWSTimeZone,
-)
+from exchangelib import (DELEGATE, Account, Configuration, Credentials,
+                         EWSDate, EWSTimeZone)
 from exchangelib.folders import Calendar, SingleFolderQuerySet
 from exchangelib.properties import DistinguishedFolderId, Mailbox
 
@@ -209,19 +203,23 @@ def sync_get_exchange_events(
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
             ev_attendees = []
+            ev_optional_attendees = (
+                ev.optional_attendees if ev.optional_attendees else []
+            )
+            ev_required_attendees = (
+                ev.required_attendees if ev.required_attendees else []
+            )
             for attendee_list in [
-                ev.required_attendees,
-                ev.optional_attendees,
+                ev_required_attendees,
+                ev_optional_attendees,
             ]:
-                if isinstance(attendee_list, list):
-                    ev_attendees.extend(
-                        [
-                            {
-                                "name": attendee.mailbox.name,
-                                "email": attendee.mailbox.email_address,
-                            }
-                            for attendee in attendee_list
-                        ]
+                for attendee in attendee_list:
+                    ev_attendees.append(
+                        {
+                            "name": attendee.mailbox.name,
+                            "email": attendee.mailbox.email_address,
+                            "optional": attendee in ev_optional_attendees,
+                        }
                     )
 
             ev_data = {
