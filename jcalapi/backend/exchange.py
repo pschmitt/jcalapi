@@ -237,7 +237,7 @@ def sync_get_exchange_events(
                 "start": ev_start,
                 "end": ev_end,
                 "whole_day": whole_day,
-                "isRecurring": ev.is_recurring,
+                "is_recurring": ev.is_recurring,
                 "status": ev_status,
                 "extra": {
                     "conference_type": ev.conference_type,
