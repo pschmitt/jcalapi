@@ -55,6 +55,13 @@ def get_confluence_calendar_info(url: str, username: str, password: str):
     return cal_metadata
 
 
+def email_to_name(email: str):
+    m = re.search(r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", email)
+    return (
+        f"{m.group(1).capitalize()} {m.group(2).capitalize()}" if m else email
+    )
+
+
 async def get_confluence_events(
     url: str,
     username: str,
@@ -167,25 +174,14 @@ async def get_confluence_events(
                 )
                 ev_organizer = ev_organizer.removeprefix("mailto:")
                 if convert_email:
-                    m = re.search(
-                        r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", ev_organizer
-                    )
-                    if m:
-                        ev_organizer = f"{m.group(1).capitalize()} {m.group(2).capitalize()}"  # noqa: E501
+                    ev_organizer = email_to_name(ev_organizer)
 
                 # attendees
                 ev_attendees = []
                 if "ATTENDEE" in e:
                     att = e.decoded("ATTENDEE")
                     email = "".join(att).removeprefix("mailto:")
-                    m = re.search(
-                        r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", email
-                    )
-                    name = (
-                        f"{m.group(1).capitalize()} {m.group(2).capitalize()}"
-                        if m
-                        else email
-                    )  # noqa: E501
+                    name = email_to_name(email)
                     attendee = {
                         "name": name,
                         "email": email,
