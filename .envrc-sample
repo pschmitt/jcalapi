@@ -1,6 +1,13 @@
 export CONFLUENCE_URL=https://confluence.example.com
 export CONFLUENCE_USERNAME=john.doe
 export CONFLUENCE_PASSWORD=XXX
+# Optional
+export CONFLUENCE_CONVERT_EMAIL=true
 
 export EXCHANGE_USERNAME=john.doe@example.com
 export EXCHANGE_PASSWORD=XXX
+# Optional
+export EXCHANGE_SERVICE_ENDPOINT=https://mail.example.com
+export EXCHANGE_AUTODISCOVERY=true
+export EXCHANGE_EMAIL=john.doe@example.com
+export EXCHANGE_SHARED_INBOXES=team-001@example.com,team-002@example.com
