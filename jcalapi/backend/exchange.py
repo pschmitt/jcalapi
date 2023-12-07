@@ -208,11 +208,32 @@ def sync_get_exchange_events(
 
             ev_status = "cancelled" if ev.is_cancelled else "confirmed"
 
+            ev_attendees = []
+            ev_optional_attendees = (
+                ev.optional_attendees if ev.optional_attendees else []
+            )
+            ev_required_attendees = (
+                ev.required_attendees if ev.required_attendees else []
+            )
+            for attendee_list in [
+                ev_required_attendees,
+                ev_optional_attendees,
+            ]:
+                for attendee in attendee_list:
+                    ev_attendees.append(
+                        {
+                            "name": attendee.mailbox.name,
+                            "email": attendee.mailbox.email_address,
+                            "optional": attendee in ev_optional_attendees,
+                        }
+                    )
+
             ev_data = {
                 "uid": ev.uid,
                 "backend": "exchange",
                 "calendar": cal_name,
                 "organizer": ev.organizer.name,
+                "attendees": ev_attendees,
                 "summary": ev.subject,
                 "description": ev_body,
                 "body": ev.body,
@@ -220,6 +241,7 @@ def sync_get_exchange_events(
                 "start": ev_start,
                 "end": ev_end,
                 "whole_day": whole_day,
+                "is_recurring": ev.is_recurring,
                 "status": ev_status,
                 "extra": {
                     "conference_type": ev.conference_type,

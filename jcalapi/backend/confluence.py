@@ -55,6 +55,13 @@ def get_confluence_calendar_info(url: str, username: str, password: str):
     return cal_metadata
 
 
+def email_to_name(email: str):
+    m = re.search(r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", email)
+    return (
+        f"{m.group(1).capitalize()} {m.group(2).capitalize()}" if m else email
+    )
+
+
 async def get_confluence_events(
     url: str,
     username: str,
@@ -115,6 +122,7 @@ async def get_confluence_events(
             )
 
             for e in normal_events + recurring_events:
+                ev_recurring = e in recurring_events
                 ev_summary = (
                     e.decoded("SUMMARY").decode("utf-8").strip()
                     if "SUMMARY" in e
@@ -166,11 +174,21 @@ async def get_confluence_events(
                 )
                 ev_organizer = ev_organizer.removeprefix("mailto:")
                 if convert_email:
-                    m = re.search(
-                        r"([^\.]+)\.([^.@]+)(?:\.ext)?@.+\..+", ev_organizer
-                    )
-                    if m:
-                        ev_organizer = f"{m.group(1).capitalize()} {m.group(2).capitalize()}"  # noqa: E501
+                    ev_organizer = email_to_name(ev_organizer)
+
+                # attendees
+                ev_attendees = []
+                if "ATTENDEE" in e:
+                    att = e.decoded("ATTENDEE")
+                    email = "".join(att).removeprefix("mailto:")
+                    name = email_to_name(email)
+                    attendee = {
+                        "name": name,
+                        "email": email,
+                        # There is no optional attendees in Confluence
+                        "optional": False,
+                    }
+                    ev_attendees.append(attendee)
 
                 ev_location = (
                     e.decoded("LOCATION").decode("utf-8")
@@ -200,12 +218,14 @@ async def get_confluence_events(
                     "backend": "confluence",
                     "calendar": cal["name"],
                     "organizer": ev_organizer,
+                    "attendees": ev_attendees,
                     "summary": ev_summary,
                     "description": ev_description,
                     "location": ev_location,
                     "start": ev_start,
                     "end": ev_end,
                     "whole_day": whole_day,
+                    "is_recurring": ev_recurring,
                     "status": ev_status,
                     "extra": {"url": ev_url},
                 }
