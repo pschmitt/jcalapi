@@ -30,7 +30,7 @@ python-multipart = "^0.0.6"
 black = "^23.11"
 flake8 = "^6.1.0"
 ipython = "^8.18.1"
-isort = "^5.12.0"
+isort = "^5.13.0"
 
 [tool.poetry.scripts]
 jcalapi = 'jcalapi.run:main'
