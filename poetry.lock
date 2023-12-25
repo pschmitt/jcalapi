@@ -1417,13 +1417,13 @@ files = [
 
 [[package]]
 name = "recurring-ical-events"
-version = "2.1.1"
+version = "2.1.2"
 description = "A Python module which repeats ICalendar events by RRULE, RDATE and EXDATE."
 optional = false
 python-versions = "*"
 files = [
-    {file = "recurring_ical_events-2.1.1-py3-none-any.whl", hash = "sha256:4062b95782ed74a2649b68c58ec344d8209d7bfd74510db791345f52dfd3714e"},
-    {file = "recurring_ical_events-2.1.1.tar.gz", hash = "sha256:8a762d54145d8b70754725935721e62311b3c0949fca0eb1fba3090900a26402"},
+    {file = "recurring_ical_events-2.1.2-py3-none-any.whl", hash = "sha256:b510d6d46e54381df1d6b35fcf2a727b71ecc510c85701b15c57312a5f172eff"},
+    {file = "recurring_ical_events-2.1.2.tar.gz", hash = "sha256:803d14a93bc2f94bbac03c7010aee98648f73246ef65d1f3c9bc8da88af6bd24"},
 ]
 
 [package.dependencies]
