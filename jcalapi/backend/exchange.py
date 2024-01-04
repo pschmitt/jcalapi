@@ -243,6 +243,7 @@ def sync_get_exchange_events(
                 "whole_day": whole_day,
                 "is_recurring": ev.is_recurring,
                 "status": ev_status,
+                "categories": ev.categories,
                 "extra": {
                     "conference_type": ev.conference_type,
                     "meeting_workspace_url": ev.meeting_workspace_url,
