@@ -70,6 +70,11 @@ This will return a JSON response with the events data:
     "backend": "exchange",
     "calendar": "calendar1",
     "organizer": "organizer1",
+    "attendees": {
+      "name": "hisname",
+      "email": "his@email.com",
+      "optional": false
+    },
     "summary": "event1 summary",
     "description": "event1 description",
     "body": "event1 body",
@@ -77,6 +82,11 @@ This will return a JSON response with the events data:
     "start": "2023-06-06T00:00:00",
     "end": "2023-06-06T01:00:00",
     "whole_day": false,
+    "is_recurring": false,
+    "categories": [
+      "Cat1",
+      "Cat2"
+    ],
     "status": "confirmed",
     "extra": {
       "conference_type": "Teams",
