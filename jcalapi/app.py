@@ -26,9 +26,16 @@ CACHE_EXPIRY = 60 * 10  # 10 minutes
 CACHE_RESTORED = ContextVar("CACHE_RESTORED", default=False)
 
 PAST_DAYS_IMPORT = int(os.environ.get("PAST_DAYS_IMPORT", 0))
-START_DATE = (datetime.datetime.now(tz=tzlocal()).replace(
-                hour=0, minute=0, second=0, microsecond=0
-            ) - datetime.timedelta(days=PAST_DAYS_IMPORT)) if PAST_DAYS_IMPORT > 0 else None
+START_DATE = (
+    (
+        datetime.datetime.now(tz=tzlocal()).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        - datetime.timedelta(days=PAST_DAYS_IMPORT)
+    )
+    if PAST_DAYS_IMPORT > 0
+    else None
+)
 
 LOGGER = logging.getLogger(__name__)
 
