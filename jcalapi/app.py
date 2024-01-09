@@ -25,6 +25,10 @@ CACHE_KEY_META_SUFFIX = "-metadata"
 CACHE_EXPIRY = 60 * 10  # 10 minutes
 CACHE_RESTORED = ContextVar("CACHE_RESTORED", default=False)
 
+PAST_DAYS_IMPORT = int(os.environ.get("PAST_DAYS_IMPORT", 0))
+START_DATE = (datetime.datetime.now(tz=tzlocal()).replace(
+                hour=0, minute=0, second=0, microsecond=0
+            ) - datetime.timedelta(days=PAST_DAYS_IMPORT)) if PAST_DAYS_IMPORT > 0 else None
 
 LOGGER = logging.getLogger(__name__)
 
@@ -139,7 +143,7 @@ async def reload_confluence(
             username=confluence_username,
             password=confluence_password,
             convert_email=convert_email,
-            start=None,
+            start=START_DATE,
             end=None,
         )
         cache_events(backend)
@@ -206,7 +210,7 @@ async def reload_exchange(
         service_endpoint=exchange_service_endpoint,
         version=exchange_version,
         auth_type=exchange_auth_type,
-        start=None,
+        start=START_DATE,
         end=None,
     )
 
