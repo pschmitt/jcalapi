@@ -225,6 +225,7 @@ def sync_get_exchange_events(
                             "name": attendee.mailbox.name,
                             "email": attendee.mailbox.email_address,
                             "optional": attendee in ev_optional_attendees,
+                            "response": attendee.response_type,
                         }
                     )
 
