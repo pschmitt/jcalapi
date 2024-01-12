@@ -73,7 +73,8 @@ This will return a JSON response with the events data:
     "attendees": {
       "name": "hisname",
       "email": "his@email.com",
-      "optional": false
+      "optional": false,
+      "response": "Accept"
     },
     "summary": "event1 summary",
     "description": "event1 description",
