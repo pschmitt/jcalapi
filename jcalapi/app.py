@@ -37,7 +37,8 @@ START_DATE = (
     else None
 )
 END_DATE = datetime.datetime.now(tz=tzlocal()).replace(
-    hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(days=14)
+    hour=0, minute=0, second=0, microsecond=0
+) + datetime.timedelta(days=14)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -147,13 +148,12 @@ async def reload_confluence(
 
     if confluence_url:
         LOGGER.info(
-            "Fetch calendar events from Confluence: %s",
-            confluence_url)
+            "Fetch calendar events from Confluence: %s", confluence_url
+        )
         if START_DATE is not None or END_DATE is not None:
             LOGGER.info(
-                "Collecting events - Start=%s, End=%s",
-                START_DATE,
-                END_DATE)
+                "Collecting events - Start=%s, End=%s", START_DATE, END_DATE
+            )
         CALENDAR_DATA[backend] = await get_confluence_events(
             url=confluence_url,
             username=confluence_username,
@@ -214,13 +214,12 @@ async def reload_exchange(
     backend = "exchange"
 
     LOGGER.info(
-        "Fetch calendar events from Exchange for user %s",
-        exchange_username
+        "Fetch calendar events from Exchange for user %s", exchange_username
     )
     if START_DATE is not None or END_DATE is not None:
-        LOGGER.info("Collecting events - Start=%s, End=%s",
-                    START_DATE,
-                    END_DATE)
+        LOGGER.info(
+            "Collecting events - Start=%s, End=%s", START_DATE, END_DATE
+        )
 
     CALENDAR_DATA[backend] = await get_exchange_events(
         username=exchange_username,
