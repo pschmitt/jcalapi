@@ -50,16 +50,17 @@ files = [
 
 [[package]]
 name = "atlassian-python-api"
-version = "3.41.6"
+version = "3.41.8"
 description = "Python Atlassian REST API Wrapper"
 optional = false
 python-versions = "*"
 files = [
-    {file = "atlassian-python-api-3.41.6.tar.gz", hash = "sha256:572d9e6fb82245920498cf96f7f6c9f2b2212c3025aa494d90e60b6c0d4e91c7"},
-    {file = "atlassian_python_api-3.41.6-py3-none-any.whl", hash = "sha256:3287f0fd509afac1d8b33817a368140b0602417c22408f8e314496773000b643"},
+    {file = "atlassian-python-api-3.41.8.tar.gz", hash = "sha256:ce678d89372578db06f5f5eadd6fc2abccc424608053dc6d83e7afea5070b021"},
+    {file = "atlassian_python_api-3.41.8-py3-none-any.whl", hash = "sha256:506b3aa8325ba0df4edd6618ac4039c0aafa48795d16d143a270b6c1a68bd4fc"},
 ]
 
 [package.dependencies]
+beautifulsoup4 = "*"
 deprecated = "*"
 jmespath = "*"
 oauthlib = "*"
