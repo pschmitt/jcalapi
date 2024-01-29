@@ -27,7 +27,7 @@ beautifulsoup4 = "^4.12.2"
 python-multipart = "^0.0.6"
 
 [tool.poetry.dev-dependencies]
-black = "^23.12"
+black = "^24.1"
 flake8 = "^7.0.0"
 ipython = "^8.20.0"
 isort = "^5.13.2"
