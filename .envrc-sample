@@ -4,6 +4,7 @@ export CONFLUENCE_PASSWORD=XXX
 # Optional
 export CONFLUENCE_CONVERT_EMAIL=true
 export PAST_DAYS_IMPORT=0
+export FUTURE_DAYS_IMPORT=14
 
 export EXCHANGE_USERNAME=john.doe@example.com
 export EXCHANGE_PASSWORD=XXX
@@ -13,3 +14,4 @@ export EXCHANGE_AUTODISCOVERY=true
 export EXCHANGE_EMAIL=john.doe@example.com
 export EXCHANGE_SHARED_INBOXES=team-001@example.com,team-002@example.com
 export PAST_DAYS_IMPORT=0
+export FUTURE_DAYS_IMPORT=14

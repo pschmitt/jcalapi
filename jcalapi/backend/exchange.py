@@ -2,6 +2,7 @@
 
 import asyncio
 import datetime
+import os
 import json
 import logging
 from functools import partial
@@ -147,7 +148,8 @@ def sync_get_exchange_events(
         start = last_monday
     # For end, default to start + 14 days
     if not end:
-        end = start + datetime.timedelta(days=14)
+        FUTURE_DAYS_IMPORT = int(os.environ.get("FUTURE_DAYS_IMPORT", 14))
+        end = start + datetime.timedelta(days=FUTURE_DAYS_IMPORT)
 
     data = []
     events = []
