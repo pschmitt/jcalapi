@@ -147,12 +147,10 @@ async def reload_confluence(
     backend = "confluence"
 
     if confluence_url:
-        LOGGER.info(
-            "Fetch calendar events from Confluence: %s", confluence_url
-        )
+        LOGGER.info(f"Fetch calendar events from Confluence: {confluence_url}")
         if START_DATE is not None or END_DATE is not None:
             LOGGER.info(
-                "Collecting events - Start=%s, End=%s", START_DATE, END_DATE
+                f"Collecting events - Start={START_DATE}, End={END_DATE}"
             )
         CALENDAR_DATA[backend] = await get_confluence_events(
             url=confluence_url,
@@ -214,12 +212,10 @@ async def reload_exchange(
     backend = "exchange"
 
     LOGGER.info(
-        "Fetch calendar events from Exchange for user %s", exchange_username
+        f"Fetch calendar events from Exchange for user {exchange_username}"
     )
     if START_DATE is not None or END_DATE is not None:
-        LOGGER.info(
-            "Collecting events - Start=%s, End=%s", START_DATE, END_DATE
-        )
+        LOGGER.info(f"Collecting events - Start={START_DATE}, End={END_DATE}")
 
     CALENDAR_DATA[backend] = await get_exchange_events(
         username=exchange_username,
