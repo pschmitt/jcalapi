@@ -8,7 +8,6 @@ from typing import List, Optional
 import xdg
 from dateutil.parser import parse as dparse
 from dateutil.tz import tzlocal
-
 # from dateutil.utils import within_delta
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
@@ -16,6 +15,7 @@ from fastapi_utils.tasks import repeat_every
 
 from jcalapi.backend.confluence import get_confluence_events
 from jcalapi.backend.exchange import get_exchange_events
+from jcalapi.backend.google import get_google_events
 
 app = FastAPI()
 
@@ -82,6 +82,8 @@ async def cache_restore():
                 await reload_exchange()
             elif key == "confluence":
                 await reload_confluence()
+            elif key == "google":
+                await reload_google()
 
     LOGGER.info("Cached values have been restored")
     CACHE_RESTORED.set(True)
@@ -110,6 +112,8 @@ async def reload(
     exchange_password: Optional[str] = None,
     exchange_email: Optional[str] = None,
     exchange_shared_inboxes: Optional[list] = [],
+    google_credentials: Optional[str] = None,
+    google_calendar_regex: Optional[str] = None,
 ):
     res_confluence = await reload_confluence(
         url=confluence_url,
@@ -122,7 +126,15 @@ async def reload(
         email=exchange_email,
         shared_inboxes=exchange_shared_inboxes,
     )
-    return {"exchange": res_exchange, "confluence": res_confluence}
+    res_google = await reload_google(
+        credentials=google_credentials,
+        calendar_regex=google_calendar_regex,
+    )
+    return {
+        "exchange": res_exchange,
+        "confluence": res_confluence,
+        "google": res_google,
+    }
 
 
 @app.post("/reload/confluence")
@@ -232,6 +244,39 @@ async def reload_exchange(
     )
 
     cache_events(backend)
+
+    return {"events": len(CALENDAR_DATA.get(backend, []))}
+
+
+@app.post("/reload/google")
+async def reload_google(
+    credentials: Optional[str] = None,
+    calendar_regex: Optional[str] = None,
+):
+    google_credentials = (
+        credentials if credentials else os.environ.get("GOOGLE_CREDENTIALS")
+    )
+    google_calendar_regex = (
+        calendar_regex
+        if calendar_regex
+        else os.environ.get("GOOGLE_CALENDAR_REGEX")
+    )
+
+    backend = "google"
+
+    if google_credentials:
+        LOGGER.info(f"Fetch calendar events from google")
+        if START_DATE is not None or END_DATE is not None:
+            LOGGER.info(
+                f"Collecting events - Start={START_DATE}, End={END_DATE}"
+            )
+        CALENDAR_DATA[backend] = await get_google_events(
+            credentials=google_credentials,
+            calendar_regex=google_calendar_regex,
+            start=START_DATE,
+            end=END_DATE,
+        )
+        cache_events(backend)
 
     return {"events": len(CALENDAR_DATA.get(backend, []))}
 
