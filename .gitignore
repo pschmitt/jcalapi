@@ -147,3 +147,4 @@ cython_debug/
 token.pickle
 .devenv
 .devenv.flake.nix
+.pre-commit-config.yaml
