@@ -128,10 +128,11 @@ def sync_get_google_events(
                 "end": ev_end,
                 "whole_day": None,  # TODO
                 "is_recurring": ev.is_recurring_instance,
-                "status": None,  # TODO
+                "status": ev.other.get("status"),
                 "categories": None,  # TODO
                 "extra": {
                     "conference_solution": ev.conference_solution,
+                    "link": ev.other.get("htmlLink"),
                 },
             }
             data.append(ev_data)
