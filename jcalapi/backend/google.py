@@ -9,7 +9,6 @@ import re
 from functools import partial
 
 import tzlocal
-from bs4 import BeautifulSoup
 from gcsa.google_calendar import GoogleCalendar
 
 from jcalapi.events import guess_conference_location
@@ -25,7 +24,7 @@ def parse_args():
         "-c",
         "--credentials",
         help="Credentials path to *.apps.googleusercontent.com.json file",
-        required=False,
+        required=True,
     )
     parser.add_argument(
         "-r",
@@ -111,7 +110,6 @@ def sync_get_google_events(
             single_events=True,  # expand recurring events
             timezone=local_tz_name,
         ):
-            # FIXME
             ev_start = ev.start.astimezone(local_tz)
             ev_end = ev.end.astimezone(local_tz)
 
