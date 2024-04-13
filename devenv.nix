@@ -13,7 +13,7 @@
 
   pre-commit.hooks = {
     black.enable = true;
-    isort.enable = true;
+    # isort.enable = true;
   };
 
   devcontainer.enable = true;
