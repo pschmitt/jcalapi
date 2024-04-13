@@ -264,7 +264,7 @@ async def reload_google(
     backend = "google"
 
     if google_credentials:
-        LOGGER.info(f"Fetch calendar events from google")
+        LOGGER.info("Fetching calendar events from google")
         if START_DATE is not None or END_DATE is not None:
             LOGGER.info(
                 f"Collecting events - Start={START_DATE}, End={END_DATE}"
