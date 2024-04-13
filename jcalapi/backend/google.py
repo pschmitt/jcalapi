@@ -11,8 +11,6 @@ from functools import partial
 import tzlocal
 from gcsa.google_calendar import GoogleCalendar
 
-from jcalapi.events import guess_conference_location
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -67,9 +65,9 @@ def sync_get_google_events(
         if re.search(calendar_regex, x.summary_override or x.summary)
     ]
 
-    LOGGER.info(
-        f"Matched calendars: {[x.summary_override or x.summary for x in calendars]}"
-    )
+    calendar_names = [x.summary_override or x.summary for x in calendars]
+
+    LOGGER.info(f"Matched calendars: {calendar_names}")
 
     local_tz = tzlocal.get_localzone()
     local_tz_name = tzlocal.get_localzone_name()
