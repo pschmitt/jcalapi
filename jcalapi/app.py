@@ -12,6 +12,7 @@ from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
 from fastapi_utils.tasks import repeat_every
 
+import jcalapi.utils as utils
 from jcalapi.backend.confluence import get_confluence_events
 from jcalapi.backend.exchange import get_exchange_events
 from jcalapi.backend.google import get_google_events
@@ -387,6 +388,8 @@ async def get_events_at_date(
         target_date = now + datetime.timedelta(days=1)
     elif when in ["yesterday", "yest"]:
         target_date = now - datetime.timedelta(days=1)
+    elif when in ["monday", "mon"]:
+        target_date = utils.next_monday()
     elif match := re.match(r"^([+-]?\d+)$", when):
         target_date = now + datetime.timedelta(days=int(match.group(1)))
 
