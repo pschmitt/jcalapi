@@ -8,7 +8,6 @@ from typing import List, Optional
 import xdg
 from dateutil.parser import parse as dparse
 from dateutil.tz import tzlocal
-# from dateutil.utils import within_delta
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
 from fastapi_utils.tasks import repeat_every
