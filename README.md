@@ -50,6 +50,8 @@ docker run -it --rm -p 127.0.0.1:7042:7042 \
   -e CONFLUENCE_PASSWORD=XXX \
   -e EXCHANGE_USERNAME=john.doe@example.com \
   -e EXCHANGE_PASSWORD=XXX \
+  -e GOOGLE_CREDENTIALS=/config/xxx.apps.googleusercontent.com.json \
+  -e GOOGLE_CALENDAR_REGEX='^Work '
   ghcr.io/pschmitt/jcalapi
 ```
 
