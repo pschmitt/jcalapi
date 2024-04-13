@@ -143,3 +143,7 @@ cython_debug/
 .envrc
 .envrc.md5sum
 .envrc-secrets
+*.apps.googleusercontent.com.json
+token.pickle
+.devenv
+.devenv.flake.nix
