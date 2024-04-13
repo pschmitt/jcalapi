@@ -115,9 +115,9 @@ def sync_get_google_events(
                 "uid": ev.event_id,
                 "backend": "google",
                 "calendar": calendar_name,
-                "organizer": ev.organizer.display_name
-                if ev.organizer
-                else None,
+                "organizer": (
+                    ev.organizer.display_name if ev.organizer else None
+                ),
                 "attendees": ev.attendees,
                 "summary": ev.summary,
                 "description": (
