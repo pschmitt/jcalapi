@@ -115,6 +115,10 @@ async def reload(
     google_credentials: Optional[str] = None,
     google_calendar_regex: Optional[str] = None,
 ):
+    res_google = await reload_google(
+        credentials=google_credentials,
+        calendar_regex=google_calendar_regex,
+    )
     res_confluence = await reload_confluence(
         url=confluence_url,
         username=confluence_username,
@@ -125,10 +129,6 @@ async def reload(
         password=exchange_password,
         email=exchange_email,
         shared_inboxes=exchange_shared_inboxes,
-    )
-    res_google = await reload_google(
-        credentials=google_credentials,
-        calendar_regex=google_calendar_regex,
     )
     return {
         "exchange": res_exchange,
