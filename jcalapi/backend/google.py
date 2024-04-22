@@ -11,6 +11,8 @@ from functools import partial
 import tzlocal
 from gcsa.google_calendar import GoogleCalendar
 
+from jcalapi.events import guess_conference_location
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -110,6 +112,13 @@ def sync_get_google_events(
         ):
             ev_start = ev.start.astimezone(local_tz)
             ev_end = ev.end.astimezone(local_tz)
+            location = guess_conference_location(
+                {
+                    "location": ev.location,
+                    "description": ev.description,
+                    "extra": ev.other,
+                }
+            )
 
             ev_data = {
                 "uid": ev.event_id,
@@ -123,7 +132,7 @@ def sync_get_google_events(
                 "description": (
                     None if ev.description == "\n" else ev.description
                 ),
-                "location": ev.location,
+                "location": location,
                 "start": ev_start,
                 "end": ev_end,
                 "whole_day": None,  # TODO
