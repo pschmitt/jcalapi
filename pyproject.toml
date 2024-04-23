@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jcalapi"
-version = "0.1.5"
+version = "0.1.6"
 description = "Local calendar caching and JSON API"
 authors = ["Philipp Schmitt <philipp@schmitt.co>"]
 license = "GPL-3"
