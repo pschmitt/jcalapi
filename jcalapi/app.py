@@ -5,9 +5,9 @@ import re
 from contextvars import ContextVar
 from typing import List, Optional
 
+import tzlocal
 import xdg
 from dateutil.parser import parse as dparse
-from dateutil.tz import tzlocal
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
 from fastapi_utils.tasks import repeat_every
@@ -29,7 +29,7 @@ PAST_DAYS_IMPORT = int(os.environ.get("PAST_DAYS_IMPORT", 0))
 FUTURE_DAYS_IMPORT = int(os.environ.get("FUTURE_DAYS_IMPORT", 14))
 START_DATE = (
     (
-        datetime.datetime.now(tz=tzlocal()).replace(
+        datetime.datetime.now(tz=tzlocal.get_localzone()).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         - datetime.timedelta(days=PAST_DAYS_IMPORT)
@@ -37,7 +37,7 @@ START_DATE = (
     if PAST_DAYS_IMPORT > 0
     else None
 )
-END_DATE = datetime.datetime.now(tz=tzlocal()).replace(
+END_DATE = datetime.datetime.now(tz=tzlocal.get_localzone()).replace(
     hour=0, minute=0, second=0, microsecond=0
 ) + datetime.timedelta(days=FUTURE_DAYS_IMPORT)
 
@@ -323,7 +323,7 @@ async def get_current_events(
     agenda = await get_events_at_date(
         "today", ignore_calendars=ignore_calendars
     )
-    now = datetime.datetime.now(tz=tzlocal())
+    now = datetime.datetime.now(tz=tzlocal.get_localzone())
     current_events = []
     for ev in agenda:
         ev_start = ev.get("start")
@@ -346,7 +346,7 @@ async def get_todays_agenda(
     agenda = await get_events_at_date(
         "today", ignore_calendars=ignore_calendars
     )
-    now = datetime.datetime.now(tz=tzlocal())
+    now = datetime.datetime.now(tz=tzlocal.get_localzone())
     # now = datetime.datetime.now()
     target_date = now + datetime.timedelta(hours=hours_prior)
     LOGGER.info(f"Get agenda for today's events - {hours_prior} hour")
@@ -360,7 +360,7 @@ async def get_todays_agenda(
             current_agenda.append(event)
         else:
             if not ev_end.tzinfo:
-                ev_end = ev_end.replace(tzinfo=tzlocal())
+                ev_end = ev_end.replace(tzinfo=tzlocal.get_localzone())
             if ev_end >= target_date:
                 current_agenda.append(event)
     return current_agenda
@@ -381,7 +381,7 @@ async def get_events_at_date(
     when: Optional[str] = "today",
     ignore_calendars: Optional[List[str]] = Query(None),
 ):
-    now = datetime.datetime.now(tz=tzlocal())
+    now = datetime.datetime.now(tz=tzlocal.get_localzone())
     target_date = now  # default to today ie now
 
     if when in ["tomorrow", "tom"]:
