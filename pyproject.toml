@@ -28,7 +28,7 @@ python-multipart = ">=0.0.6,<0.0.10"
 gcsa = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
-black = "^24.3"
+black = "^24.4"
 flake8 = "^7.0.0"
 ipython = "^8.23.0"
 isort = "^5.13.2"
