@@ -30,7 +30,7 @@ gcsa = "^2.2.0"
 [tool.poetry.dev-dependencies]
 black = "^24.4"
 flake8 = "^7.0.0"
-ipython = "^8.23.0"
+ipython = "^8.24.0"
 isort = "^5.13.2"
 
 [tool.poetry.scripts]
