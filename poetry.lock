@@ -642,13 +642,13 @@ uvicorn = {version = ">=0.29.0", extras = ["standard"]}
 
 [[package]]
 name = "fastapi-utils"
-version = "0.6.0"
+version = "0.7.0"
 description = "Reusable utilities for FastAPI"
 optional = false
 python-versions = "<4.0,>=3.7"
 files = [
-    {file = "fastapi_utils-0.6.0-py3-none-any.whl", hash = "sha256:8d504d8f88b9cd0f3834e8f8e0545cb890e3bbe661e44fdb4533bb3734610cb7"},
-    {file = "fastapi_utils-0.6.0.tar.gz", hash = "sha256:4fd34ff7d3bcc8e31fd5c5a9c66c16ca09093e3d97663ed7e3bf013b380766a9"},
+    {file = "fastapi_utils-0.7.0-py3-none-any.whl", hash = "sha256:4fc4d6a10b5c5c3f2ec564d360fc1188507b911e4b06ee4d4c111906d7ddeef1"},
+    {file = "fastapi_utils-0.7.0.tar.gz", hash = "sha256:074509405b02e2651dfe2d11862dd760bacc1a64508f3d8cc44e52a6dc1ed342"},
 ]
 
 [package.dependencies]
@@ -2222,6 +2222,21 @@ files = [
 ]
 
 [[package]]
+name = "typing-inspect"
+version = "0.9.0"
+description = "Runtime inspection utilities for typing module."
+optional = false
+python-versions = "*"
+files = [
+    {file = "typing_inspect-0.9.0-py3-none-any.whl", hash = "sha256:9ee6fc59062311ef8547596ab6b955e1b8aa46242d854bfc78f4f6b0eff35f9f"},
+    {file = "typing_inspect-0.9.0.tar.gz", hash = "sha256:b23fc42ff6f6ef6954e4852c1fb512cdd18dbea03134f91f856a95ccc9461f78"},
+]
+
+[package.dependencies]
+mypy-extensions = ">=0.3.0"
+typing-extensions = ">=3.7.4"
+
+[[package]]
 name = "tzdata"
 version = "2024.1"
 description = "Provider of IANA time zone data"
@@ -2723,4 +2738,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "c34cd34a7e2b33398a5cb459d6da275b9223bab904563da26452dd3d887c8c2e"
+content-hash = "1c6f1f6d773125f18e4dd1e9684724b07fee3e4c9f9378077dd5722914666bcd"
