@@ -110,8 +110,28 @@ def sync_get_google_events(
             single_events=True,  # expand recurring events
             timezone=local_tz_name,
         ):
-            ev_start = ev.start.astimezone(local_tz)
-            ev_end = ev.end.astimezone(local_tz)
+            ev_start = ev.start
+            ev_end = ev.end
+
+            # Convert to datetime if they are date objects
+            if isinstance(ev_start, datetime.date) and not isinstance(
+                ev_start, datetime.datetime
+            ):
+                ev_start = datetime.datetime.combine(
+                    ev_start, datetime.time.min
+                ).astimezone(local_tz)
+            else:
+                ev_start = ev_start.astimezone(local_tz)
+
+            if isinstance(ev_end, datetime.date) and not isinstance(
+                ev_end, datetime.datetime
+            ):
+                ev_end = datetime.datetime.combine(
+                    ev_end, datetime.time.max
+                ).astimezone(local_tz)
+            else:
+                ev_end = ev_end.astimezone(local_tz)
+
             location = guess_conference_location(
                 {
                     "location": ev.location,
