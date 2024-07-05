@@ -110,25 +110,28 @@ def sync_get_google_events(
             single_events=True,  # expand recurring events
             timezone=local_tz_name,
         ):
-            ev_start = ev.start
-            ev_end = ev.end
+            whole_day = False
 
-            # Convert to datetime if they are date objects
+            # Convert to datetime if start/end props are date objects
+            ev_start = ev.start
             if isinstance(ev_start, datetime.date) and not isinstance(
                 ev_start, datetime.datetime
             ):
                 ev_start = datetime.datetime.combine(
                     ev_start, datetime.time.min
                 ).astimezone(local_tz)
+                whole_day = True
             else:
                 ev_start = ev_start.astimezone(local_tz)
 
+            ev_end = ev.end
             if isinstance(ev_end, datetime.date) and not isinstance(
                 ev_end, datetime.datetime
             ):
                 ev_end = datetime.datetime.combine(
-                    ev_end, datetime.time.max
+                    ev_end, datetime.time.min
                 ).astimezone(local_tz)
+                whole_day = True
             else:
                 ev_end = ev_end.astimezone(local_tz)
 
@@ -155,7 +158,7 @@ def sync_get_google_events(
                 "location": location,
                 "start": ev_start,
                 "end": ev_end,
-                "whole_day": None,  # TODO
+                "whole_day": whole_day,
                 "is_recurring": ev.is_recurring_instance,
                 "status": ev.other.get("status"),
                 "categories": None,  # TODO
