@@ -18,7 +18,9 @@ def guess_conference_location(event):
     if "extra" in event:
         for val in event.get("extra").values():
             if val:
-                fields.append(val)
+                # NOTE re.findall expects strings, so let's convert the values
+                # to str.
+                fields.append(str(val))
 
     for val in [x for x in fields if x]:
         for regex in [REGEX_ZOOM_URL, REGEX_MS_TEAMS_URL]:
