@@ -640,13 +640,13 @@ pyflakes = ">=3.2.0,<3.3.0"
 
 [[package]]
 name = "gcsa"
-version = "2.3.0"
+version = "2.4.0"
 description = "Simple API for Google Calendar management"
 optional = false
 python-versions = "*"
 files = [
-    {file = "gcsa-2.3.0-py2.py3-none-any.whl", hash = "sha256:9fb63b023bee5541dd030b1c05283f7448068c866f34fc7d6f920f9bfa985ae1"},
-    {file = "gcsa-2.3.0.tar.gz", hash = "sha256:ee9d0841249799e400886195578582d67fe89758d7ee7aceae8646e424de1d87"},
+    {file = "gcsa-2.4.0-py2.py3-none-any.whl", hash = "sha256:9296c71dd20c750e6d74e7416b6eca86bcb24fefe5810a8604323867e5a4de82"},
+    {file = "gcsa-2.4.0.tar.gz", hash = "sha256:83df6c61ec78b7b3d66e36b4321a6f68ea97ab7c1abe1a577d194df0f279c92f"},
 ]
 
 [package.dependencies]
