@@ -1647,17 +1647,6 @@ files = [
 ]
 
 [[package]]
-name = "pytz"
-version = "2024.1"
-description = "World timezone definitions, modern and historical"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytz-2024.1-py2.py3-none-any.whl", hash = "sha256:328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319"},
-    {file = "pytz-2024.1.tar.gz", hash = "sha256:2a29735ea9c18baf14b448846bde5a48030ed267578472d8955cd0e7443a9812"},
-]
-
-[[package]]
 name = "pytz-deprecation-shim"
 version = "0.1.0.post0"
 description = "Shims to make deprecation of pytz easier"
@@ -1733,20 +1722,20 @@ files = [
 
 [[package]]
 name = "recurring-ical-events"
-version = "3.3.1"
+version = "3.3.2"
 description = "Calculate recurrence times of events, todos and journals based on icalendar RFC5545."
 optional = false
 python-versions = "*"
 files = [
-    {file = "recurring_ical_events-3.3.1-py3-none-any.whl", hash = "sha256:299445efb735a9d555f6a393202d4e7af0a0c6e532f153951abc020bdf57c096"},
-    {file = "recurring_ical_events-3.3.1.tar.gz", hash = "sha256:631c8bb76ec76bca9de80216c80710564bcf084c814870b36de0439b71238a22"},
+    {file = "recurring_ical_events-3.3.2-py3-none-any.whl", hash = "sha256:c1f5a97d354571f431ae5dfd8cf15ec2bb13564c9214b3db3bf377793b8a1831"},
+    {file = "recurring_ical_events-3.3.2.tar.gz", hash = "sha256:d3d6252af41a6f2dc39de45b8481030b6fca5d371da775b0b22a6aef12b0075c"},
 ]
 
 [package.dependencies]
 icalendar = ">=5.0.0,<7.0.0"
 python-dateutil = ">=2.8.1,<3.0.0"
 tzdata = {version = "*", markers = "python_version >= \"3.7\""}
-x-wr-timezone = "==0.*"
+x-wr-timezone = {version = "==1.*", markers = "python_version >= \"3.9\""}
 
 [[package]]
 name = "requests"
@@ -2378,18 +2367,18 @@ files = [
 
 [[package]]
 name = "x-wr-timezone"
-version = "0.0.7"
+version = "1.0.1"
 description = "A Python module and program to convert calendars using X-WR-TIMEZONE to standard ones."
 optional = false
 python-versions = "*"
 files = [
-    {file = "x_wr_timezone-0.0.7-py3-none-any.whl", hash = "sha256:0b5e16f677c8f51ce41087a0b3d4f786c5fdcf78af4f8a75d4d960107dcb6d3a"},
-    {file = "x_wr_timezone-0.0.7.tar.gz", hash = "sha256:ccbaae164a52086535fd2eb1dced164a5250acc83a672fbb044d11e81a268965"},
+    {file = "x_wr_timezone-1.0.1-py3-none-any.whl", hash = "sha256:25a981f570ce43a90b2b62e6dea6fe58ea404cc2ec7c6b3e40605a60eb8ad868"},
+    {file = "x_wr_timezone-1.0.1.tar.gz", hash = "sha256:720fb58275c450f9563deaa1118c69ecdcad70874e9c0b4a23dcb2c10584af80"},
 ]
 
 [package.dependencies]
 icalendar = "*"
-pytz = "*"
+tzdata = "*"
 
 [[package]]
 name = "xdg"
