@@ -640,13 +640,13 @@ pyflakes = ">=3.2.0,<3.3.0"
 
 [[package]]
 name = "gcsa"
-version = "2.4.0"
+version = "2.5.0"
 description = "Simple API for Google Calendar management"
 optional = false
 python-versions = "*"
 files = [
-    {file = "gcsa-2.4.0-py2.py3-none-any.whl", hash = "sha256:9296c71dd20c750e6d74e7416b6eca86bcb24fefe5810a8604323867e5a4de82"},
-    {file = "gcsa-2.4.0.tar.gz", hash = "sha256:83df6c61ec78b7b3d66e36b4321a6f68ea97ab7c1abe1a577d194df0f279c92f"},
+    {file = "gcsa-2.5.0-py2.py3-none-any.whl", hash = "sha256:302fee24e8606f9f2c653cf383e5661ca9971a9e55457bcbf676520aad0ea7bb"},
+    {file = "gcsa-2.5.0.tar.gz", hash = "sha256:d177026ea0f4287d9521862157c73fdebb08bd242e3c5c0725db9ce24d5470c7"},
 ]
 
 [package.dependencies]
@@ -658,8 +658,8 @@ python-dateutil = ">=2.7"
 tzlocal = ">=4,<5"
 
 [package.extras]
-dev = ["flake8", "pep8-naming", "pyfakefs", "pytest", "pytest-cov", "pytest-pep8", "setuptools", "sphinx", "sphinx-rtd-theme", "tox", "twine"]
-docs = ["sphinx", "sphinx-rtd-theme"]
+dev = ["flake8", "pep8-naming", "pyfakefs", "pytest", "pytest-cov", "pytest-pep8", "setuptools", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-googleanalytics", "tox", "twine"]
+docs = ["sphinx", "sphinx-rtd-theme", "sphinxcontrib-googleanalytics"]
 tests = ["flake8", "pep8-naming", "pyfakefs", "pytest", "pytest-cov", "pytest-pep8", "setuptools", "tox", "twine"]
 
 [[package]]
