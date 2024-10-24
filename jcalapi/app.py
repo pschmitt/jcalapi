@@ -19,7 +19,7 @@ from jcalapi.backend.google import get_google_events
 
 app = FastAPI()
 
-CALENDAR_DATA = {"exchange": [], "confluence": []}
+CALENDAR_DATA = {"confluence": [], "exchange": [], "google": []}
 CACHE = Cache(os.path.join(xdg.xdg_cache_home(), "jcalapi"))
 CACHE_KEY_META_SUFFIX = "-metadata"
 CACHE_EXPIRY = 60 * 10  # 10 minutes
@@ -159,6 +159,16 @@ async def reload_confluence(
     )
     backend = "confluence"
 
+    if (
+        not confluence_url
+        or not confluence_username
+        or not confluence_password
+    ):
+        LOGGER.warning(
+            "Confluence URL, username and password are required to fetch events"
+        )
+        return {"events": None}
+
     if confluence_url:
         LOGGER.info(f"Fetch calendar events from Confluence: {confluence_url}")
         if START_DATE is not None or END_DATE is not None:
@@ -224,6 +234,12 @@ async def reload_exchange(
 
     backend = "exchange"
 
+    if not exchange_username or not exchange_password:
+        LOGGER.warning(
+            "Exchange username and password are required to fetch events"
+        )
+        return {"events": None}
+
     LOGGER.info(
         f"Fetch calendar events from Exchange for user {exchange_username}"
     )
@@ -264,19 +280,20 @@ async def reload_google(
 
     backend = "google"
 
-    if google_credentials:
-        LOGGER.info("Fetching calendar events from google")
-        if START_DATE is not None or END_DATE is not None:
-            LOGGER.info(
-                f"Collecting events - Start={START_DATE}, End={END_DATE}"
-            )
-        CALENDAR_DATA[backend] = await get_google_events(
-            credentials=google_credentials,
-            calendar_regex=google_calendar_regex,
-            start=START_DATE,
-            end=END_DATE,
-        )
-        cache_events(backend)
+    if not google_credentials:
+        LOGGER.warning("Google credentials are required to fetch events")
+        return {"events": None}
+
+    LOGGER.info("Fetching calendar events from google")
+    if START_DATE is not None or END_DATE is not None:
+        LOGGER.info(f"Collecting events - Start={START_DATE}, End={END_DATE}")
+    CALENDAR_DATA[backend] = await get_google_events(
+        credentials=google_credentials,
+        calendar_regex=google_calendar_regex,
+        start=START_DATE,
+        end=END_DATE,
+    )
+    cache_events(backend)
 
     return {"events": len(CALENDAR_DATA.get(backend, []))}
 
