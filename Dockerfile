@@ -1,11 +1,12 @@
-FROM python:3.11
+FROM python:3.13
 
 COPY pyproject.toml README.md /app/
 COPY ./jcalapi /app/jcalapi
 
+# hadolint ignore=DL3008
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
-    pip install /app && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata && \
+    pip install --no-cache-dir /app && \
     rm -rf /var/lib/apt/lists/*
 
 ENV DEBUG=False \
