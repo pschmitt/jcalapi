@@ -111,10 +111,12 @@ async def reload(
     exchange_username: Optional[str] = None,
     exchange_password: Optional[str] = None,
     exchange_email: Optional[str] = None,
-    exchange_shared_inboxes: Optional[list] = [],
+    exchange_shared_inboxes: Optional[List[str]] = None,
     google_credentials: Optional[str] = None,
     google_calendar_regex: Optional[str] = None,
 ):
+    if exchange_shared_inboxes is None:
+        exchange_shared_inboxes = []
     res_google = await reload_google(
         credentials=google_credentials,
         calendar_regex=google_calendar_regex,
@@ -193,12 +195,14 @@ async def reload_exchange(
     email: Optional[str] = None,
     username: Optional[str] = None,
     password: Optional[str] = None,
-    shared_inboxes: Optional[list] = [],
+    shared_inboxes: Optional[List[str]] = None,
     autodiscovery: Optional[bool] = True,
     service_endpoint: Optional[str] = None,
     auth_type: Optional[str] = None,
     version: Optional[str] = None,
 ):
+    if shared_inboxes is None:
+        shared_inboxes = []
     exchange_email = email if email else os.environ.get("EXCHANGE_EMAIL")
     exchange_username = (
         username if username else os.environ.get("EXCHANGE_USERNAME")
