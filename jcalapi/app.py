@@ -167,7 +167,8 @@ async def reload_confluence(
         or not confluence_password
     ):
         LOGGER.warning(
-            "Confluence URL, username and password are required to fetch events"
+            "Confluence URL, username and password are "
+            "required to fetch events"
         )
         return {"events": None}
 
