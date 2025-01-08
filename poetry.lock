@@ -505,18 +505,19 @@ wmi = ["wmi (>=1.5.1)"]
 
 [[package]]
 name = "environs"
-version = "12.0.0"
+version = "14.0.0"
 description = "simplified environment variable parsing"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "environs-12.0.0-py3-none-any.whl", hash = "sha256:152068ba62185b99d87df5f6d6044c0e533261777119037e718c1397fc7d697f"},
-    {file = "environs-12.0.0.tar.gz", hash = "sha256:6150ddeb05562a80cc789b308c650d33b98a5f9c3f4c63d9ed465c433f1cb9e2"},
+    {file = "environs-14.0.0-py3-none-any.whl", hash = "sha256:7b19816c2766b683a40946dc030fdee97eb108751ea1789a0850e93ee4aa1d6f"},
+    {file = "environs-14.0.0.tar.gz", hash = "sha256:02c50088c459a2b21d6530cacd173c7528c38a723aae2791a863266ca41d9eeb"},
 ]
 
 [package.dependencies]
-marshmallow = ">=3.13.0"
+marshmallow = ">=3.18.0"
 python-dotenv = "*"
+typing-extensions = {version = "*", markers = "python_version < \"3.11\""}
 
 [package.extras]
 dev = ["environs[tests]", "pre-commit (>=4.0,<5.0)", "tox"]
@@ -2400,4 +2401,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "3eabc811cdcd93db83ba1de2151af5f77c2e77efc95863806c3fbb7b45aa196a"
+content-hash = "2a91154d983ed36c056a5a4e3528a133c16775cf3c95938d3cdaa832823b6be4"
