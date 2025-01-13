@@ -52,13 +52,13 @@ files = [
 
 [[package]]
 name = "atlassian-python-api"
-version = "3.41.16"
+version = "3.41.18"
 description = "Python Atlassian REST API Wrapper"
 optional = false
 python-versions = "*"
 files = [
-    {file = "atlassian_python_api-3.41.16-py3-none-any.whl", hash = "sha256:99e5587233a96d22c45a61b19523dd98e8266c620ba2d289f23e4ea35c9cf316"},
-    {file = "atlassian_python_api-3.41.16.tar.gz", hash = "sha256:dc0144ff8b8884562bb2af650586292524ad25f120cd21940df80f0d2ac64411"},
+    {file = "atlassian_python_api-3.41.18-py3-none-any.whl", hash = "sha256:90e8b5fe649ace4967906552777203cf7d2d941688abb1da6b72c0f9a966038a"},
+    {file = "atlassian_python_api-3.41.18.tar.gz", hash = "sha256:f38fa9c9c39fc072fa2124d2a8c9db3b684cb88797f428ddac19ae3c94d70bb3"},
 ]
 
 [package.dependencies]
@@ -67,7 +67,7 @@ deprecated = "*"
 jmespath = "*"
 oauthlib = "*"
 requests = "*"
-requests-oauthlib = "*"
+requests_oauthlib = "*"
 six = "*"
 
 [package.extras]
