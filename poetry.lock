@@ -1731,20 +1731,23 @@ files = [
 
 [[package]]
 name = "recurring-ical-events"
-version = "3.5.0"
+version = "3.5.1"
 description = "Calculate recurrence times of events, todos, alarms and journals based on icalendar RFC5545."
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 files = [
-    {file = "recurring_ical_events-3.5.0-py3-none-any.whl", hash = "sha256:ea5f0e11f85eaa38050a07c77ab11d481711fdfbbdd95da3949bdea6f1aaeae5"},
-    {file = "recurring_ical_events-3.5.0.tar.gz", hash = "sha256:8f6012b4a8ab80f66132f38cc9c4dec69385d504ff1a5acf1f6eda602da71546"},
+    {file = "recurring_ical_events-3.5.1-py3-none-any.whl", hash = "sha256:563838cb9e6679ab9a2d471dde1c1af0f8f81bd64c5d6af6efd19dc6025765d7"},
+    {file = "recurring_ical_events-3.5.1.tar.gz", hash = "sha256:a5b61918a14dc842d23b4929bcd99123aaeaae296f99b3adb0fec6f405bc53f4"},
 ]
 
 [package.dependencies]
 icalendar = ">=6.1.0,<7.0.0"
 python-dateutil = ">=2.8.1,<3.0.0"
-tzdata = {version = "*", markers = "python_version >= \"3.7\""}
+tzdata = "*"
 x-wr-timezone = {version = ">=1.0.0,<3.0.0", markers = "python_version >= \"3.9\""}
+
+[package.extras]
+test = ["pygments", "pytest", "pytest-cov", "pytz (>=2023.3)", "restructuredtext-lint"]
 
 [[package]]
 name = "requests"
