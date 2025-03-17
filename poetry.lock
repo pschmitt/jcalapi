@@ -566,18 +566,18 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "exchangelib"
-version = "5.5.0"
+version = "5.5.1"
 description = "Client for Microsoft Exchange Web Services (EWS)"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "exchangelib-5.5.0-py3-none-any.whl", hash = "sha256:b67f044b851df1c9b233603beff73fec6e56292573dc230606bf15bb900cb442"},
-    {file = "exchangelib-5.5.0.tar.gz", hash = "sha256:cd505a8d86c228dcf3b2a1928eed2905b3f1ed09dec312fa9f02e0b8a23ba42c"},
+    {file = "exchangelib-5.5.1-py3-none-any.whl", hash = "sha256:c230cf20dffb9964f4a584b6255800fac9f75f404d253934c429e7e37e3075bb"},
+    {file = "exchangelib-5.5.1.tar.gz", hash = "sha256:d6dcb71196e686e29434d5273ce7c9b9902454214098cc3569f740f74f273e95"},
 ]
 
 [package.dependencies]
-cached-property = "*"
+cached_property = "*"
 defusedxml = ">=0.6.0"
 dnspython = ">=2.2.0"
 isodate = "*"
@@ -585,16 +585,16 @@ lxml = ">3.0"
 oauthlib = "*"
 pygments = "*"
 requests = ">=2.31.0"
-requests-ntlm = ">=0.2.0"
-requests-oauthlib = "*"
+requests_ntlm = ">=0.2.0"
+requests_oauthlib = "*"
 tzdata = "*"
 tzlocal = "*"
 
 [package.extras]
-complete = ["msal", "requests-gssapi", "requests-negotiate-sspi"]
-kerberos = ["requests-gssapi"]
+complete = ["msal", "requests_gssapi", "requests_negotiate_sspi"]
+kerberos = ["requests_gssapi"]
 msal = ["msal"]
-sspi = ["requests-negotiate-sspi"]
+sspi = ["requests_negotiate_sspi"]
 
 [[package]]
 name = "executing"
