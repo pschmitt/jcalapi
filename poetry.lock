@@ -1816,14 +1816,14 @@ files = [
 
 [[package]]
 name = "recurring-ical-events"
-version = "3.6.0"
+version = "3.6.1"
 description = "Calculate recurrence times of events, todos, alarms and journals based on icalendar RFC5545."
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "recurring_ical_events-3.6.0-py3-none-any.whl", hash = "sha256:5531eb725ba7bfc8959f6cf7fc816f32057e150429c1db5b1fd116cd1284aa48"},
-    {file = "recurring_ical_events-3.6.0.tar.gz", hash = "sha256:cdc7827a28c4aa74000b2d601b4aadc4c7c7df84a5c36b7513af3b5b37e9b225"},
+    {file = "recurring_ical_events-3.6.1-py3-none-any.whl", hash = "sha256:49a1e4e40339e591e36648e2617873b81ed4d9735cbaec163df0cf30370aa10d"},
+    {file = "recurring_ical_events-3.6.1.tar.gz", hash = "sha256:7b6ce242bcd9469476924e2950373d8e01e8b65dc647b30d6e7a88dd7b759f5d"},
 ]
 
 [package.dependencies]
