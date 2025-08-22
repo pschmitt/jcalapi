@@ -55,14 +55,14 @@ files = [
 
 [[package]]
 name = "atlassian-python-api"
-version = "4.0.6"
+version = "4.0.7"
 description = "Python Atlassian REST API Wrapper"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "atlassian_python_api-4.0.6-py3-none-any.whl", hash = "sha256:04db747b175a245e49f38c913df9be6a22d8c9d349f9a8b9cc991fc18eab80f5"},
-    {file = "atlassian_python_api-4.0.6.tar.gz", hash = "sha256:0d58f55d828f07e94f9821159473912caee48e31dc2c34fc5751031ab401c907"},
+    {file = "atlassian_python_api-4.0.7-py3-none-any.whl", hash = "sha256:46a70cb29eaab87c0a1697fccd3e25df1aa477e6aa4fb9ba936a9d46b425933c"},
+    {file = "atlassian_python_api-4.0.7.tar.gz", hash = "sha256:8d9cc6068b1d2a48eb434e22e57f6bbd918a47fac9e46b95b7a3cefb00fceacb"},
 ]
 
 [package.dependencies]
