@@ -673,23 +673,23 @@ pyflakes = ">=3.4.0,<3.5.0"
 
 [[package]]
 name = "gcsa"
-version = "2.5.1"
+version = "2.6.0"
 description = "Simple API for Google Calendar management"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "gcsa-2.5.1-py2.py3-none-any.whl", hash = "sha256:4e29dc38bfa7ac0049e0230201567e9794af1d4f9829f65e2182e5ee57ef24d9"},
-    {file = "gcsa-2.5.1.tar.gz", hash = "sha256:ddad61c418b5c471872e8201293dc948fb5cf2f54635b8e53e874959aebba6a7"},
+    {file = "gcsa-2.6.0-py2.py3-none-any.whl", hash = "sha256:fcc495ffc0364d09f873e74214f6692a95fc64d7e12237cde4de68d00be9511f"},
+    {file = "gcsa-2.6.0.tar.gz", hash = "sha256:1181ff6bf409b165b872788827a67e7a280cbba784a7b86aef57eeca8d216e9b"},
 ]
 
 [package.dependencies]
-beautiful-date = ">=2.0.0"
+beautiful_date = ">=2.0.0"
 google-api-python-client = ">=1.8"
 google-auth-httplib2 = ">=0.0.4"
 google-auth-oauthlib = ">=0.5,<2.0"
 python-dateutil = ">=2.7"
-tzlocal = ">=4,<5"
+tzlocal = ">=4,<6"
 
 [package.extras]
 dev = ["flake8", "pep8-naming", "pyfakefs", "pytest", "pytest-cov", "pytest-pep8", "setuptools", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-googleanalytics", "tox", "twine"]
