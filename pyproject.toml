@@ -29,7 +29,7 @@ gcsa = "^2.2.0"
 typing_inspect = "^0.9.0"
 
 [tool.poetry.dev-dependencies]
-black = "^25.1"
+black = "^25.9"
 flake8 = "^7.3.0"
 ipython = "^8.37.0"
 isort = "^6.0.1"
