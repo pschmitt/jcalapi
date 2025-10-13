@@ -567,14 +567,14 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "exchangelib"
-version = "5.5.1"
+version = "5.6.0"
 description = "Client for Microsoft Exchange Web Services (EWS)"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "exchangelib-5.5.1-py3-none-any.whl", hash = "sha256:c230cf20dffb9964f4a584b6255800fac9f75f404d253934c429e7e37e3075bb"},
-    {file = "exchangelib-5.5.1.tar.gz", hash = "sha256:d6dcb71196e686e29434d5273ce7c9b9902454214098cc3569f740f74f273e95"},
+    {file = "exchangelib-5.6.0-py3-none-any.whl", hash = "sha256:7d843ff56f41f3a1eaff73e4bbb4ecce21957aa52b65bef01440414ffbba377e"},
+    {file = "exchangelib-5.6.0.tar.gz", hash = "sha256:a65cffba3b4d1166347059e88b1f11eae9a9d70119c3ad9b33389d7258f6181c"},
 ]
 
 [package.dependencies]
