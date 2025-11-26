@@ -133,8 +133,11 @@ def sync_get_google_events(
             if isinstance(ev_end, datetime.date) and not isinstance(
                 ev_end, datetime.datetime
             ):
+                # Google uses an exclusive end date for all-day events, so
+                # shift back one day and use the end of that day.
+                ev_end = ev_end - datetime.timedelta(days=1)
                 ev_end = datetime.datetime.combine(
-                    ev_end, datetime.time.min
+                    ev_end, datetime.time.max
                 ).astimezone(local_tz)
                 whole_day = True
             else:
