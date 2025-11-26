@@ -8,7 +8,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       flake-utils,
       ...
@@ -131,7 +130,10 @@
         };
       in
       {
-        packages.default = jcalapiPackage;
+        packages = {
+          default = jcalapiPackage;
+          jcalapi = jcalapiPackage;
+        };
 
         devShells.default = pkgs.mkShell {
           name = "jcalapi-devshell";

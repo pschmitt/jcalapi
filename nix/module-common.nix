@@ -20,39 +20,50 @@ let
       mkPackageOption pkgs "jcalapi" { };
 
   envAttrs =
-    lib.filterAttrs (_: v: v != null) (
-      {
-        PORT = cfg.port;
-        CONFLUENCE_URL = cfg.confluenceUrl;
-        CONFLUENCE_USERNAME = cfg.confluenceUsername;
-        CONFLUENCE_PASSWORD = cfg.confluencePassword;
-        CONFLUENCE_CONVERT_EMAIL =
-          lib.optionalString (cfg.confluenceConvertEmail != null)
-            (boolToString cfg.confluenceConvertEmail);
-
-        EXCHANGE_USERNAME = cfg.exchangeUsername;
-        EXCHANGE_PASSWORD = cfg.exchangePassword;
-        EXCHANGE_SERVICE_ENDPOINT = cfg.exchangeServiceEndpoint;
-        EXCHANGE_AUTODISCOVERY =
-          lib.optionalString (cfg.exchangeAutodiscovery != null)
-            (boolToString cfg.exchangeAutodiscovery);
-        EXCHANGE_EMAIL = cfg.exchangeEmail;
-        EXCHANGE_SHARED_INBOXES =
-          lib.optionalString (cfg.exchangeSharedInboxes != null)
-            (fmtList cfg.exchangeSharedInboxes);
-
-        GOOGLE_CREDENTIALS = cfg.googleCredentialsFile;
-        GOOGLE_CALENDAR_REGEX = cfg.googleCalendarRegex;
-
-        PAST_DAYS_IMPORT =
-          lib.optionalString (cfg.pastDaysImport != null)
-            (toString cfg.pastDaysImport);
-        FUTURE_DAYS_IMPORT =
-          lib.optionalString (cfg.futureDaysImport != null)
-            (toString cfg.futureDaysImport);
-      }
-      // cfg.extraEnv
-    );
+    (lib.optionalAttrs (cfg.port != null) { PORT = toString cfg.port; })
+    // (lib.optionalAttrs (cfg.confluence.url != null) {
+      CONFLUENCE_URL = cfg.confluence.url;
+    })
+    // (lib.optionalAttrs (cfg.confluence.username != null) {
+      CONFLUENCE_USERNAME = cfg.confluence.username;
+    })
+    // (lib.optionalAttrs (cfg.confluence.password != null) {
+      CONFLUENCE_PASSWORD = cfg.confluence.password;
+    })
+    // (lib.optionalAttrs (cfg.confluence.convertEmail != null) {
+      CONFLUENCE_CONVERT_EMAIL = boolToString cfg.confluence.convertEmail;
+    })
+    // (lib.optionalAttrs (cfg.exchange.username != null) {
+      EXCHANGE_USERNAME = cfg.exchange.username;
+    })
+    // (lib.optionalAttrs (cfg.exchange.password != null) {
+      EXCHANGE_PASSWORD = cfg.exchange.password;
+    })
+    // (lib.optionalAttrs (cfg.exchange.serviceEndpoint != null) {
+      EXCHANGE_SERVICE_ENDPOINT = cfg.exchange.serviceEndpoint;
+    })
+    // (lib.optionalAttrs (cfg.exchange.autodiscovery != null) {
+      EXCHANGE_AUTODISCOVERY = boolToString cfg.exchange.autodiscovery;
+    })
+    // (lib.optionalAttrs (cfg.exchange.email != null) {
+      EXCHANGE_EMAIL = cfg.exchange.email;
+    })
+    // (lib.optionalAttrs (cfg.exchange.sharedInboxes != null) {
+      EXCHANGE_SHARED_INBOXES = fmtList cfg.exchange.sharedInboxes;
+    })
+    // (lib.optionalAttrs (cfg.google.credentialsFile != null) {
+      GOOGLE_CREDENTIALS = cfg.google.credentialsFile;
+    })
+    // (lib.optionalAttrs (cfg.google.calendarRegex != null) {
+      GOOGLE_CALENDAR_REGEX = cfg.google.calendarRegex;
+    })
+    // (lib.optionalAttrs (cfg.pastDaysImport != null) {
+      PAST_DAYS_IMPORT = toString cfg.pastDaysImport;
+    })
+    // (lib.optionalAttrs (cfg.futureDaysImport != null) {
+      FUTURE_DAYS_IMPORT = toString cfg.futureDaysImport;
+    })
+    // cfg.extraEnv;
 in
 {
   options.services.jcalapi = {
@@ -60,76 +71,102 @@ in
 
     package = pkgOption;
 
-    googleCredentialsFile = mkOption {
-      type = types.nullOr types.path;
-      default = null;
-      description = "Path to Google credentials JSON; sets GOOGLE_CREDENTIALS.";
+    reloadHook = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Run a reload hook after start.";
+      };
+
+      delaySeconds = mkOption {
+        type = types.ints.positive;
+        default = 10;
+        description = "Delay before issuing reload request.";
+      };
     };
 
-    googleCalendarRegex = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Regex to filter Google calendars (GOOGLE_CALENDAR_REGEX).";
+    wantedBy = mkOption {
+      type = types.listOf types.str;
+      default = [ "default.target" ];
+      description = "Targets that should want the jcalapi user service.";
     };
 
-    confluenceUrl = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Confluence URL (CONFLUENCE_URL).";
+    google = {
+      credentialsFile = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Path to Google credentials JSON; sets GOOGLE_CREDENTIALS.";
+      };
+
+      calendarRegex = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Regex to filter Google calendars (GOOGLE_CALENDAR_REGEX).";
+      };
     };
 
-    confluenceUsername = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Confluence username (CONFLUENCE_USERNAME).";
+    confluence = {
+      url = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Confluence URL (CONFLUENCE_URL).";
+      };
+
+      username = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Confluence username (CONFLUENCE_USERNAME).";
+      };
+
+      password = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Confluence password/token (CONFLUENCE_PASSWORD).";
+      };
+
+      convertEmail = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+        description = "Whether to convert Confluence usernames to emails (CONFLUENCE_CONVERT_EMAIL).";
+      };
     };
 
-    confluencePassword = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Confluence password/token (CONFLUENCE_PASSWORD).";
-    };
+    exchange = {
+      username = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Exchange username (EXCHANGE_USERNAME).";
+      };
 
-    confluenceConvertEmail = mkOption {
-      type = types.nullOr types.bool;
-      default = null;
-      description = "Whether to convert Confluence usernames to emails (CONFLUENCE_CONVERT_EMAIL).";
-    };
+      password = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Exchange password (EXCHANGE_PASSWORD).";
+      };
 
-    exchangeUsername = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Exchange username (EXCHANGE_USERNAME).";
-    };
+      serviceEndpoint = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Exchange service endpoint override (EXCHANGE_SERVICE_ENDPOINT).";
+      };
 
-    exchangePassword = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Exchange password (EXCHANGE_PASSWORD).";
-    };
+      autodiscovery = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+        description = "Whether to use Exchange autodiscovery (EXCHANGE_AUTODISCOVERY).";
+      };
 
-    exchangeServiceEndpoint = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Exchange service endpoint override (EXCHANGE_SERVICE_ENDPOINT).";
-    };
+      email = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Exchange email (EXCHANGE_EMAIL).";
+      };
 
-    exchangeAutodiscovery = mkOption {
-      type = types.nullOr types.bool;
-      default = null;
-      description = "Whether to use Exchange autodiscovery (EXCHANGE_AUTODISCOVERY).";
-    };
-
-    exchangeEmail = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Exchange email (EXCHANGE_EMAIL).";
-    };
-
-    exchangeSharedInboxes = mkOption {
-      type = types.nullOr (types.listOf types.str);
-      default = null;
-      description = "List of shared inboxes for Exchange (EXCHANGE_SHARED_INBOXES, comma-separated).";
+      sharedInboxes = mkOption {
+        type = types.nullOr (types.listOf types.str);
+        default = null;
+        description = "List of shared inboxes for Exchange (EXCHANGE_SHARED_INBOXES, comma-separated).";
+      };
     };
 
     pastDaysImport = mkOption {
@@ -146,7 +183,7 @@ in
 
     port = mkOption {
       type = types.nullOr types.int;
-      default = null;
+      default = 7042;
       description = "Port for jcalapi to listen on (PORT env var).";
     };
 
@@ -159,16 +196,22 @@ in
 
   config = mkIf cfg.enable {
     systemd.user.services.jcalapi = {
-      description = "jcalapi calendar API (user service)";
-      wantedBy = [ "default.target" ];
+      Unit = {
+        Description = "jcalapi calendar API (user service)";
+      };
+      Install.WantedBy = cfg.wantedBy;
 
-      serviceConfig = {
+      Service = {
         ExecStart = "${cfg.package}/bin/jcalapi";
         Restart = "on-failure";
         Environment = lib.mapAttrsToList (n: v: "${n}=${v}") envAttrs;
         WorkingDirectory = "%h/.local/share/jcalapi";
         StateDirectory = "jcalapi";
         StateDirectoryMode = "0700";
+        ExecStartPost = lib.mkIf cfg.reloadHook.enable [
+          "${pkgs.coreutils}/bin/sleep ${toString cfg.reloadHook.delaySeconds}"
+          "${pkgs.curl}/bin/curl -X POST http://127.0.0.1:${toString cfg.port}/reload"
+        ];
       };
     };
   };
