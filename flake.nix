@@ -8,6 +8,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       flake-utils,
       ...
@@ -150,5 +151,9 @@
           '';
         };
       }
-    );
+    )
+    // {
+      nixosModules.default = import ./nix/module.nix;
+      homeModules.default = import ./nix/module-hm.nix;
+    };
 }
