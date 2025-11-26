@@ -18,11 +18,11 @@
         pkgs = import nixpkgs { inherit system; };
 
         python = pkgs.python313.override {
-            packageOverrides = final: prev: {
-              asynccli = prev.buildPythonPackage {
-                pname = "asynccli";
-                version = "0.1.3";
-                format = "setuptools";
+          packageOverrides = final: prev: {
+            asynccli = prev.buildPythonPackage {
+              pname = "asynccli";
+              version = "0.1.3";
+              format = "setuptools";
               src = pkgs.fetchurl {
                 url = "https://files.pythonhosted.org/packages/57/f8/c4a2cef122af5a6eafc6d468346e1625b07713ea7ee8ab90caa27d47bc96/asynccli-0.1.3.tar.gz";
                 hash = "sha256-w2A/gIVtiYKBfw8vy+BCmXUkIHjhu64+ls1JF/IMTCo=";
@@ -37,13 +37,13 @@
                   --replace "'pytest-runner'," "" \
                   --replace '"pytest-runner",' ""
               '';
-                pythonImportsCheck = [ "asynccli" ];
-              };
+              pythonImportsCheck = [ "asynccli" ];
+            };
 
-              "fastapi-utils" = prev.buildPythonPackage {
-                pname = "fastapi-utils";
-                version = "0.2.1";
-                format = "pyproject";
+            "fastapi-utils" = prev.buildPythonPackage {
+              pname = "fastapi-utils";
+              version = "0.2.1";
+              format = "pyproject";
               src = pkgs.fetchurl {
                 url = "https://files.pythonhosted.org/packages/e6/c9/d7d8908902afb3fae40d4713b4a72848bc015e21c5c4bebfb935708b21b9/fastapi-utils-0.2.1.tar.gz";
                 hash = "sha256-Dmx/wYcLgOaBSUlXq/ZdT09C9Mf3AAWRjpGBsi8b11k=";
@@ -81,9 +81,7 @@
         pyPkgs = python.pkgs;
 
         devTools = python.withPackages (
-          ps:
-          with ps;
-          [
+          ps: with ps; [
             black
             flake8
             ipython
