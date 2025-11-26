@@ -4,8 +4,8 @@ let
   packageOption =
     pkgs: name: _opts:
     lib.mkOption {
+      inherit (inputs.jcalapi.packages.${pkgs.stdenv.hostPlatform.system}) default;
       type = lib.types.package;
-      default = inputs.jcalapi.packages.${pkgs.system}.default;
       description = "jcalapi package to run.";
     };
 
