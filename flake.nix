@@ -32,6 +32,7 @@
                 prev.wheel
               ];
               doCheck = false;
+              # Remove obsolete pytest-runner build dependency that is not packaged for modern Python
               postPatch = ''
                 substituteInPlace setup.py \
                   --replace "'pytest-runner'," "" \
@@ -52,6 +53,7 @@
                 prev.poetry-core
                 prev.pythonRelaxDepsHook
               ];
+              # Switch to poetry-core backend and relax pydantic/sqlalchemy pins to build on current nixpkgs
               postPatch = ''
                 substituteInPlace pyproject.toml \
                   --replace "poetry>=0.12" "poetry-core>=1.0.0" \
