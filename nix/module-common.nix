@@ -8,6 +8,10 @@ let
   cfg = config.services.jcalapi;
 
   fmtList = list: lib.concatStringsSep "," list;
+  stateDir = "%S/jcalapi";
+  credTarget =
+    lib.optionalString (cfg.google.credentialsFile != null)
+      "${stateDir}/google-credentials.json";
 
   pkgOption =
     if mkPackageOption == null then
@@ -52,7 +56,7 @@ let
       EXCHANGE_SHARED_INBOXES = fmtList cfg.exchange.sharedInboxes;
     })
     // (lib.optionalAttrs (cfg.google.credentialsFile != null) {
-      GOOGLE_CREDENTIALS = cfg.google.credentialsFile;
+      GOOGLE_CREDENTIALS = credTarget;
     })
     // (lib.optionalAttrs (cfg.google.calendarRegex != null) {
       GOOGLE_CALENDAR_REGEX = cfg.google.calendarRegex;
@@ -192,6 +196,12 @@ in
       default = { };
       description = "Additional environment variables to inject.";
     };
+
+    extraEnvFile = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = "Optional EnvironmentFile to include.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -205,9 +215,16 @@ in
         ExecStart = "${cfg.package}/bin/jcalapi";
         Restart = "on-failure";
         Environment = lib.mapAttrsToList (n: v: "${n}=${v}") envAttrs;
-        WorkingDirectory = "%h/.local/share/jcalapi";
+        EnvironmentFile = lib.optional (cfg.extraEnvFile != null) cfg.extraEnvFile;
+        WorkingDirectory = stateDir;
         StateDirectory = "jcalapi";
         StateDirectoryMode = "0700";
+        ExecStartPre =
+          [ "${pkgs.coreutils}/bin/mkdir -p ${stateDir}" ]
+          ++ (lib.optionals (cfg.google.credentialsFile != null) [
+            "${pkgs.coreutils}/bin/cp --dereference ${cfg.google.credentialsFile} ${credTarget}"
+            "${pkgs.coreutils}/bin/chmod 600 ${credTarget}"
+          ]);
         ExecStartPost = lib.mkIf cfg.reloadHook.enable [
           "${pkgs.coreutils}/bin/sleep ${toString cfg.reloadHook.delaySeconds}"
           "${pkgs.curl}/bin/curl -X POST http://127.0.0.1:${toString cfg.port}/reload"
