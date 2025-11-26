@@ -61,11 +61,16 @@ def sync_get_google_events(
     end=None,
 ):
     gcal = GoogleCalendar(credentials_path=credentials, read_only=True)
-    calendars = [
-        x
-        for x in gcal.get_calendar_list()
-        if re.search(calendar_regex, x.summary_override or x.summary)
-    ]
+    pattern = calendar_regex or ""
+    calendars = (
+        [
+            x
+            for x in gcal.get_calendar_list()
+            if re.search(pattern, x.summary_override or x.summary)
+        ]
+        if pattern
+        else list(gcal.get_calendar_list())
+    )
 
     calendar_names = [x.summary_override or x.summary for x in calendars]
 

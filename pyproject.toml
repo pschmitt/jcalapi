@@ -1,45 +1,52 @@
-[tool.poetry]
+[project]
 name = "jcalapi"
 version = "0.1.9"
 description = "Local calendar caching and JSON API"
-authors = ["Philipp Schmitt <philipp@schmitt.co>"]
-license = "GPL-3"
 readme = "README.md"
-homepage = "https://github.com/pschmitt/jcalapi"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-only" }
+authors = [
+  { name = "Philipp Schmitt", email = "philipp@schmitt.co" }
+]
+dependencies = [
+  "asynccli>=0.1.3,<0.2.0",
+  "atlassian-python-api>=3.38,<5.0",
+  "beautifulsoup4>=4.12.2,<5.0.0",
+  "diskcache>=5.6.1,<6.0.0",
+  "environs>=9.5,<15.0",
+  "exchangelib>=5.0.3,<6.0.0",
+  "fastapi>=0.96,<0.123",
+  "fastapi-utils>=0.2.1,<0.9.0",
+  "gcsa>=2.2.0,<3.0.0",
+  "httpx>=0.24.1,<0.29.0",
+  "icalendar>=5.0.7,<7.0.0",
+  "loguru>=0.7.0,<0.8.0",
+  "python-dateutil>=2.8.2,<3.0.0",
+  "python-multipart>=0.0.6,<0.0.21",
+  "recurring-ical-events>=2.0.2,<4.0.0",
+  "typing-inspect>=0.9.0,<0.10.0",
+  "uvicorn[standard]>=0.22,<0.39",
+  "xdg>=6.0.0,<7.0.0"
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-asynccli = "^0.1.3"
-atlassian-python-api = ">=3.38,<5.0"
-diskcache = "^5.6.1"
-environs = ">=9.5,<15.0"
-fastapi = ">=0.96,<0.123"
-fastapi-utils = ">=0.2.1,<0.9.0"
-httpx = ">=0.24.1,<0.29.0"
-icalendar = ">=5.0.7,<7.0.0"
-loguru = "^0.7.0"
-python-dateutil = "^2.8.2"
-recurring-ical-events = ">=2.0.2,<4.0.0"
-uvicorn = {extras = ["standard"], version = ">=0.22,<0.39"}
-xdg = "^6.0.0"
-exchangelib = "^5.0.3"
-beautifulsoup4 = "^4.12.2"
-python-multipart = ">=0.0.6,<0.0.21"
-gcsa = "^2.2.0"
-typing_inspect = "^0.9.0"
+[project.urls]
+Homepage = "https://github.com/pschmitt/jcalapi"
+Repository = "https://github.com/pschmitt/jcalapi"
 
-[tool.poetry.dev-dependencies]
-black = "^25.11"
-flake8 = "^7.3.0"
-ipython = "^8.37.0"
-isort = "^7.0.0"
+[project.scripts]
+jcalapi = "jcalapi.run:main"
 
-[tool.poetry.scripts]
-jcalapi = 'jcalapi.run:main'
+[dependency-groups]
+dev = [
+  "black>=24.10.0",
+  "flake8>=7.3.0",
+  "ipython>=8.37.0",
+  "isort>=7.0.0"
+]
 
 [tool.black]
 line-length = 79
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.9.7,<0.10.0"]
+build-backend = "uv_build"

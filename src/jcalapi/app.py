@@ -279,8 +279,8 @@ async def reload_google(
     )
     google_calendar_regex = (
         calendar_regex
-        if calendar_regex
-        else os.environ.get("GOOGLE_CALENDAR_REGEX")
+        if calendar_regex is not None
+        else os.environ.get("GOOGLE_CALENDAR_REGEX", "")
     )
 
     backend = "google"
