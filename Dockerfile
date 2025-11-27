@@ -1,7 +1,7 @@
 FROM python:3.13
 
 COPY pyproject.toml README.md /app/
-COPY ./jcalapi /app/jcalapi
+COPY ./src/jcalapi /app/jcalapi
 
 # hadolint ignore=DL3008
 RUN apt-get update && \
