@@ -1,4 +1,4 @@
-FROM python:3.13
+FROM python:3.14
 
 COPY pyproject.toml README.md /app/
 COPY ./src/jcalapi /app/jcalapi
