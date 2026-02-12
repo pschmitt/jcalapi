@@ -557,17 +557,18 @@ wheels = [
 
 [[package]]
 name = "fastapi"
-version = "0.122.0"
+version = "0.129.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "annotated-doc" },
     { name = "pydantic" },
     { name = "starlette" },
     { name = "typing-extensions" },
+    { name = "typing-inspection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b2/de/3ee97a4f6ffef1fb70bf20561e4f88531633bb5045dc6cebc0f8471f764d/fastapi-0.122.0.tar.gz", hash = "sha256:cd9b5352031f93773228af8b4c443eedc2ac2aa74b27780387b853c3726fb94b", size = 346436, upload-time = "2025-11-24T19:17:47.95Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/48/47/75f6bea02e797abff1bca968d5997793898032d9923c1935ae2efdece642/fastapi-0.129.0.tar.gz", hash = "sha256:61315cebd2e65df5f97ec298c888f9de30430dd0612d59d6480beafbc10655af", size = 375450, upload-time = "2026-02-12T13:54:52.541Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7a/93/aa8072af4ff37b795f6bbf43dcaf61115f40f49935c7dbb180c9afc3f421/fastapi-0.122.0-py3-none-any.whl", hash = "sha256:a456e8915dfc6c8914a50d9651133bd47ec96d331c5b44600baa635538a30d67", size = 110671, upload-time = "2025-11-24T19:17:45.96Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/dd/d0ee25348ac58245ee9f90b6f3cbb666bf01f69be7e0911f9851bddbda16/fastapi-0.129.0-py3-none-any.whl", hash = "sha256:b4946880e48f462692b31c083be0432275cbfb6e2274566b1be91479cc1a84ec", size = 102950, upload-time = "2026-02-12T13:54:54.528Z" },
 ]
 
 [[package]]
@@ -894,17 +895,17 @@ requires-dist = [
     { name = "diskcache", specifier = ">=5.6.1,<6.0.0" },
     { name = "environs", specifier = ">=9.5,<15.0" },
     { name = "exchangelib", specifier = ">=5.0.3,<6.0.0" },
-    { name = "fastapi", specifier = ">=0.96,<0.123" },
+    { name = "fastapi", specifier = ">=0.129,<0.130" },
     { name = "fastapi-utils", specifier = ">=0.2.1,<0.9.0" },
     { name = "gcsa", specifier = ">=2.2.0,<3.0.0" },
     { name = "httpx", specifier = ">=0.24.1,<0.29.0" },
-    { name = "icalendar", specifier = ">=5.0.7,<7.0.0" },
+    { name = "icalendar", specifier = ">=5.0.7,<8.0.0" },
     { name = "loguru", specifier = ">=0.7.0,<0.8.0" },
     { name = "python-dateutil", specifier = ">=2.8.2,<3.0.0" },
-    { name = "python-multipart", specifier = ">=0.0.6,<0.0.21" },
+    { name = "python-multipart", specifier = ">=0.0.6,<0.0.23" },
     { name = "recurring-ical-events", specifier = ">=2.0.2,<4.0.0" },
     { name = "typing-inspect", specifier = ">=0.9.0,<0.10.0" },
-    { name = "uvicorn", extras = ["standard"], specifier = ">=0.22,<0.39" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.22,<0.41" },
     { name = "xdg", specifier = ">=6.0.0,<7.0.0" },
 ]
 
