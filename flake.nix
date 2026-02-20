@@ -63,10 +63,12 @@
               pythonRelaxDeps = [
                 "pydantic"
                 "sqlalchemy"
+                "uvicorn"
               ];
               pythonRelaxDepsCheck = [
                 "pydantic"
                 "sqlalchemy"
+                "uvicorn"
               ];
               propagatedBuildInputs = with prev; [
                 fastapi
