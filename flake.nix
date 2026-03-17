@@ -97,7 +97,10 @@
           version = "0.1.9";
           src = ./.;
           pyproject = true;
-          nativeBuildInputs = [ pyPkgs."uv-build" ];
+          nativeBuildInputs = [
+            pyPkgs."uv-build"
+          ];
+          pythonRelaxDeps = [ "uvicorn" ];
           propagatedBuildInputs =
             let
               atlassianPythonApi = pyPkgs."atlassian-python-api";
