@@ -1,7 +1,7 @@
 FROM python:3.14
 
 COPY pyproject.toml README.md /app/
-COPY ./src/jcalapi /app/jcalapi
+COPY ./src /app/src
 
 # hadolint ignore=DL3008
 RUN apt-get update && \
@@ -37,4 +37,4 @@ VOLUME ["/config"]
 WORKDIR /app
 EXPOSE 7042
 
-ENTRYPOINT ["python", "/app/jcalapi/run.py"]
+ENTRYPOINT ["python", "-m", "jcalapi"]
