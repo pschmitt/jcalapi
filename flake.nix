@@ -19,28 +19,6 @@
 
         python = pkgs.python313.override {
           packageOverrides = final: prev: {
-            asynccli = prev.buildPythonPackage {
-              pname = "asynccli";
-              version = "0.1.3";
-              format = "setuptools";
-              src = pkgs.fetchurl {
-                url = "https://files.pythonhosted.org/packages/57/f8/c4a2cef122af5a6eafc6d468346e1625b07713ea7ee8ab90caa27d47bc96/asynccli-0.1.3.tar.gz";
-                hash = "sha256-w2A/gIVtiYKBfw8vy+BCmXUkIHjhu64+ls1JF/IMTCo=";
-              };
-              nativeBuildInputs = [
-                prev.setuptools
-                prev.wheel
-              ];
-              doCheck = false;
-              # Remove obsolete pytest-runner build dependency that is not packaged for modern Python
-              postPatch = ''
-                substituteInPlace setup.py \
-                  --replace "'pytest-runner'," "" \
-                  --replace '"pytest-runner",' ""
-              '';
-              pythonImportsCheck = [ "asynccli" ];
-            };
-
             "fastapi-utils" = prev.buildPythonPackage {
               pname = "fastapi-utils";
               version = "0.2.1";
@@ -114,7 +92,6 @@
               uvicornPkg = pyPkgs.uvicorn;
             in
             [
-              pyPkgs.asynccli
               atlassianPythonApi
               pyPkgs.beautifulsoup4
               pyPkgs.diskcache

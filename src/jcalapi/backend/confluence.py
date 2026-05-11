@@ -6,7 +6,8 @@ import datetime
 import logging
 import re
 
-import asynccli
+import asyncio
+
 import httpx
 import icalendar
 import recurring_ical_events
@@ -249,5 +250,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    app = asynccli.App(main)
-    app.run()
+    asyncio.run(main())

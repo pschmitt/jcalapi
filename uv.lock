@@ -49,12 +49,6 @@ wheels = [
 ]
 
 [[package]]
-name = "asynccli"
-version = "0.1.3"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/57/f8/c4a2cef122af5a6eafc6d468346e1625b07713ea7ee8ab90caa27d47bc96/asynccli-0.1.3.tar.gz", hash = "sha256:c3603f80856d8982817f0f2fcbe0429975242078e1bbae3e96cd4917f20c4c2a", size = 4497, upload-time = "2017-08-29T18:07:49.468Z" }
-
-[[package]]
 name = "atlassian-python-api"
 version = "4.0.7"
 source = { registry = "https://pypi.org/simple" }
@@ -859,7 +853,6 @@ name = "jcalapi"
 version = "0.1.9"
 source = { editable = "." }
 dependencies = [
-    { name = "asynccli" },
     { name = "atlassian-python-api" },
     { name = "beautifulsoup4" },
     { name = "diskcache" },
@@ -889,11 +882,10 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "asynccli", specifier = ">=0.1.3,<0.2.0" },
     { name = "atlassian-python-api", specifier = ">=3.38,<5.0" },
     { name = "beautifulsoup4", specifier = ">=4.12.2,<5.0.0" },
     { name = "diskcache", specifier = ">=5.6.1,<6.0.0" },
-    { name = "environs", specifier = ">=15,<15.1" },
+    { name = "environs", specifier = ">=14,<16" },
     { name = "exchangelib", specifier = ">=5.0.3,<6.0.0" },
     { name = "fastapi", specifier = ">=0.121,<0.137" },
     { name = "fastapi-utils", specifier = ">=0.2.1,<0.9.0" },
@@ -902,7 +894,7 @@ requires-dist = [
     { name = "icalendar", specifier = ">=5.0.7,<8.0.0" },
     { name = "loguru", specifier = ">=0.7.0,<0.8.0" },
     { name = "python-dateutil", specifier = ">=2.8.2,<3.0.0" },
-    { name = "python-multipart", specifier = ">=0.0.28,<0.0.29" },
+    { name = "python-multipart", specifier = ">=0.0.6,<0.0.29" },
     { name = "recurring-ical-events", specifier = ">=2.0.2,<4.0.0" },
     { name = "typing-inspect", specifier = ">=0.9.0,<0.10.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.42,<0.47" },
