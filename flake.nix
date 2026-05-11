@@ -17,7 +17,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        python = pkgs.python313;
+        python = pkgs.python314;
 
         pyPkgs = python.pkgs;
 
