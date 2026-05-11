@@ -17,46 +17,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        python = pkgs.python313.override {
-          packageOverrides = final: prev: {
-            "fastapi-utils" = prev.buildPythonPackage {
-              pname = "fastapi-utils";
-              version = "0.2.1";
-              format = "pyproject";
-              src = pkgs.fetchurl {
-                url = "https://files.pythonhosted.org/packages/e6/c9/d7d8908902afb3fae40d4713b4a72848bc015e21c5c4bebfb935708b21b9/fastapi-utils-0.2.1.tar.gz";
-                hash = "sha256-Dmx/wYcLgOaBSUlXq/ZdT09C9Mf3AAWRjpGBsi8b11k=";
-              };
-              nativeBuildInputs = [
-                prev.poetry-core
-                prev.pythonRelaxDepsHook
-              ];
-              # Switch to poetry-core backend and relax pydantic/sqlalchemy pins to build on current nixpkgs
-              postPatch = ''
-                substituteInPlace pyproject.toml \
-                  --replace "poetry>=0.12" "poetry-core>=1.0.0" \
-                  --replace "poetry.masonry.api" "poetry.core.masonry.api"
-              '';
-              doCheck = false;
-              pythonRelaxDeps = [
-                "pydantic"
-                "sqlalchemy"
-              ];
-              pythonRelaxDepsCheck = [
-                "pydantic"
-                "sqlalchemy"
-              ];
-              propagatedBuildInputs = with prev; [
-                fastapi
-                pydantic
-                python-dateutil
-                sqlalchemy
-                typing-extensions
-              ];
-              pythonImportsCheck = [ "fastapi_utils" ];
-            };
-          };
-        };
+        python = pkgs.python313;
 
         pyPkgs = python.pkgs;
 
@@ -86,7 +47,6 @@
           propagatedBuildInputs =
             let
               atlassianPythonApi = pyPkgs."atlassian-python-api";
-              fastapiUtils = pyPkgs."fastapi-utils";
               recurringIcalEvents = pyPkgs."recurring-ical-events";
               pythonMultipart = pyPkgs."python-multipart";
               uvicornPkg = pyPkgs.uvicorn;
@@ -98,7 +58,6 @@
               pyPkgs.environs
               pyPkgs.exchangelib
               pyPkgs.fastapi
-              fastapiUtils
               pyPkgs.gcsa
               pyPkgs.httpx
               pyPkgs.icalendar

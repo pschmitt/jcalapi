@@ -1,7 +1,9 @@
+import asyncio
 import datetime
 import logging
 import os
 import re
+from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from typing import List, Optional
 
@@ -10,14 +12,24 @@ import xdg
 from dateutil.parser import parse as dparse
 from diskcache import Cache
 from fastapi import FastAPI, HTTPException, Query
-from fastapi_utils.tasks import repeat_every
 
 import jcalapi.utils as utils
 from jcalapi.backend.confluence import get_confluence_events
 from jcalapi.backend.exchange import get_exchange_events
 from jcalapi.backend.google import get_google_events
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task = asyncio.create_task(_refresh_loop())
+    yield
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        pass
+
+
+app = FastAPI(lifespan=lifespan)
 
 CALENDAR_DATA = {"confluence": [], "exchange": [], "google": []}
 CACHE = Cache(os.path.join(xdg.xdg_cache_home(), "jcalapi"))
@@ -89,18 +101,16 @@ async def cache_restore():
     CACHE_RESTORED.set(True)
 
 
-@app.on_event("startup")
-@repeat_every(seconds=60 * 5)  # 5 minutes
-async def startup_event():
-    cache_restored = CACHE_RESTORED.get(False)
-    LOGGER.info(f"Startup event triggered -> CACHE_RESTORED={cache_restored}")
-    # At the very first start restore from cache, after that run reload()
-    # at every interval
-    if not cache_restored:
-        await cache_restore()
-    else:
-        LOGGER.info("Refreshing events data")
-        await reload()
+async def _refresh_loop():
+    while True:
+        cache_restored = CACHE_RESTORED.get(False)
+        LOGGER.info(f"Refresh tick -> CACHE_RESTORED={cache_restored}")
+        if not cache_restored:
+            await cache_restore()
+        else:
+            LOGGER.info("Refreshing events data")
+            await reload()
+        await asyncio.sleep(60 * 5)
 
 
 @app.post("/reload")
