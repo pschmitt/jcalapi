@@ -100,7 +100,11 @@
           nativeBuildInputs = [
             pyPkgs."uv-build"
           ];
-          pythonRelaxDeps = [ "uvicorn" ];
+          pythonRelaxDeps = [
+            "environs"
+            "python-multipart"
+            "uvicorn"
+          ];
           propagatedBuildInputs =
             let
               atlassianPythonApi = pyPkgs."atlassian-python-api";
