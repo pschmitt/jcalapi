@@ -1,6 +1,6 @@
 [project]
 name = "jcalapi"
-version = "0.1.9"
+version = "0.2.0"
 description = "Local calendar caching and JSON API"
 readme = "README.md"
 requires-python = ">=3.10"

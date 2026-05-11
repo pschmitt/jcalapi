@@ -850,7 +850,7 @@ wheels = [
 
 [[package]]
 name = "jcalapi"
-version = "0.1.9"
+version = "0.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "atlassian-python-api" },

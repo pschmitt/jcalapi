@@ -33,7 +33,7 @@
 
         jcalapiPackage = pyPkgs.buildPythonApplication {
           pname = "jcalapi";
-          version = "0.1.9";
+          version = "0.2.0";
           src = ./.;
           pyproject = true;
           nativeBuildInputs = [
@@ -44,23 +44,23 @@
             "python-multipart"
             "uvicorn"
           ];
-          propagatedBuildInputs = [
+          propagatedBuildInputs = with pyPkgs; [
             pyPkgs."atlassian-python-api"
-            pyPkgs.beautifulsoup4
-            pyPkgs.diskcache
-            pyPkgs.environs
-            pyPkgs.exchangelib
-            pyPkgs.fastapi
-            pyPkgs.gcsa
-            pyPkgs.httpx
-            pyPkgs.icalendar
-            pyPkgs.loguru
+            beautifulsoup4
+            diskcache
+            environs
+            exchangelib
+            fastapi
+            gcsa
+            httpx
+            icalendar
+            loguru
             pyPkgs."python-dateutil"
             pyPkgs."python-multipart"
             pyPkgs."recurring-ical-events"
             pyPkgs."typing-inspect"
-            pyPkgs.uvicorn
-            pyPkgs.xdg
+            uvicorn
+            xdg
           ];
           pythonImportsCheck = [ "jcalapi" ];
         };
