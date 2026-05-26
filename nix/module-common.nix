@@ -208,6 +208,10 @@ in
     systemd.user.services.jcalapi = {
       Unit = {
         Description = "jcalapi calendar API (user service)";
+        # Start after the wanted-by targets so we don't block them from
+        # becoming active while jcalapi initialises (Google auth etc. can
+        # take minutes on a freshly booted machine).
+        After = cfg.wantedBy;
       };
       Install.WantedBy = cfg.wantedBy;
 
@@ -227,7 +231,7 @@ in
           ]);
         ExecStartPost = lib.mkIf cfg.reloadHook.enable [
           "${pkgs.coreutils}/bin/sleep ${toString cfg.reloadHook.delaySeconds}"
-          "${pkgs.curl}/bin/curl -X POST http://127.0.0.1:${toString cfg.port}/reload"
+          "${pkgs.curl}/bin/curl --max-time 30 -X POST http://127.0.0.1:${toString cfg.port}/reload"
         ];
       };
     };
