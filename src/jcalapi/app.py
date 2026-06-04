@@ -18,6 +18,7 @@ from jcalapi.backend.confluence import get_confluence_events
 from jcalapi.backend.exchange import get_exchange_events
 from jcalapi.backend.google import get_google_events
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     task = asyncio.create_task(_refresh_loop())
