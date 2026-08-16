@@ -9,7 +9,7 @@ authors = [
   { name = "Philipp Schmitt", email = "philipp@schmitt.co" }
 ]
 dependencies = [
-  "atlassian-python-api>=5,<5.1",
+  "atlassian-python-api>=4,<5",
   "beautifulsoup4>=4.12.2,<5.0.0",
   "diskcache>=5.6.1,<6.0.0",
   "environs>=14,<16",

@@ -40,6 +40,7 @@
             pyPkgs."uv-build"
           ];
           pythonRelaxDeps = [
+            "atlassian-python-api"
             "environs"
             "python-multipart"
             "uvicorn"
