@@ -39,6 +39,10 @@
           nativeBuildInputs = [
             pyPkgs."uv-build"
           ];
+          postPatch = ''
+            substituteInPlace pyproject.toml \
+              --replace-fail 'uv_build>=0.12.5,<0.13.0' 'uv_build'
+          '';
           pythonRelaxDeps = [
             "atlassian-python-api"
             "environs"
