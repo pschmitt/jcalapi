@@ -46,6 +46,7 @@
           pythonRelaxDeps = [
             "atlassian-python-api"
             "environs"
+            "fastapi"
             "python-multipart"
             "uvicorn"
           ];
