@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "description": "Only raise upper bounds so nixpkgs' older versions stay in range",
+      "matchManagers": ["pep621"],
+      "rangeStrategy": "widen"
+    }
   ]
 }

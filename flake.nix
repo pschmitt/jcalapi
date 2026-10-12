@@ -39,11 +39,6 @@
           nativeBuildInputs = [
             pyPkgs."uv-build"
           ];
-          # Drop the uv_build range Renovate keeps bumping ahead of nixpkgs
-          postPatch = ''
-            sed -i -E 's/"uv_build[^"]*"/"uv_build"/' pyproject.toml
-            grep -q '"uv_build"' pyproject.toml
-          '';
           pythonRelaxDeps = [
             "atlassian-python-api"
             "environs"
