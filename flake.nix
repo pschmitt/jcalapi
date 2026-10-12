@@ -42,9 +42,7 @@
           pythonRelaxDeps = [
             "atlassian-python-api"
             "environs"
-            "fastapi"
             "python-multipart"
-            "uvicorn"
           ];
           propagatedBuildInputs = with pyPkgs; [
             pyPkgs."atlassian-python-api"
