@@ -1,4 +1,4 @@
-FROM python:3.14
+FROM python:3.15
 
 COPY pyproject.toml README.md /app/
 COPY ./src /app/src
