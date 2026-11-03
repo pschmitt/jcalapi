@@ -1,17 +1,27 @@
-{ lib, pkgs, mkPackageOption ? null }:
+{
+  lib,
+  pkgs,
+  mkPackageOption ? null,
+}:
 
 { config, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption types boolToString;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    boolToString
+    ;
 
   cfg = config.services.jcalapi;
 
   fmtList = list: lib.concatStringsSep "," list;
   stateDir = "%S/jcalapi";
-  credTarget =
-    lib.optionalString (cfg.google.credentialsFile != null)
-      "${stateDir}/google-credentials.json";
+  credTarget = lib.optionalString (
+    cfg.google.credentialsFile != null
+  ) "${stateDir}/google-credentials.json";
 
   pkgOption =
     if mkPackageOption == null then
@@ -223,12 +233,13 @@ in
         WorkingDirectory = stateDir;
         StateDirectory = "jcalapi";
         StateDirectoryMode = "0700";
-        ExecStartPre =
-          [ "${pkgs.coreutils}/bin/mkdir -p ${stateDir}" ]
-          ++ (lib.optionals (cfg.google.credentialsFile != null) [
-            "${pkgs.coreutils}/bin/cp --dereference ${cfg.google.credentialsFile} ${credTarget}"
-            "${pkgs.coreutils}/bin/chmod 600 ${credTarget}"
-          ]);
+        ExecStartPre = [
+          "${pkgs.coreutils}/bin/mkdir -p ${stateDir}"
+        ]
+        ++ (lib.optionals (cfg.google.credentialsFile != null) [
+          "${pkgs.coreutils}/bin/cp --dereference ${cfg.google.credentialsFile} ${credTarget}"
+          "${pkgs.coreutils}/bin/chmod 600 ${credTarget}"
+        ]);
         ExecStartPost = lib.mkIf cfg.reloadHook.enable [
           "${pkgs.coreutils}/bin/sleep ${toString cfg.reloadHook.delaySeconds}"
           "${pkgs.curl}/bin/curl --max-time 30 -X POST http://127.0.0.1:${toString cfg.port}/reload"
